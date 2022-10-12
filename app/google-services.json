@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1080642523553",
+    "project_id": "chatapp-b0775",
+    "storage_bucket": "chatapp-b0775.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1080642523553:android:ef8f6eba2e67cfbe37fbe0",
+        "android_client_info": {
+          "package_name": "com.halil.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1080642523553-brgl982b1hppdho5cp13f52gpaaukm5q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBB9mU13ERSO0UhrqLlNOqlIGW2-4Xiw1U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1080642523553-brgl982b1hppdho5cp13f52gpaaukm5q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
