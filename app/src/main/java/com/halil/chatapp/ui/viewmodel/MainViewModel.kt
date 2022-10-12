@@ -29,7 +29,7 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
         }
         _registerStatus.postValue(Resource.Loading())
         viewModelScope.launch {
-            val result = repository.login(email, password)
+            var result = repository.login(email, password)
             _loginStatus.postValue(result)
         }
     }
@@ -60,4 +60,6 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
         }
 
     }
+
+
 }

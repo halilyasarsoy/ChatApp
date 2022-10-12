@@ -7,7 +7,7 @@ import com.halil.chatapp.data.User
 import com.halil.chatapp.other.Resource
 import kotlinx.coroutines.tasks.await
 
-class MainRepository : MainRepositoryInterface {
+class MainRepositoryDefault : MainRepositoryInterface {
     private val auth = FirebaseAuth.getInstance()
     private val users = FirebaseFirestore.getInstance().collection("users")
     override suspend fun register(
