@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:alpha="0.94"
     android:background="@drawable/background_image"
     tools:context=".ui.fragment.LoginScreenFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:alpha=".9"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -41,7 +40,8 @@
             android:layout_width="354dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_text"
@@ -62,7 +62,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/btn"
-            android:hint="Login"
+            android:hint="@string/login"
             android:textColorHint="@color/white" />
 
         <LinearLayout

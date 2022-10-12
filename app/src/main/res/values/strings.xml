@@ -3,4 +3,14 @@
     <string name="StringSplashText">Welcome to Chat</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login">Login</string>
+    <string name="please_enter_name">Please Enter Name</string>
+    <string name="please_enter_last_name">Please Enter Last Name</string>
+    <string name="please_enter_email">Please Enter Email</string>
+    <string name="please_enter_password">Please Enter Password</string>
+    <string name="please_enter_confirm_password">Please Enter Confirm Password</string>
+    <string name="if_you_have_an_account">If you have an account</string>
+    <string name="sign_in">Sign In</string>
+    <string name="registersuccestext">Registration Successful</string>
+    <string name="buttonsucces">Click to Login</string>
 </resources>

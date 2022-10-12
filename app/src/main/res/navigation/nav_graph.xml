@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_registerFragment_to_registerSuccessFragment"
             app:destination="@id/registerSuccessFragment" />
+        <action
+            android:id="@+id/action_registerFragment_to_loginScreenFragment"
+            app:destination="@id/loginScreenFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerSuccessFragment"
