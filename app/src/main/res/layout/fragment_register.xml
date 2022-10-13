@@ -29,8 +29,9 @@
                 android:ems="10"
                 android:hint="@string/please_enter_name"
                 android:inputType="textEmailAddress"
-                android:textColorHint="#1E1D1A"
-                android:textSize="14sp" />
+                android:textColorHint="#E0F7FA"
+                android:textSize="14sp"
+                tools:ignore="TextContrastCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -48,8 +49,9 @@
                 android:ems="10"
                 android:hint="@string/please_enter_last_name"
                 android:inputType="textEmailAddress"
-                android:textColorHint="#1E1D1A"
-                android:textSize="14sp" />
+                android:textColorHint="#E0F7FA"
+                android:textSize="14sp"
+                tools:ignore="TextContrastCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -67,8 +69,9 @@
                 android:ems="10"
                 android:hint="@string/please_enter_email"
                 android:inputType="textEmailAddress"
-                android:textColorHint="#1E1D1A"
-                android:textSize="14sp" />
+                android:textColorHint="#E0F7FA"
+                android:textSize="14sp"
+                tools:ignore="TextContrastCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -88,7 +91,8 @@
                 android:hint="@string/please_enter_password"
                 android:inputType="numberPassword"
                 android:textColorHint="#1E1D1A"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                tools:ignore="TextContrastCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -107,8 +111,9 @@
                 android:ems="10"
                 android:hint="@string/please_enter_confirm_password"
                 android:inputType="numberPassword"
-                android:textColorHint="#1E1D1A"
-                android:textSize="14sp" />
+                android:textColorHint="#FBE9E7"
+                android:textSize="14sp"
+                tools:ignore="TextContrastCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -131,8 +136,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/if_you_have_an_account"
-                android:textColor="@color/darker"
-                android:textSize="16sp" />
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                tools:ignore="TextContrastCheck" />
 
             <Button
                 android:id="@+id/button_Turn_login"
@@ -141,7 +147,8 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/btn"
                 android:hint="@string/login"
-                android:textColorHint="@color/darker" />
+                android:textColorHint="@color/white"
+                tools:ignore="TextContrastCheck" />
 
         </LinearLayout>
 

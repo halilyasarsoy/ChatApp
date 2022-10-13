@@ -74,8 +74,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" if you don't have an account"
-                android:textColor="@color/darker"
+                android:text="@string/if_you_don_t_have_an_account"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
 
             <Button
@@ -84,8 +84,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/btn"
-                android:hint="Sign up"
-                android:textColorHint="@color/darker" />
+                android:hint="@string/sign_up"
+                android:textColorHint="@color/white" />
 
         </LinearLayout>
     </LinearLayout>

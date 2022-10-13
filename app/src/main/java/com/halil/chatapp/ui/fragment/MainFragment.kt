@@ -7,29 +7,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
-import com.halil.chatapp.R
-import com.halil.chatapp.databinding.FragmentAuthMainBinding
-import com.halil.chatapp.ui.activity.MainActivity
-import com.halil.chatapp.ui.viewmodel.AuthViewModel
+import com.halil.chatapp.databinding.FragmentMainBinding
+import com.halil.chatapp.ui.activity.AuthActivity
 import com.halil.chatapp.ui.viewmodel.MainViewModel
+import com.halil.chatapp.ui.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
-class AuthMainFragment : Fragment() {
-    private val vm: MainViewModel by viewModels()
-    private val authvm: AuthViewModel by viewModels()
-    private var _binding: FragmentAuthMainBinding? = null
+class MainFragment : Fragment() {
+    private val authvm: MainViewModel by viewModels()
+    private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
-    private val auth = FirebaseAuth.getInstance().signOut()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAuthMainBinding.inflate(inflater, container, false)
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -37,10 +32,10 @@ class AuthMainFragment : Fragment() {
         logout()
     }
 
-    fun logout() {
+    private fun logout() {
         binding.logoutbutton.setOnClickListener {
             authvm.logout {
-                val intent = Intent(requireContext(), MainActivity::class.java)
+                val intent = Intent(requireContext(), AuthActivity::class.java)
                 startActivity(intent)
                 activity?.finish()
             }

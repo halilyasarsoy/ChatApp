@@ -5,20 +5,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.halil.chatapp.databinding.FragmentLoginScreenBinding
-import com.halil.chatapp.ui.viewmodel.MainViewModel
+import com.halil.chatapp.ui.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import com.halil.chatapp.other.Resource
-import com.halil.chatapp.ui.activity.AuthActivity
+import com.halil.chatapp.ui.activity.MainActivity
 
 @AndroidEntryPoint
 class LoginScreenFragment : Fragment() {
     private var _binding: FragmentLoginScreenBinding? = null
     private val binding get() = _binding!!
-    private val vm : MainViewModel by viewModels()
+    private val vm : AuthViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,13 +55,13 @@ class LoginScreenFragment : Fragment() {
         vm.loginStatus.observe(viewLifecycleOwner){
             when (it) {
                 is Resource.Error -> {
-                    //Toast Err
+                Toast.makeText(requireContext(),"Missing or incorrect login information",Toast.LENGTH_LONG).show()
                 }
                 is Resource.Loading -> {
-                    //Progressbar visible
+
                 }
                 is Resource.Success -> {
-                    val intent = Intent(requireContext(), AuthActivity::class.java)
+                    val intent = Intent(requireContext(), MainActivity::class.java)
                     startActivity(intent)
                     activity?.finish()
                 }

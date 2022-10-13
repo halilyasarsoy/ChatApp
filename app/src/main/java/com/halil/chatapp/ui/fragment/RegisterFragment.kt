@@ -1,8 +1,6 @@
 package com.halil.chatapp.ui.fragment
 
 import android.os.Bundle
-import android.service.controls.ControlsProviderService.TAG
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,17 +9,16 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.halil.chatapp.data.User
 import com.halil.chatapp.databinding.FragmentRegisterBinding
 import com.halil.chatapp.other.Resource
-import com.halil.chatapp.ui.viewmodel.MainViewModel
+import com.halil.chatapp.ui.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
-    private val vm: MainViewModel by viewModels()
+    private val vm: AuthViewModel by viewModels()
     private val db = Firebase.firestore
 
     override fun onCreateView(

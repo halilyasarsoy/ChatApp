@@ -3,13 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_auth"
-    app:startDestination="@id/authMainFragment">
+    app:startDestination="@id/loginScreenFragment">
 
     <fragment
-        android:id="@+id/authMainFragment"
-        android:name="com.halil.chatapp.ui.fragment.AuthMainFragment"
-        android:label="fragment_auth_main"
-        tools:layout="@layout/fragment_auth_main">
-
+        android:id="@+id/loginScreenFragment"
+        android:name="com.halil.chatapp.ui.fragment.LoginScreenFragment"
+        android:label="fragment_login_screen"
+        tools:layout="@layout/fragment_login_screen" >
+        <action
+            android:id="@+id/action_loginScreenFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.halil.chatapp.ui.fragment.RegisterFragment"
+        android:label="RegisterFragment"
+        tools:layout="@layout/fragment_register">
+        <action
+            android:id="@+id/action_registerFragment_to_registerSuccessFragment"
+            app:destination="@id/registerSuccessFragment" />
+        <action
+            android:id="@+id/action_registerFragment_to_loginScreenFragment"
+            app:destination="@id/loginScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerSuccessFragment"
+        android:name="com.halil.chatapp.ui.fragment.RegisterSuccessFragment"
+        android:label="fragment_register_success"
+        tools:layout="@layout/fragment_register_success" >
+        <action
+            android:id="@+id/action_registerSuccessFragment_to_loginScreenFragment"
+            app:destination="@id/loginScreenFragment" />
     </fragment>
 </navigation>

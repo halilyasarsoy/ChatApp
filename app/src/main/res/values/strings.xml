@@ -13,4 +13,6 @@
     <string name="sign_in">Sign In</string>
     <string name="registersuccestext">Registration Successful</string>
     <string name="buttonsucces">Click to Login</string>
+    <string name="if_you_don_t_have_an_account">if you don\'t have an account</string>
+    <string name="sign_up">Sign up</string>
 </resources>
