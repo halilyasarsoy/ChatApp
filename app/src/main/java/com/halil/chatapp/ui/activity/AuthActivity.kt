@@ -11,8 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AuthActivity : AppCompatActivity() {
     private lateinit var navController: NavController
-    private val auth = FirebaseAuth.getInstance()
-
+    private val auth = FirebaseAuth.getInstance().signOut()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -15,4 +15,6 @@ interface MainRepositoryInterface {
 
     suspend fun login(email: String, password: String): Resource<AuthResult>
 
+    fun logout (result : () -> Unit)
+
 }

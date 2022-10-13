@@ -9,5 +9,7 @@
         android:id="@+id/authMainFragment"
         android:name="com.halil.chatapp.ui.fragment.AuthMainFragment"
         android:label="fragment_auth_main"
-        tools:layout="@layout/fragment_auth_main" />
+        tools:layout="@layout/fragment_auth_main">
+
+    </fragment>
 </navigation>

@@ -1,12 +1,17 @@
 package com.halil.chatapp.ui.fragment
 
 import android.os.Bundle
+import android.service.controls.ControlsProviderService.TAG
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.halil.chatapp.data.User
 import com.halil.chatapp.databinding.FragmentRegisterBinding
 import com.halil.chatapp.other.Resource
 import com.halil.chatapp.ui.viewmodel.MainViewModel
@@ -17,6 +22,7 @@ class RegisterFragment : Fragment() {
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
     private val vm: MainViewModel by viewModels()
+    private val db = Firebase.firestore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +31,6 @@ class RegisterFragment : Fragment() {
 
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,7 +47,6 @@ class RegisterFragment : Fragment() {
     }
 
     private fun registerSuccess() {
-
         binding.registerButtonSignin.setOnClickListener {
             val name = binding.registerNameText.text.toString().trim()
             val lastName = binding.registerLastName.text.toString().trim()
@@ -71,9 +75,5 @@ class RegisterFragment : Fragment() {
                 else -> {}
             }
         }
-
-
     }
-
-
 }

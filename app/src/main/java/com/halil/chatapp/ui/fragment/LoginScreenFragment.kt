@@ -41,6 +41,7 @@ class LoginScreenFragment : Fragment() {
             findNavController().navigate(actionToRegister)
         }
     }
+
     private fun login (){
         binding.buttonLogin.setOnClickListener {
             val mail = binding.emailText.text.toString().trim()
@@ -67,7 +68,4 @@ class LoginScreenFragment : Fragment() {
             }
         }
     }
-
-
-
 }
