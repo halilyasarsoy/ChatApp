@@ -1,5 +1,6 @@
 package com.halil.chatapp.repository
 
+
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -11,11 +12,11 @@ import kotlinx.coroutines.tasks.await
 
 class MainRepositoryDefault : MainRepositoryInterface {
     private val auth = FirebaseAuth.getInstance()
-    val db = Firebase.firestore
     private val users = FirebaseFirestore.getInstance().collection("users")
+
     override suspend fun register(
         name: String,
-        lastName: String,
+        lastname: String,
         email: String,
         password: String,
         confirmPassword: String
@@ -24,9 +25,10 @@ class MainRepositoryDefault : MainRepositoryInterface {
             val result = auth.createUserWithEmailAndPassword(email, password).await()
             val uid = result.user!!.uid
             val userCreate =
-                User(uuid = uid, lastname = lastName, email = email)
+                User(name = name, lastname = lastname, email = email)
             users.document(uid).set(userCreate)
             Resource.Success(result)
+
         } catch (e: Exception) {
             Resource.Error(e.message.toString())
         }
@@ -36,7 +38,6 @@ class MainRepositoryDefault : MainRepositoryInterface {
         return try {
             val result = auth.signInWithEmailAndPassword(email, password).await()
             Resource.Success(result)
-
         } catch (e: Exception) {
             Resource.Error(e.message.toString())
         }

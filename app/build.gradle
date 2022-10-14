@@ -65,24 +65,17 @@ dependencies {
 
     //firebase
     implementation 'com.firebaseui:firebase-ui-firestore:7.1.1'
-    implementation 'com.google.firebase:firebase-auth-ktx:21.0.8'
-    implementation 'com.google.firebase:firebase-firestore-ktx:24.4.0'
-    implementation 'com.google.firebase:firebase-functions:20.1.1'
-    implementation 'com.google.firebase:firebase-messaging-ktx:23.0.8'
-    implementation 'com.google.firebase:firebase-auth:21.0.8'
-    implementation 'com.google.firebase:firebase-database:20.0.6'
-    implementation 'com.google.firebase:firebase-storage-ktx:20.0.2'
-    implementation "com.google.firebase:firebase-iid:21.1.0"
+    implementation 'com.google.firebase:firebase-auth-ktx:21.0.5'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.1.2'
 
 
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
 
-   //Dagger - Hilt
-  implementation 'com.google.dagger:hilt-android:2.44'
+    //Dagger - Hilt
+    implementation 'com.google.dagger:hilt-android:2.44'
     kapt 'com.google.dagger:hilt-compiler:2.44'
     implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
-
     implementation 'androidx.core:core-splashscreen:1.0.0'
 
 

@@ -1,17 +1,14 @@
 package com.halil.chatapp.ui.fragment
 
-import android.content.Intent
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.google.firebase.auth.FirebaseAuth
 import com.halil.chatapp.databinding.FragmentMainBinding
-import com.halil.chatapp.ui.activity.AuthActivity
 import com.halil.chatapp.ui.viewmodel.MainViewModel
-import com.halil.chatapp.ui.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,16 +26,6 @@ class MainFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        logout()
-    }
 
-    private fun logout() {
-        binding.logoutbutton.setOnClickListener {
-            authvm.logout {
-                val intent = Intent(requireContext(), AuthActivity::class.java)
-                startActivity(intent)
-                activity?.finish()
-            }
-        }
     }
 }

@@ -35,5 +35,4 @@ class RegisterSuccessFragment : Fragment() {
             findNavController().navigate(action)
         }
     }
-
 }

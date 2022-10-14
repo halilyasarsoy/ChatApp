@@ -6,11 +6,11 @@
         android:icon="@drawable/ic_baseline_person_24"
         />
     <item android:title="Home"
-        android:id="@+id/settingFragment"
+        android:id="@+id/userFragment"
         android:icon="@drawable/ic_baseline_home_24"
         />
     <item android:title="Setting"
-        android:id="@+id/userFragment"
+        android:id="@+id/settingFragment"
         android:icon="@drawable/ic_baseline_settings_24"
         />
 </menu>

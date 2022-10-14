@@ -1,13 +1,14 @@
 package com.halil.chatapp.repository
 
 import com.google.firebase.auth.AuthResult
+import com.halil.chatapp.data.User
 import com.halil.chatapp.other.Resource
 
 interface MainRepositoryInterface {
 
     suspend fun register(
         name: String,
-        lastName: String,
+        lastname: String,
         email: String,
         password: String,
         confirmPassword: String

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,6 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
+
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
     private val vm: AuthViewModel by viewModels()
@@ -31,9 +33,9 @@ class RegisterFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        registerCheck()
         navigateToLogin()
         registerSuccess()
-        registerCheck()
     }
 
     private fun navigateToLogin() {
@@ -44,14 +46,13 @@ class RegisterFragment : Fragment() {
     }
 
     private fun registerSuccess() {
-        binding.registerButtonSignin.setOnClickListener {
+        binding.registerButtonAuth.setOnClickListener {
             val name = binding.registerNameText.text.toString().trim()
-            val lastName = binding.registerLastName.text.toString().trim()
-            val mail = binding.registerEmailtext.text.toString().trim()
+            val lastname = binding.registerLastName.text.toString().trim()
+            val email = binding.registerEmailtext.text.toString().trim()
             val password = binding.registerPasswordtext.text.toString().trim()
             val confirmpassword = binding.registerConfirmpasswordText.text.toString().trim()
-
-            vm.register(name, lastName, mail, password, confirmpassword)
+            vm.register(name, lastname, email, password, confirmpassword)
         }
     }
 
@@ -59,7 +60,7 @@ class RegisterFragment : Fragment() {
         vm.registerStatus.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Error -> {
-                    //ToastErr
+                Toast.makeText(requireContext(),"Please fill all blanks",Toast.LENGTH_LONG).show()
                 }
                 is Resource.Loading -> {
                 //progress bar

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.AuthResult
+import com.halil.chatapp.data.User
 import com.halil.chatapp.other.Resource
 import com.halil.chatapp.repository.MainRepositoryInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,6 +27,7 @@ class AuthViewModel @Inject constructor(private val repository: MainRepositoryIn
 
     private val _isLoading = MutableStateFlow(true)
     val isLoading = _isLoading.asStateFlow()
+
     init {
         viewModelScope.launch {
             delay(3000)
@@ -63,7 +65,7 @@ class AuthViewModel @Inject constructor(private val repository: MainRepositoryIn
         viewModelScope.launch {
             val result = repository.register(
                 name = name,
-                lastName = lastName,
+                lastname = lastName,
                 email = email,
                 password = password,
                 confirmPassword = confirmPassword

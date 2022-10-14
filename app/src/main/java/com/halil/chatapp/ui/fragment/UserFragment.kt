@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.halil.chatapp.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 
 class UserFragment : Fragment() {
     override fun onCreateView(
@@ -15,5 +17,4 @@ class UserFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_user, container, false)
     }
-
 }

@@ -36,7 +36,7 @@ class LoginScreenFragment : Fragment() {
     }
 
     private fun navigateToRegister() {
-        binding.buttonSignup.setOnClickListener {
+        binding.buttonSignupAuth.setOnClickListener {
             val actionToRegister =
                 LoginScreenFragmentDirections.actionLoginScreenFragmentToRegisterFragment()
             findNavController().navigate(actionToRegister)
