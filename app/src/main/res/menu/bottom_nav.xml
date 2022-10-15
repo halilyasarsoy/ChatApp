@@ -6,7 +6,7 @@
         android:icon="@drawable/ic_baseline_person_24"
         />
     <item android:title="Home"
-        android:id="@+id/userFragment"
+        android:id="@+id/homeFragment"
         android:icon="@drawable/ic_baseline_home_24"
         />
     <item android:title="Setting"

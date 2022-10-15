@@ -28,15 +28,7 @@ class SettingFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        logout()
+
     }
-    private fun logout() {
-        binding.logoutbutton.setOnClickListener {
-            mainViewModel.logout {
-                val intent = Intent(requireContext(), AuthActivity::class.java)
-                startActivity(intent)
-                activity?.finish()
-            }
-        }
-    }
+
 }

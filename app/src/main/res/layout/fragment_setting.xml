@@ -5,10 +5,4 @@
     android:layout_height="match_parent"
     tools:context="ui.fragment.SettingFragment">
 
-
-    <Button
-        android:id="@+id/logoutbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button" />
 </FrameLayout>
