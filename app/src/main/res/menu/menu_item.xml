@@ -11,6 +11,6 @@
     <item
         android:id="@+id/settingFragment"
         android:icon="@drawable/ic_baseline_settings_24"
-        android:title="chats"
-        app:showAsAction="ifRoom" />
+        android:title="@string/setting"
+        app:showAsAction="never" />
 </menu>

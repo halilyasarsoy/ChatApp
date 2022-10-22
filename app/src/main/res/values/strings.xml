@@ -15,4 +15,5 @@
     <string name="buttonsucces">Click to Login</string>
     <string name="if_you_don_t_have_an_account">if you don\'t have an account</string>
     <string name="sign_up">Sign up</string>
+    <string name="setting">Setting</string>
 </resources>

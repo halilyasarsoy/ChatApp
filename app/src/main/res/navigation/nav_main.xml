@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.halil.chatapp.ui.fragment.MainFragment"
@@ -13,11 +13,7 @@
         android:id="@+id/homeFragment"
         android:name="com.halil.chatapp.ui.fragment.HomeFragment"
         android:label="fragment_user"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_homeFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.halil.chatapp.ui.fragment.SettingFragment"
