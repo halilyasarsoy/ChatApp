@@ -18,6 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="354dp"
             android:layout_height="60dp"
@@ -50,7 +51,7 @@
                 android:background="@drawable/custom_input"
                 android:ems="10"
                 android:hint="Password"
-                android:inputType="textPassword"
+                android:inputType="numberPassword"
                 android:textColorHint="#1E1D1A"
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>

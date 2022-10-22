@@ -1,7 +1,9 @@
 package com.halil.chatapp.repository
 
 import com.google.firebase.auth.AuthResult
+import com.google.rpc.context.AttributeContext.Auth
 import com.halil.chatapp.data.User
+import com.halil.chatapp.data.Users
 import com.halil.chatapp.other.Resource
 
 interface MainRepositoryInterface {
@@ -18,4 +20,5 @@ interface MainRepositoryInterface {
 
     fun logout (result : () -> Unit)
 
+    suspend fun getUser(onResult : (Resource<List<Users>>) -> Unit)
 }

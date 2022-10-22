@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.AuthResult
-import com.halil.chatapp.data.User
 import com.halil.chatapp.other.Resource
 import com.halil.chatapp.repository.MainRepositoryInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -56,7 +55,7 @@ class AuthViewModel @Inject constructor(private val repository: MainRepositoryIn
         confirmPassword: String
     ) {
         val error =
-            if (name.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) "Please fill all blanks" else null
+            if (name.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || password != confirmPassword) "Make sure it's right. Something is wrong.." else null
         error?.let {
             _registerStatus.postValue(Resource.Error(it))
             return

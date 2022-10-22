@@ -1,64 +1,76 @@
 package com.halil.chatapp.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
-import com.halil.chatapp.R
 import com.halil.chatapp.adapter.ListAdapter
-import com.halil.chatapp.data.User
-import com.halil.chatapp.ui.viewmodel.AuthViewModel
+import com.halil.chatapp.data.Users
+import com.halil.chatapp.databinding.FragmentHomeBinding
+import com.halil.chatapp.other.Resource
 import com.halil.chatapp.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
     private val vm: MainViewModel by viewModels()
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var userArrayList : ArrayList<User>
-    private lateinit var listAdapter : ListAdapter
-    private lateinit var db : FirebaseFirestore
+    private var userArrayList: ArrayList<Users>? = null
+    private val listAdapter = ListAdapter(arrayListOf())
+    private lateinit var db: FirebaseFirestore
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        recyclerView = view.findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.setHasFixedSize(true)
-        userArrayList = arrayListOf()
-        listAdapter = ListAdapter(userArrayList)
-        recyclerView.adapter = listAdapter
-        db = FirebaseFirestore.getInstance()
-        eventChangeList()
+        vm.getUser()
+        adapterSetup()
+        checkUserList()
     }
-    private fun eventChangeList(){
-        db.collection("users").get()
-            .addOnSuccessListener {
-                if(!it.isEmpty){
-                    for (data in it.documents){
-                        val user : User? = data.toObject(User::class.java)
-                        if (user != null){
-                            userArrayList.add(user)
-                        }
+
+    private fun adapterSetup() {
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            setHasFixedSize(true)
+            adapter = listAdapter
+        }
+    }
+
+    private fun checkUserList() {
+        vm.userList.observe(viewLifecycleOwner) {
+            when (it) {
+                is Resource.Error -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "Missing or incorrect login information",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                is Resource.Loading -> {
+                    //progresbar
+                }
+                is Resource.Success -> {
+                        userArrayList = it.data as ArrayList<Users>?
+                        userArrayList?.let { newlist ->
+                        listAdapter.setDataChange(newlist)
+//                            if(newlist.isEmpty()){
+//                                //layoutimage
+//                            }
                     }
                 }
-                recyclerView.adapter = ListAdapter(userArrayList)
+                else -> {}
             }
-            .addOnFailureListener {
-                Toast.makeText(requireContext(),"Toast", Toast.LENGTH_LONG).show()
-            }
-
-
+        }
     }
 }
