@@ -17,6 +17,7 @@ class AuthActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private val auth = FirebaseAuth.getInstance()
     private val viewModel: AuthViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen().apply {
@@ -26,6 +27,7 @@ class AuthActivity : AppCompatActivity() {
         }
        application.setTheme(R.style.DarkTheme)
         setContentView(R.layout.activity_auth)
+
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.authFragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController

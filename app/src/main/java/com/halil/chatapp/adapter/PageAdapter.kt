@@ -8,6 +8,7 @@ import com.halil.chatapp.ui.fragment.HomeFragment
 import com.halil.chatapp.ui.fragment.SettingFragment
 
 class PageAdapter (fragmentActivity : FragmentActivity) : FragmentStateAdapter(fragmentActivity){
+
     override fun getItemCount() = 2
 
     override fun createFragment(position: Int): Fragment {

@@ -4,6 +4,7 @@ data class User(
     var name : String,
     var lastname : String,
     var email : String,
+    var imgUrl : String
         ) {
-    constructor() : this("","","")
+    constructor() : this("","","","")
 }

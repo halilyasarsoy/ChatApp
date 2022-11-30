@@ -61,8 +61,8 @@ class HomeFragment : Fragment() {
                     //progresbar
                 }
                 is Resource.Success -> {
-                        userArrayList = it.data as ArrayList<Users>?
-                        userArrayList?.let { newlist ->
+                    userArrayList = it.data as ArrayList<Users>?
+                    userArrayList?.let { newlist ->
                         listAdapter.setDataChange(newlist)
 //                            if(newlist.isEmpty()){
 //                                //layoutimage

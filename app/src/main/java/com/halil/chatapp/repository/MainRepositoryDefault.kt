@@ -12,25 +12,29 @@ class MainRepositoryDefault : MainRepositoryInterface {
     private val auth = FirebaseAuth.getInstance()
     private val users = FirebaseFirestore.getInstance().collection("users")
 
-
     override suspend fun register(
         name: String,
         lastname: String,
         email: String,
         password: String,
-        confirmPassword: String
+        confirmPassword: String,
+        imgUrl: String
+
     ): Resource<AuthResult> {
         return try {
-            val result = auth.createUserWithEmailAndPassword(email, password).await()
+            val result = auth.createUserWithEmailAndPassword(email, password)
+                .await()
             val uid = result.user!!.uid
             val userCreate =
-                User(name = name, lastname = lastname, email = email)
+                User(name = name, lastname = lastname, email = email, imgUrl = imgUrl)
             users.document(uid).set(userCreate)
-            Resource.Success(result)
 
+//            databaseReference = FirebaseDatabase.getInstance().getReference("users").child(uid)
+            Resource.Success(result)
         } catch (e: Exception) {
             Resource.Error(e.message.toString())
         }
+
     }
 
     override suspend fun login(email: String, password: String): Resource<AuthResult> {
@@ -53,12 +57,11 @@ class MainRepositoryDefault : MainRepositoryInterface {
                 if (it.isSuccessful) {
                     val userList = it.result?.documents?.mapNotNull {
                         it.toObject(Users::class.java)
-                    }
+                    }?.filter { it.email != auth.currentUser?.email }
                     onResult.invoke(Resource.Success(userList))
                 } else {
                     onResult.invoke(Resource.Error(it.exception?.message.toString()))
                 }
             }
     }
-
 }

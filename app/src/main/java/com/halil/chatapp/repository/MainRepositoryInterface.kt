@@ -1,8 +1,8 @@
 package com.halil.chatapp.repository
 
+import android.media.Image
+import android.net.Uri
 import com.google.firebase.auth.AuthResult
-import com.google.rpc.context.AttributeContext.Auth
-import com.halil.chatapp.data.User
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.other.Resource
 
@@ -13,7 +13,8 @@ interface MainRepositoryInterface {
         lastname: String,
         email: String,
         password: String,
-        confirmPassword: String
+        confirmPassword: String,
+        imgUrl : String
     ): Resource<AuthResult>
 
     suspend fun login(email: String, password: String): Resource<AuthResult>

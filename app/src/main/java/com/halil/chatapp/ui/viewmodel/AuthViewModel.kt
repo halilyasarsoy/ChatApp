@@ -1,5 +1,6 @@
 package com.halil.chatapp.ui.viewmodel
 
+import android.media.Image
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -52,10 +53,11 @@ class AuthViewModel @Inject constructor(private val repository: MainRepositoryIn
         lastName: String,
         email: String,
         password: String,
-        confirmPassword: String
+        confirmPassword: String,
+        imgUrl : String
     ) {
         val error =
-            if (name.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || password != confirmPassword) "Make sure it's right. Something is wrong.." else null
+            if (name.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || password != confirmPassword ) "Make sure it's right. Something is wrong.." else null
         error?.let {
             _registerStatus.postValue(Resource.Error(it))
             return
@@ -67,7 +69,8 @@ class AuthViewModel @Inject constructor(private val repository: MainRepositoryIn
                 lastname = lastName,
                 email = email,
                 password = password,
-                confirmPassword = confirmPassword
+                confirmPassword = confirmPassword,
+                imgUrl = imgUrl
             )
             _registerStatus.postValue(result)
         }
