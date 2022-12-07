@@ -4,20 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
     app:startDestination="@id/homeFragment">
-    <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.halil.chatapp.ui.fragment.MainFragment"
-        android:label="MainFragment"
-        tools:layout="@layout/fragment_main"/>
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.halil.chatapp.ui.fragment.HomeFragment"
         android:label="fragment_user"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_chatScreenFragment"
+            app:destination="@id/chatScreenFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.halil.chatapp.ui.fragment.SettingFragment"
         android:label="SettingFragment"
-        tools:layout="@layout/fragment_setting"/>
+        tools:layout="@layout/fragment_setting" >
+        <action
+            android:id="@+id/action_settingFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatScreenFragment"
+        android:name="com.halil.chatapp.ui.fragment.ChatScreenFragment"
+        android:label="fragment_chat_screen"
+        tools:layout="@layout/fragment_chat_screen">
+        <action
+            android:id="@+id/action_chatScreenFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 
 </navigation>

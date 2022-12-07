@@ -1,23 +1,26 @@
 package com.halil.chatapp.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.google.firebase.auth.FirebaseAuth
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.databinding.ListItemBinding
 
-//binding
-//click
-//??
 class ListAdapter(var userList: ArrayList<Users>) :
     RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
-    var onItemClick: ((Users) -> Unit)? = null
+    private lateinit var onItemClickListener: OnItemClickListener
 
-    class MyViewHolder(private val itemBinding: ListItemBinding) :
+    interface OnItemClickListener {
+        fun onItemClick(user: Int)
+    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        onItemClickListener = listener
+    }
+
+    class MyViewHolder(private val itemBinding: ListItemBinding, listener: OnItemClickListener) :
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bindItem(users: ArrayList<Users>) {
             val userX = users[adapterPosition]
@@ -25,24 +28,25 @@ class ListAdapter(var userList: ArrayList<Users>) :
             itemBinding.tvLastName.text = userX.lastname
             itemBinding.imgUser.load(userX.imgUrl)
         }
+
+        init {
+            itemView.setOnClickListener {
+                listener.onItemClick(adapterPosition)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder(
             ListItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
+                LayoutInflater.from(parent.context), parent, false
+            ), onItemClickListener
         )
+
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val user = userList[position]
         holder.bindItem(userList)
-        holder.itemView.setOnClickListener {
-            onItemClick?.invoke(user)
-        }
     }
 
     override fun getItemCount(): Int {

@@ -18,9 +18,11 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
+
     private val vm: MainViewModel by viewModels()
     private var userArrayList: ArrayList<Users>? = null
     private val listAdapter = ListAdapter(arrayListOf())
+
     private lateinit var db: FirebaseFirestore
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -35,7 +37,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         vm.getUser()
         adapterSetup()
         checkUserList()
@@ -47,6 +48,14 @@ class HomeFragment : Fragment() {
             setHasFixedSize(true)
             adapter = listAdapter
         }
+        listAdapter.setOnItemClickListener(object : ListAdapter.OnItemClickListener {
+            override fun onItemClick(user: Int) {
+                Toast.makeText(context, "youclicked $user", Toast.LENGTH_LONG).show()
+            }
+
+        })
+
+
     }
 
     private fun checkUserList() {

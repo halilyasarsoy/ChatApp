@@ -16,4 +16,7 @@
     <string name="if_you_don_t_have_an_account">if you don\'t have an account</string>
     <string name="sign_up">Sign up</string>
     <string name="setting">Setting</string>
+    <string name="profileName">Profile Name</string>
+    <string name="status">Online</string>
+    <string name="askQuestion">Ask a question..</string>
 </resources>

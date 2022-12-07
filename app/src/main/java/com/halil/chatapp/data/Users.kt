@@ -8,6 +8,7 @@ data class Users(
     var imgUrl: String,
     var userList: List<Users>
 ) {
+
     constructor() : this("","", "", "", "", listOf())
 
 }

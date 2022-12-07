@@ -25,8 +25,4 @@ class ChatScreenFragment : Fragment() {
 
 
     }
-    private fun getData(){
-        FirebaseDatabase.getInstance().getReference("chats")
-    }
-
 }
