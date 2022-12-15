@@ -1,54 +1,56 @@
-//package com.halil.chatapp.adapter
-//
-//import android.content.Context
-//import android.view.LayoutInflater
-//import android.view.View
-//import android.view.ViewGroup
-//import androidx.recyclerview.widget.RecyclerView
-//import com.halil.chatapp.R
-//import com.halil.chatapp.data.Message
-//import com.halil.chatapp.databinding.ListItemBinding
-//
-//class MessageAdapter(
-//    var context: Context,
-//    messages: ArrayList<Message>?,
-//    senderRoom: String,
-//    receiverRoom: String
-//) : RecyclerView.Adapter<RecyclerView.ViewHolder?>() {
-//    lateinit var messages: ArrayList<Message>
-//    val ITEM_SENT = 1
-//    val ITEM_REVEIVE = 2
-//    var senderRoom: String
-//    val receiverRoom: String
-//
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-//
-//        return if (viewType == ITEM_SENT) {
-//            val view : View = LayoutInflater.from(context).inflater(R.layout.)
-//        } else {
-//
-//        }
-//    }
-//
-//    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-//
-//    }
-//
-//    override fun getItemCount(): Int = messages.size
-//
-//    inner class SentMsg(private val itemBinding: ListItemBinding) :
-//        RecyclerView.ViewHolder(itemBinding.root)
-//
-//    inner class ReceiveMsg(private val itemBinding: ListItemBinding) :
-//        RecyclerView.ViewHolder(itemBinding.root)
-//
-//    init {
-//        if (messages != null) {
-//            this.messages = messages
-//        }
-//        this.senderRoom = senderRoom
-//        this.receiverRoom = receiverRoom
-//    }
-//
-//
-//}
+package com.halil.chatapp.adapter
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.halil.chatapp.R
+import com.halil.chatapp.data.Message
+import com.halil.chatapp.databinding.ListItemBinding
+import com.halil.chatapp.ui.fragment.ChatScreenFragment
+
+class MessageAdapter(private val context: ChatScreenFragment, private var messageList: ArrayList<Message>) :
+    RecyclerView.Adapter<MessageAdapter.ViewHolder>() {
+
+    private val MESSAGGE_TYPE_LEFT = 0
+    private val MESSAGGE_TYPE_RIGHT = 1
+    var firebaseUser: FirebaseUser? = null
+    private var binding : ListItemBinding?=null
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return if (viewType == MESSAGGE_TYPE_RIGHT) {
+            val view =
+                LayoutInflater.from(parent.context).inflate(R.layout.send_message, parent, false)
+            ViewHolder(view)
+        } else {
+            val view =
+                LayoutInflater.from(parent.context).inflate(R.layout.receive_message, parent, false)
+            return ViewHolder(view)
+        }
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val chat = messageList[position]
+        holder.txtUserName.text = chat.message
+    }
+
+    override fun getItemCount(): Int {
+        return messageList.size
+    }
+
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val txtUserName: TextView = view.findViewById(R.id.tvMessage)
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        firebaseUser = FirebaseAuth.getInstance().currentUser
+        if (messageList[position].senderId == firebaseUser!!.uid) {
+            return MESSAGGE_TYPE_RIGHT
+        } else {
+            return MESSAGGE_TYPE_LEFT
+        }
+    }
+}

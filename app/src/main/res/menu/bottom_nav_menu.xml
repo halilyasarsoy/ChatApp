@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Chats"
-        android:icon="@drawable/ic_baseline_chat_24"
-        android:id="@+id/chatScreenFragment"/>
+<!--    <item android:title="Chats"-->
+<!--        android:icon="@drawable/ic_baseline_chat_24"-->
+<!--        android:id="@+id/chatScreenFragment"/>-->
     <item android:title="Users"
         android:icon="@drawable/ic_baseline_person_24"
         android:id="@+id/homeFragment"/>

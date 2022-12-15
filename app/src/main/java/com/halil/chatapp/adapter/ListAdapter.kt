@@ -10,10 +10,12 @@ import com.halil.chatapp.databinding.ListItemBinding
 class ListAdapter(var userList: ArrayList<Users>) :
     RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
+    private var binding: ListItemBinding? = null
     private lateinit var onItemClickListener: OnItemClickListener
 
     interface OnItemClickListener {
-        fun onItemClick(user: Int)
+        fun onItemClick(user: Users) {
+        }
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
@@ -27,12 +29,7 @@ class ListAdapter(var userList: ArrayList<Users>) :
             itemBinding.tvFirstName.text = userX.name
             itemBinding.tvLastName.text = userX.lastname
             itemBinding.imgUser.load(userX.imgUrl)
-        }
 
-        init {
-            itemView.setOnClickListener {
-                listener.onItemClick(adapterPosition)
-            }
         }
     }
 
@@ -42,11 +39,20 @@ class ListAdapter(var userList: ArrayList<Users>) :
                 LayoutInflater.from(parent.context), parent, false
             ), onItemClickListener
         )
-
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bindItem(userList)
+        val userList = userList[position]
+
+        holder.itemView.apply {
+            binding?.tvFirstName?.text = userList.name
+            binding?.tvLastName?.text = userList.lastname
+            binding?.imgUser?.load(userList.imgUrl)
+        }
+        holder.itemView.setOnClickListener {
+            onItemClickListener.onItemClick(userList)
+        }
     }
 
     override fun getItemCount(): Int {

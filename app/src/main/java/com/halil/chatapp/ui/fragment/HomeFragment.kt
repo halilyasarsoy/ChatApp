@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
 import com.halil.chatapp.adapter.ListAdapter
@@ -40,6 +42,7 @@ class HomeFragment : Fragment() {
         vm.getUser()
         adapterSetup()
         checkUserList()
+
     }
 
     private fun adapterSetup() {
@@ -47,15 +50,14 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
             adapter = listAdapter
+
         }
         listAdapter.setOnItemClickListener(object : ListAdapter.OnItemClickListener {
-            override fun onItemClick(user: Int) {
-                Toast.makeText(context, "youclicked $user", Toast.LENGTH_LONG).show()
+            override fun onItemClick(user: Users) {
+                val direction = HomeFragmentDirections.actionHomeFragmentToChatScreenFragment(user.name,user.lastname,user.imgUrl,user.uid)
+                findNavController().navigate(direction)
             }
-
         })
-
-
     }
 
     private fun checkUserList() {
@@ -85,3 +87,4 @@ class HomeFragment : Fragment() {
         }
     }
 }
+

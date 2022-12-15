@@ -1,24 +1,11 @@
 package com.halil.chatapp.data
 
-class Message {
-    var messageId: String? = null
-    var message: String? = null
-    var senderId: String? = null
-    var profileImg: String? = null
-    var timeStamp: Long = 0
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-    constructor() {
-
-    }
-
-    constructor(
-        message: String?,
-        senderId : String?,
-        timeStamp: Long
-    ) {
-this.message=message
-        this.senderId=senderId
-        this.timeStamp=timeStamp
-    }
-
-}
+@Parcelize
+data class Message(
+    var senderId: String = "",
+    var receiverId: String = "",
+    var message: String = ""
+) : Parcelable

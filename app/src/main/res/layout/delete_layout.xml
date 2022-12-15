@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <TextView
-        android:id="@+id/deleteEveryone"
+        android:id="@+id/everyone"
         android:text="Delete for Everyone"
         android:textAlignment="textEnd"
         android:padding="10dp"
@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <TextView
-        android:id="@+id/delete"
+        android:id="@+id/deleteEveryone"
         android:text="Delete for me"
         android:textAlignment="textEnd"
         android:padding="10dp"

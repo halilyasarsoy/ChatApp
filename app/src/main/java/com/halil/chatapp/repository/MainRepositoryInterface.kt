@@ -1,7 +1,5 @@
 package com.halil.chatapp.repository
 
-import android.media.Image
-import android.net.Uri
 import com.google.firebase.auth.AuthResult
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.other.Resource
@@ -22,4 +20,5 @@ interface MainRepositoryInterface {
     fun logout (result : () -> Unit)
 
     suspend fun getUser(onResult : (Resource<List<Users>>) -> Unit)
+
 }

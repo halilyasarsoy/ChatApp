@@ -26,15 +26,12 @@ class MainRepositoryDefault : MainRepositoryInterface {
                 .await()
             val uid = result.user!!.uid
             val userCreate =
-                User(name = name, lastname = lastname, email = email, imgUrl = imgUrl)
+                User(name = name, lastname = lastname, email = email, imgUrl = imgUrl, uid = uid)
             users.document(uid).set(userCreate)
-
-//            databaseReference = FirebaseDatabase.getInstance().getReference("users").child(uid)
             Resource.Success(result)
         } catch (e: Exception) {
             Resource.Error(e.message.toString())
         }
-
     }
 
     override suspend fun login(email: String, password: String): Resource<AuthResult> {

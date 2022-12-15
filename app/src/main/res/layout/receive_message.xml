@@ -16,18 +16,28 @@
         android:layout_marginBottom="1dp"
         android:layout_marginTop="1dp"
         android:background="@drawable/receiver_drawable"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="15dp">
 
         <TextView
+            android:id="@+id/peopleName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/app_name"
+            android:text="@string/peopleName"
             android:textAlignment="textStart"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold|normal" />
+        <TextView
+            android:id="@+id/tvMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:text="he"
+            android:textSize="18sp" />
     </LinearLayout>
+
     <ImageView
         android:id="@+id/chatsImage"
         android:layout_width="200dp"
