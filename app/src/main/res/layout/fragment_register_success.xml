@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_image"
+    android:background="@drawable/deneme"
     tools:context=".ui.fragment.RegisterSuccessFragment">
 
     <LinearLayout
@@ -27,5 +27,6 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="20sp" />
+
     </LinearLayout>
 </FrameLayout>

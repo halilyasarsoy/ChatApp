@@ -1,6 +1,7 @@
 package com.halil.chatapp.ui.fragment
 
 
+import android.app.ActionBar
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -48,11 +49,10 @@ class ChatScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         messageList = ArrayList()
         navigateToUsers()
-
         chatInfoSetup()
-
 
         firebaseUser = FirebaseAuth.getInstance().currentUser
         binding.recyclerViewChats.layoutManager =

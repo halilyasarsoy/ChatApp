@@ -4,33 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_image"
+    android:background="@drawable/denemeiki"
     tools:context="ui.fragment.RegisterFragment">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="120dp"
+        android:src="@drawable/userimage"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.457"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:alpha=".9"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_image_search_24"
-            android:layout_marginBottom="20dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/nameLayout"
-            android:layout_width="354dp"
+            android:layout_width="320dp"
             android:layout_height="60dp"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:hintTextColor="@color/white"
             android:layout_gravity="center">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_nameText"
-                android:layout_width="354dp"
+                android:layout_width="320dp"
                 android:layout_height="60dp"
                 android:background="@drawable/custom_input"
                 android:ems="10"
@@ -43,14 +56,17 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/lastnamelayout"
-            android:layout_width="354dp"
+            android:layout_width="320dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp">
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:hintTextColor="@color/white"
+            android:layout_marginTop="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_lastName"
-                android:layout_width="354dp"
+                android:layout_width="320dp"
                 android:layout_height="60dp"
                 android:background="@drawable/custom_input"
                 android:ems="10"
@@ -63,14 +79,17 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emaillayout"
-            android:layout_width="354dp"
+            android:layout_width="320dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp">
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:hintTextColor="@color/white"
+            android:layout_marginTop="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_emailtext"
-                android:layout_width="354dp"
+                android:layout_width="320dp"
                 android:layout_height="60dp"
                 android:background="@drawable/custom_input"
                 android:ems="10"
@@ -83,15 +102,18 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordlayout"
-            android:layout_width="354dp"
+            android:layout_width="320dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:hintTextColor="@color/white"
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_passwordtext"
-                android:layout_width="match_parent"
+                android:layout_width="320dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/custom_input"
                 android:ems="10"
@@ -104,15 +126,18 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/confirmlayout"
-            android:layout_width="354dp"
+            android:layout_width="320dp"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:hintTextColor="@color/white"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_confirmpassword_text"
-                android:layout_width="match_parent"
+                android:layout_width="320dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/custom_input"
                 android:ems="10"
@@ -123,12 +148,13 @@
                 tools:ignore="TextContrastCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/registerButtonAuth"
-            android:layout_width="wrap_content"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ripple_effect"
             android:backgroundTint="@color/btn"
             android:hint="@string/sign_up"
             android:textColorHint="@color/white" />
@@ -158,7 +184,6 @@
                 tools:ignore="TextContrastCheck" />
 
         </LinearLayout>
-
 
 
     </LinearLayout>

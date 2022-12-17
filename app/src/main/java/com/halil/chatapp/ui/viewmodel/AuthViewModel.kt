@@ -57,7 +57,7 @@ class AuthViewModel @Inject constructor(private val repository: MainRepositoryIn
         imgUrl : String
     ) {
         val error =
-            if (name.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || password != confirmPassword ) "Make sure it's right. Something is wrong.." else null
+            if (name.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || password != confirmPassword) "Make sure it's right. Something is wrong.." else null
         error?.let {
             _registerStatus.postValue(Resource.Error(it))
             return

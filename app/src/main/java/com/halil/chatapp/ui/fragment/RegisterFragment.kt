@@ -46,7 +46,6 @@ class RegisterFragment : Fragment() {
         navigateToLogin()
         registerSuccess()
         selectImage()
-
         progressBar = binding.progressBarRegister
     }
 
@@ -64,8 +63,8 @@ class RegisterFragment : Fragment() {
             val lastname = binding.registerLastName.text.toString().trim()
             val email = binding.registerEmailtext.text.toString().trim()
             val password = binding.registerPasswordtext.text.toString().trim()
-            val confirmpassword = binding.registerConfirmpasswordText.text.toString().trim()
-            vm.register(name, lastname, email, password, confirmpassword, test)
+            val confirmPassword = binding.registerConfirmpasswordText.text.toString().trim()
+            vm.register(name, lastname, email, password, confirmPassword,test)
         }
     }
 

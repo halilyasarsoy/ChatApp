@@ -4,30 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_image"
+    android:background="@drawable/deneme"
     tools:context=".ui.fragment.LoginScreenFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha=".9"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="354dp"
+            android:layout_width="320dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_marginTop="250dp">
+            android:layout_marginTop="240dp"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:hintTextColor="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email_text"
-                android:layout_width="354dp"
+                android:layout_width="320dp"
                 android:layout_height="60dp"
                 android:background="@drawable/custom_input"
                 android:ems="10"
@@ -38,15 +39,18 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="354dp"
+            android:layout_width="320dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:hintTextColor="@color/white"
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_text"
-                android:layout_width="354dp"
+                android:layout_width="320dp"
                 android:layout_height="60dp"
                 android:background="@drawable/custom_input"
                 android:ems="10"
@@ -56,12 +60,13 @@
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_login"
-            android:layout_width="wrap_content"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
+            android:background="@drawable/ripple_effect"
             android:backgroundTint="@color/btn"
             android:hint="@string/login"
             android:textColorHint="@color/white" />
@@ -70,7 +75,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="80dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -89,8 +95,6 @@
                 android:textColorHint="@color/white" />
 
         </LinearLayout>
-
-
 
 
     </LinearLayout>
