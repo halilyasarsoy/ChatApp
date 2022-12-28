@@ -1,14 +1,14 @@
 package com.halil.chatapp.ui.fragment
 
-
-import android.app.ActionBar
-import android.content.Intent
+import android.annotation.SuppressLint
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -28,32 +28,33 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ChatScreenFragment : Fragment() {
+
     private var _binding: FragmentChatScreenBinding? = null
     private val binding get() = _binding!!
     var messageList = ArrayList<Message>()
-    private val auth = FirebaseAuth.getInstance()
     private lateinit var databasex: DatabaseReference
     var firebaseUser: FirebaseUser? = null
     var topic = "user"
     private val args: ChatScreenFragmentArgs by navArgs()
-    private lateinit var user: Users
 
+    @SuppressLint("RestrictedApi")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-
+        val supportActionBar: androidx.appcompat.app.ActionBar? =
+            (requireActivity() as AppCompatActivity).supportActionBar
+        supportActionBar?.hide()
+        supportActionBar?.setShowHideAnimationEnabled(false)
         _binding = FragmentChatScreenBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         messageList = ArrayList()
         navigateToUsers()
         chatInfoSetup()
-
+        navigateToDetail()
         firebaseUser = FirebaseAuth.getInstance().currentUser
         binding.recyclerViewChats.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -72,7 +73,6 @@ class ChatScreenFragment : Fragment() {
         })
 
         databasex = FirebaseDatabase.getInstance().getReference("users").child(args.userId)
-
         binding.sendMessage.setOnClickListener {
             val message: String = binding.messageBox.text.toString()
             if (message.isEmpty()) {
@@ -81,7 +81,6 @@ class ChatScreenFragment : Fragment() {
                 binding.messageBox.setText("")
             } else {
                 sendMessage(firebaseUser!!.uid, args.userId, message)
-
                 binding.messageBox.setText("")
                 topic = "/topics/${args.userId}"
                 Log.d(this.javaClass.simpleName, "onCreate: topic: $topic, userName: ${args.name}")
@@ -147,6 +146,23 @@ class ChatScreenFragment : Fragment() {
         })
     }
 
+    private fun navigateToDetail() {
+        val imageView = binding.profileImage
+        imageView.setOnClickListener {
+            val actionToUser =
+                ChatScreenFragmentDirections.actionChatScreenFragmentToDetailUsersFragment(
+                    args.name,
+                    args.lastname,
+                    args.imgUrl
+                )
+            findNavController().navigate(actionToUser)
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val supportActionBar: androidx.appcompat.app.ActionBar? =
+            (requireActivity() as AppCompatActivity).supportActionBar
+        supportActionBar?.show()
+    }
 }
-
-

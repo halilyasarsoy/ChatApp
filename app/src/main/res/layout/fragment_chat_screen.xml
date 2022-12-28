@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+
     android:layout_height="match_parent"
     tools:context=".ui.fragment.ChatScreenFragment">
 
@@ -80,14 +81,14 @@
     <LinearLayout
         android:id="@+id/linearContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="470dp"
         android:layout_below="@+id/toolbar"
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewChats"
             android:layout_width="match_parent"
-            android:layout_height="554dp"
+            android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:visibility="visible" />
     </LinearLayout>
@@ -98,19 +99,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_above="@id/linearContent"
-        android:orientation="horizontal"
-        android:weightSum="2">
+        android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
-            android:layout_marginBottom="8dp"
             android:layout_weight="2"
-            android:padding="10dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="10dp"
+            app:cardCornerRadius="7dp"
+            app:cardElevation="5dp"
             app:cardUseCompatPadding="true">
 
             <LinearLayout

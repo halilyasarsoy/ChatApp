@@ -12,6 +12,8 @@ interface MainRepositoryInterface {
         email: String,
         password: String,
         confirmPassword: String,
+        profession:String,
+
         imgUrl : String
     ): Resource<AuthResult>
 
@@ -21,4 +23,5 @@ interface MainRepositoryInterface {
 
     suspend fun getUser(onResult : (Resource<List<Users>>) -> Unit)
 
+    fun updateStatus(status: String)
 }

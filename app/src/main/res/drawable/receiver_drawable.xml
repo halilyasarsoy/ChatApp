@@ -4,9 +4,9 @@
     <item>
         <shape>
             <corners
-                android:bottomRightRadius="45dp"
-                android:topLeftRadius="45dp"
-                android:topRightRadius="45dp"/>/>
+                android:bottomRightRadius="20dp"
+                android:topLeftRadius="20dp"
+                android:topRightRadius="20dp"/>
         </shape>
     </item>
     <item
@@ -16,9 +16,9 @@
         <shape>
             <solid android:color="#B1AAAA" />
             <corners
-                android:bottomRightRadius="45dp"
-                android:topLeftRadius="45dp"
-                android:topRightRadius="45dp"/>
+                android:bottomRightRadius="20dp"
+                android:topLeftRadius="20dp"
+                android:topRightRadius="20dp"/>
         </shape>
     </item>
 </layer-list>

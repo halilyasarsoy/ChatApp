@@ -10,9 +10,9 @@
     <color name="darker">#000000</color>
     <color name="focus">#1B701F</color>
     <color name="btn">#4C1D2B</color>
-    <color name="bottom_nav_color">#192043</color>
+    <color name="bottom_nav_color">#302a3f</color>
     <color name="chats">#25D366</color>
-    <color name="bannerChats">#DCF8C6</color>
+    <color name="bannerChats">#FFFFFF</color>
     <color name="actionBar">#075e54</color>
     <color name="toolbarChats">#67625D</color>
 

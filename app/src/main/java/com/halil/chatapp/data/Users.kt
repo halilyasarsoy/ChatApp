@@ -9,12 +9,19 @@ data class Users(
     var name: String,
     var lastname: String,
     var email: String,
-    var imgUrl: String,
-    var userList: List<Users>
-) :Parcelable{
+    var imgUrl: String?=null,
+    var userList: List<Users>,
+    var profession : String,
 
-    constructor() : this("", "", "", "", "", listOf())
+    val online: String = "offline"
 
+    ) : Parcelable {
+    init {
+        this.name= name.capitalize()
+        this.lastname=lastname.capitalize()
+        this.profession=profession.capitalize()
+    }
+    constructor() : this("", "", "", "", "", listOf(),"")
 }
 
 

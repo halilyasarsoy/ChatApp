@@ -1,45 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/lol"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="8dp"
-    app:cardCornerRadius="10dp"
-    android:layout_margin="8dp"
-    app:cardBackgroundColor="@color/bannerChats">
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="3dp"
+    android:layout_marginRight="3dp"
+    android:layout_marginBottom="1dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardBackgroundColor="@color/bannerChats"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="4dp">
 
-        <LinearLayout
-            android:id="@+id/lol2"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lol2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgUser"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="2dp"
+            android:src="@drawable/ic_launcher_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/Circular"
+            app:strokeWidth="1dp" />
+
+        <TextView
+            android:id="@+id/tvFirstName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:padding="8dp"
-            android:orientation="horizontal">
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:text="halil"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tvLastName"
+            app:layout_constraintStart_toEndOf="@+id/imgUser"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.153" />
 
-            <ImageView
-                android:id="@+id/imgUser"
-                android:layout_margin="4dp"
-                android:layout_width="80dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_launcher_background"/>
-            <TextView
-                android:id="@+id/tvFirstName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="halil"
-                android:layout_marginStart="8dp"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
-            <TextView
-                android:id="@+id/tvLastName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="yasarsoy"
-                android:layout_marginStart="8dp"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tvLastName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="yasarsoy"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvFirstName"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.153" />
+
+        <TextView
+            android:id="@+id/tvLatestMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:text="@string/jobs"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.068"
+            app:layout_constraintStart_toEndOf="@+id/imgUser"
+            app:layout_constraintTop_toBottomOf="@+id/tvFirstName"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </androidx.cardview.widget.CardView>

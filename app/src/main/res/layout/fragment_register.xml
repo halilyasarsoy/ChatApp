@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/denemeiki"
+    android:background="@drawable/mainbg"
     tools:context="ui.fragment.RegisterFragment">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
-        android:layout_height="120dp"
+        android:layout_height="110dp"
         android:src="@drawable/userimage"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,12 +20,12 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:alpha=".9"
+        android:layout_width="366dp"
+        android:layout_height="550dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/register_blur_layout"
         android:gravity="center"
         android:orientation="vertical"
-        android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,10 +36,10 @@
             android:id="@+id/nameLayout"
             android:layout_width="320dp"
             android:layout_height="60dp"
+            android:layout_gravity="center"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
-            app:hintTextColor="@color/white"
-            android:layout_gravity="center">
+            app:hintTextColor="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_nameText"
@@ -59,10 +59,10 @@
             android:layout_width="320dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
-            app:hintTextColor="@color/white"
-            android:layout_marginTop="10dp">
+            app:hintTextColor="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_lastName"
@@ -82,10 +82,10 @@
             android:layout_width="320dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
-            app:hintTextColor="@color/white"
-            android:layout_marginTop="10dp">
+            app:hintTextColor="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_emailtext"
@@ -94,6 +94,28 @@
                 android:background="@drawable/custom_input"
                 android:ems="10"
                 android:hint="@string/please_enter_email"
+                android:inputType="textEmailAddress"
+                android:textColorHint="#E0F7FA"
+                android:textSize="14sp"
+                tools:ignore="TextContrastCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tvProfessionLayout"
+            android:layout_width="320dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:hintTextColor="@color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tvProfession"
+                android:layout_width="320dp"
+                android:layout_height="60dp"
+                android:background="@drawable/custom_input"
+                android:ems="10"
+                android:hint="@string/enterJobs"
                 android:inputType="textEmailAddress"
                 android:textColorHint="#E0F7FA"
                 android:textSize="14sp"
@@ -127,12 +149,12 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/confirmlayout"
             android:layout_width="320dp"
-            app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp"
-            app:hintTextColor="@color/white"
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:hintTextColor="@color/white"
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -156,7 +178,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/ripple_effect"
             android:backgroundTint="@color/btn"
-            android:hint="@string/sign_up"
+            android:hint="@string/signUp"
             android:textColorHint="@color/white" />
 
         <LinearLayout

@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.halil.chatapp.data.User
+//import com.halil.chatapp.data.Message
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.databinding.ListItemBinding
 
@@ -29,7 +31,7 @@ class ListAdapter(var userList: ArrayList<Users>) :
             itemBinding.tvFirstName.text = userX.name
             itemBinding.tvLastName.text = userX.lastname
             itemBinding.imgUser.load(userX.imgUrl)
-
+            itemBinding.tvLatestMessage.text= userX.profession
         }
     }
 
@@ -49,6 +51,7 @@ class ListAdapter(var userList: ArrayList<Users>) :
             binding?.tvFirstName?.text = userList.name
             binding?.tvLastName?.text = userList.lastname
             binding?.imgUser?.load(userList.imgUrl)
+            binding?.tvLatestMessage?.text=userList.profession
         }
         holder.itemView.setOnClickListener {
             onItemClickListener.onItemClick(userList)
@@ -59,7 +62,7 @@ class ListAdapter(var userList: ArrayList<Users>) :
         return userList.size
     }
 
-    fun setDataChange(newUserList: List<Users>) {
+    fun setDataChange(newUserList: ArrayList<Users>) {
         userList.clear()
         userList.addAll(newUserList)
         notifyDataSetChanged()

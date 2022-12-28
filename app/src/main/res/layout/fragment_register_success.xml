@@ -12,21 +12,22 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/registersuccestext"
-            android:textSize="30sp" />
+            <TextView
+                android:layout_gravity="center
+"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/registersuccestext"
+                android:textSize="30sp" />
 
-        <Button
-            android:id="@+id/backto_login"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/buttonsucces"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
-
+            <Button
+                android:id="@+id/backto_login"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/buttonsucces"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
     </LinearLayout>
 </FrameLayout>

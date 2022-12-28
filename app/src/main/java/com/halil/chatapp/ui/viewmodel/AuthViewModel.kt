@@ -54,10 +54,11 @@ class AuthViewModel @Inject constructor(private val repository: MainRepositoryIn
         email: String,
         password: String,
         confirmPassword: String,
+        profession : String,
         imgUrl : String
     ) {
         val error =
-            if (name.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || password != confirmPassword) "Make sure it's right. Something is wrong.." else null
+            if (name.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || password != confirmPassword || profession.isEmpty()) "Make sure it's right. Something is wrong.." else null
         error?.let {
             _registerStatus.postValue(Resource.Error(it))
             return
@@ -70,6 +71,7 @@ class AuthViewModel @Inject constructor(private val repository: MainRepositoryIn
                 email = email,
                 password = password,
                 confirmPassword = confirmPassword,
+                profession = profession,
                 imgUrl = imgUrl
             )
             _registerStatus.postValue(result)

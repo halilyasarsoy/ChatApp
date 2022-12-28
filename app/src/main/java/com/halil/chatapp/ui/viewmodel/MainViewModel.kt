@@ -1,8 +1,10 @@
 package com.halil.chatapp.ui.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.AuthResult
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.other.Resource
 import com.halil.chatapp.repository.MainRepositoryInterface
@@ -17,6 +19,10 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
     private val _userList = MutableLiveData<Resource<List<Users>>>()
     val userList = _userList
 
+    private val _stats = MutableLiveData<Resource<AuthResult>>()
+    val stats: LiveData<Resource<AuthResult>> = _stats
+
+
     fun logout(result: () -> Unit) {
         repository.logout(result)
     }
@@ -28,5 +34,13 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
             _userList.postValue(it)
             }
         }
+    }
+    fun updateStatus(status: String) {
+        viewModelScope.launch {
+             repository.updateStatus(
+                status= status
+            )
+        }
+        repository.updateStatus(status)
     }
 }

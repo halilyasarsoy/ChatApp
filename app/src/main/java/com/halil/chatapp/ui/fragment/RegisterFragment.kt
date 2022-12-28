@@ -4,6 +4,9 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.support.v4.media.MediaMetadataCompat.TextKey
+import android.text.method.TextKeyListener
+import android.text.method.TextKeyListener.Capitalize
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +30,7 @@ class RegisterFragment : Fragment() {
     private val binding get() = _binding!!
     private val vm: AuthViewModel by viewModels()
     private lateinit var imageURI: Uri
-    private lateinit var imgUrlx: String
+    private var imgUrlx: String?=null
     private var imgName = ""
     private lateinit var progressBar: ProgressBar
 
@@ -44,7 +47,7 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         registerCheck()
         navigateToLogin()
-        registerSuccess()
+        registerSuccess(it = TextKeyListener.Capitalize.CHARACTERS)
         selectImage()
         progressBar = binding.progressBarRegister
     }
@@ -56,16 +59,25 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun registerSuccess() {
+    private fun registerSuccess(it :TextKeyListener.Capitalize): TextKeyListener.Capitalize {
         binding.registerButtonAuth.setOnClickListener {
-            val test = imgUrlx
-            val name = binding.registerNameText.text.toString().trim()
-            val lastname = binding.registerLastName.text.toString().trim()
-            val email = binding.registerEmailtext.text.toString().trim()
-            val password = binding.registerPasswordtext.text.toString().trim()
-            val confirmPassword = binding.registerConfirmpasswordText.text.toString().trim()
-            vm.register(name, lastname, email, password, confirmPassword,test)
+            if (imgUrlx?.isNotEmpty() == true) {
+                val test = imgUrlx
+                val name = binding.registerNameText.text.toString().trim()
+                val lastname = binding.registerLastName.text.toString().trim()
+                val email = binding.registerEmailtext.text.toString().trim()
+                val password = binding.registerPasswordtext.text.toString().trim()
+                val confirmPassword = binding.registerConfirmpasswordText.text.toString().trim()
+                val profession = binding.tvProfession.text.toString().trim()
+                test?.let { its ->
+                    vm.register(name, lastname, email, password, confirmPassword, profession ,its)
+                }
+                downloadImage()
+            } else {
+                Toast.makeText(context, "fillblank", Toast.LENGTH_SHORT).show()
+            }
         }
+        return it
     }
 
     private fun registerCheck() {

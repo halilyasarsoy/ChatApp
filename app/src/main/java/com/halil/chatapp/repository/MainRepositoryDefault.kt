@@ -2,15 +2,22 @@ package com.halil.chatapp.repository
 
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.halil.chatapp.data.User
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.other.Resource
 import kotlinx.coroutines.tasks.await
 
+@Suppress("UNREACHABLE_CODE")
 class MainRepositoryDefault : MainRepositoryInterface {
     private val auth = FirebaseAuth.getInstance()
     private val users = FirebaseFirestore.getInstance().collection("users")
+    fun getUID(): String? {
+        val firebaseAuth = FirebaseAuth.getInstance()
+        return firebaseAuth.uid
+    }
 
     override suspend fun register(
         name: String,
@@ -18,6 +25,7 @@ class MainRepositoryDefault : MainRepositoryInterface {
         email: String,
         password: String,
         confirmPassword: String,
+        profession: String,
         imgUrl: String
 
     ): Resource<AuthResult> {
@@ -26,7 +34,14 @@ class MainRepositoryDefault : MainRepositoryInterface {
                 .await()
             val uid = result.user!!.uid
             val userCreate =
-                User(name = name, lastname = lastname, email = email, imgUrl = imgUrl, uid = uid)
+                User(
+                    name = name,
+                    lastname = lastname,
+                    email = email,
+                    imgUrl = imgUrl,
+                    uid = uid,
+                    profession = profession
+                )
             users.document(uid).set(userCreate)
             Resource.Success(result)
         } catch (e: Exception) {
@@ -60,5 +75,11 @@ class MainRepositoryDefault : MainRepositoryInterface {
                     onResult.invoke(Resource.Error(it.exception?.message.toString()))
                 }
             }
+    }
+    override fun updateStatus(status: String) {
+        val map = HashMap<String, Any>()
+        map["online"] = status
+        getUID()?.let { FirebaseDatabase.getInstance().getReference("users").child(it) }
+            ?.updateChildren(map)
     }
 }

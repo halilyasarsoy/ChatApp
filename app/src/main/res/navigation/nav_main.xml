@@ -12,10 +12,14 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_chatScreenFragment"
-            app:destination="@id/chatScreenFragment" />
+            app:destination="@id/chatScreenFragment"
+            app:enterAnim="@anim/slide_in_right" />
+
         <action
             android:id="@+id/action_homeFragment_to_settingFragment"
             app:destination="@id/settingFragment" />
+
+
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -25,6 +29,9 @@
         <action
             android:id="@+id/action_settingFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <argument
+            android:name="imgUrl"
+            app:argType="string"/>
     </fragment>
     <fragment
         android:id="@+id/chatScreenFragment"
@@ -45,6 +52,28 @@
             app:argType="string"/>
         <argument
             android:name="userId"
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_chatScreenFragment_to_detailUsersFragment"
+            app:destination="@id/detailUsersFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/detailUsersFragment"
+        android:name="com.halil.chatapp.ui.fragment.DetailUsersFragment"
+        android:label="fragment_detail_users"
+        tools:layout="@layout/fragment_detail_users" >
+        <action
+            android:id="@+id/action_detailUsersFragment_to_chatScreenFragment"
+            app:destination="@id/chatScreenFragment" />
+        <argument
+            android:name="name"
+            app:argType="string"/>
+        <argument
+            android:name="lastname"
+            app:argType="string" />
+        <argument
+            android:name="imgUrl"
             app:argType="string"/>
 
     </fragment>

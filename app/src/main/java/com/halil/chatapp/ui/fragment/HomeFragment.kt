@@ -1,17 +1,26 @@
 package com.halil.chatapp.ui.fragment
 
 import android.os.Bundle
+import android.provider.VoicemailContract.Status
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.halil.chatapp.adapter.ListAdapter
+import com.halil.chatapp.data.User
+//import com.halil.chatapp.data.Message
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.databinding.FragmentHomeBinding
 import com.halil.chatapp.other.Resource
@@ -24,7 +33,6 @@ class HomeFragment : Fragment() {
     private val vm: MainViewModel by viewModels()
     private var userArrayList: ArrayList<Users>? = null
     private val listAdapter = ListAdapter(arrayListOf())
-
     private lateinit var db: FirebaseFirestore
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -42,7 +50,6 @@ class HomeFragment : Fragment() {
         vm.getUser()
         adapterSetup()
         checkUserList()
-
     }
 
     private fun adapterSetup() {
@@ -50,12 +57,21 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
             adapter = listAdapter
-
         }
+
         listAdapter.setOnItemClickListener(object : ListAdapter.OnItemClickListener {
             override fun onItemClick(user: Users) {
-                val direction = HomeFragmentDirections.actionHomeFragmentToChatScreenFragment(user.name,user.lastname,user.imgUrl,user.uid)
-                findNavController().navigate(direction)
+                val direction = user.imgUrl?.let {
+                    HomeFragmentDirections.actionHomeFragmentToChatScreenFragment(
+                        user.name,
+                        user.lastname,
+                        it,
+                        user.uid
+                    )
+                }
+                if (direction != null) {
+                    findNavController().navigate(direction)
+                }
             }
         })
     }
@@ -86,5 +102,7 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
 }
+
 
