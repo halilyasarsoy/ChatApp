@@ -12,6 +12,7 @@ data class Users(
     var imgUrl: String?=null,
     var userList: List<Users>,
     var profession : String,
+    var approved: Boolean = true,
 
     val online: String = "offline"
 

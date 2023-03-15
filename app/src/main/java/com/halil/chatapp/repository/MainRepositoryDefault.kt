@@ -63,19 +63,20 @@ class MainRepositoryDefault : MainRepositoryInterface {
         result.invoke()
     }
 
-    override suspend fun getUser(onResult: (Resource<List<Users>>) -> Unit) {
-        users.get()
-            .addOnCompleteListener { it ->
-                if (it.isSuccessful) {
-                    val userList = it.result?.documents?.mapNotNull {
-                        it.toObject(Users::class.java)
-                    }?.filter { it.email != auth.currentUser?.email }
+    override suspend fun getUser(onResult: (Resource<List<Users>>) -> Unit,query: String) {
+        users.whereEqualTo("name", query)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val userList = task.result?.documents?.mapNotNull { it.toObject(Users::class.java) }
+                        ?.filter { it.email != auth.currentUser?.email && it.approved }
                     onResult.invoke(Resource.Success(userList))
                 } else {
-                    onResult.invoke(Resource.Error(it.exception?.message.toString()))
+                    onResult.invoke(Resource.Error(task.exception?.message.toString()))
                 }
             }
     }
+
     override fun updateStatus(status: String) {
         val map = HashMap<String, Any>()
         map["online"] = status

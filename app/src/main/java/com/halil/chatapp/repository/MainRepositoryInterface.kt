@@ -12,16 +12,15 @@ interface MainRepositoryInterface {
         email: String,
         password: String,
         confirmPassword: String,
-        profession:String,
+        profession: String,
 
-        imgUrl : String
+        imgUrl: String
     ): Resource<AuthResult>
 
     suspend fun login(email: String, password: String): Resource<AuthResult>
 
-    fun logout (result : () -> Unit)
+    fun logout(result: () -> Unit)
 
-    suspend fun getUser(onResult : (Resource<List<Users>>) -> Unit)
-
+    suspend fun getUser(onResult: (Resource<List<Users>>) -> Unit,query: String)
     fun updateStatus(status: String)
 }
