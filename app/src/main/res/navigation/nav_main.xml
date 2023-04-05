@@ -77,5 +77,10 @@
             app:argType="string"/>
 
     </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.halil.chatapp.ui.fragment.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
 
 </navigation>

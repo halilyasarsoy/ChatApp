@@ -43,13 +43,6 @@ class HomeFragment : Fragment() {
         checkUserList()
     }
 
-    private fun checkUserApproved(user: Users, onResult: (Boolean) -> Unit) {
-        if (user.approved) {
-            onResult.invoke(true) // Kullanıcı onaylıysa, mesaj gönderilebilir
-        } else {
-            onResult.invoke(false) // Kullanıcı onaylı değilse, mesaj gönderilemez
-        }
-    }
     private fun adapterSetup() {
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
@@ -59,28 +52,18 @@ class HomeFragment : Fragment() {
 
         listAdapter.setOnItemClickListener(object : ListAdapter.OnItemClickListener {
             override fun onItemClick(user: Users) {
-                checkUserApproved(user) { approved ->
-                    if (approved) {
-                        val direction = user.imgUrl?.let {
-                            HomeFragmentDirections.actionHomeFragmentToChatScreenFragment(
-                                user.name,
-                                user.lastname,
-                                it,
-                                user.uid
-                            )
-                        }
-                        if (direction != null) {
-                            findNavController().navigate(direction)
-                        }
-                    } else {
-                        Toast.makeText(
-                            requireContext(),
-                            "Bu kullanıcı henüz onaylanmadı!",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+                val direction = user.imgUrl?.let {
+                    HomeFragmentDirections.actionHomeFragmentToChatScreenFragment(
+                        user.name,
+                        user.lastname,
+                        it,
+                        user.uid
+                    )
                 }
-            }
+                if (direction != null) {
+                    findNavController().navigate(direction)
+                        }
+                    }
         })
     }
 

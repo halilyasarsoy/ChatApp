@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var binding: ActivityMainBinding
     private val vm: MainViewModel by viewModels()
-    private val appUtil = AppUtil()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,10 +53,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-private fun test(){
 
-
-}
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_item, menu)
         return true

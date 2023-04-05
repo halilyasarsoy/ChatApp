@@ -10,4 +10,7 @@
     <item android:title="Settings"
         android:id="@+id/settingFragment"
         android:icon="@drawable/ic_baseline_settings_24"/>
+    <item android:title="Search Friend"
+        android:id="@+id/searchFragment"
+        android:icon="@drawable/ic_baseline_settings_24"/>
 </menu>
