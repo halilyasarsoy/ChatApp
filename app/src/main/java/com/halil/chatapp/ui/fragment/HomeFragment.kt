@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -23,11 +24,12 @@ class HomeFragment : Fragment() {
 
     private val vm: MainViewModel by viewModels()
     private var userArrayList: ArrayList<Users>? = null
-    private val listAdapter = ListAdapter(arrayListOf())
+    private var listAdapter = ListAdapter(arrayListOf())
     private lateinit var db: FirebaseFirestore
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-
+    private lateinit var filteredUserList: ArrayList<Users>
+    private lateinit var searchView: EditText
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,6 +43,9 @@ class HomeFragment : Fragment() {
         vm.getUser()
         adapterSetup()
         checkUserList()
+        listAdapter = ListAdapter(ArrayList())
+        userArrayList = ArrayList()
+        filteredUserList = ArrayList()
     }
 
     private fun adapterSetup() {
@@ -78,15 +83,11 @@ class HomeFragment : Fragment() {
                     ).show()
                 }
                 is Resource.Loading -> {
-                    //progresbar
                 }
                 is Resource.Success -> {
                     userArrayList = it.data as ArrayList<Users>?
                     userArrayList?.let { newlist ->
                         listAdapter.setDataChange(newlist)
-//                            if(newlist.isEmpty()){
-//                                //layoutimage
-//                            }
                     }
                 }
                 else -> {}

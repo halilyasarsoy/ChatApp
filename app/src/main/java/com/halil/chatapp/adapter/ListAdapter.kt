@@ -1,6 +1,7 @@
 package com.halil.chatapp.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -14,6 +15,7 @@ class ListAdapter(var userList: ArrayList<Users>) :
 
     private var binding: ListItemBinding? = null
     private lateinit var onItemClickListener: OnItemClickListener
+    private var searchText = ""
 
     interface OnItemClickListener {
         fun onItemClick(user: Users) {
@@ -44,22 +46,29 @@ class ListAdapter(var userList: ArrayList<Users>) :
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bindItem(userList)
-        val userList = userList[position]
-
-        holder.itemView.apply {
-            binding?.tvFirstName?.text = userList.name
-            binding?.tvLastName?.text = userList.lastname
-            binding?.imgUser?.load(userList.imgUrl)
-            binding?.tvLatestMessage?.text=userList.profession
-        }
-        holder.itemView.setOnClickListener {
-            onItemClickListener.onItemClick(userList)
+        val user = userList[position]
+        if (user.name.contains(searchText, true) || user.lastname.contains(searchText, true)) {
+            holder.bindItem(userList)
+            holder.itemView.apply {
+                binding?.tvFirstName?.text = user.name
+                binding?.tvLastName?.text = user.lastname
+                binding?.imgUser?.load(user.imgUrl)
+                binding?.tvLatestMessage?.text=user.profession
+            }
+            holder.itemView.setOnClickListener {
+                onItemClickListener.onItemClick(user)
+            }
+        } else {
+            holder.itemView.visibility = View.GONE
         }
     }
 
     override fun getItemCount(): Int {
         return userList.size
+    }
+    fun setSearchText(text: String) {
+        searchText = text
+        notifyDataSetChanged()
     }
 
     fun setDataChange(newUserList: ArrayList<Users>) {

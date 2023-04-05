@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.HomeFragment">
+
+
+<EditText
+    android:id="@+id/searchEdit"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:hint="text name"/>
 
 <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,5 +19,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:scaleType="fitXY"
-    tools:listitem="@layout/list_item" />
-
+    tools:listitem="@layout/list_item"
+    android:paddingTop="100dp"/>
+</FrameLayout>
