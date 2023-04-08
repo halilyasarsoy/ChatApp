@@ -63,13 +63,12 @@ class MainRepositoryDefault : MainRepositoryInterface {
         result.invoke()
     }
 
-    override suspend fun getUser(onResult: (Resource<List<Users>>) -> Unit,query: String) {
-        users.whereEqualTo("name", query)
-            .get()
+    override suspend fun getUser(onResult: (Resource<List<Users>>) -> Unit) {
+        users.get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val userList = task.result?.documents?.mapNotNull { it.toObject(Users::class.java) }
-                        ?.filter { it.email != auth.currentUser?.email && it.approved }
+                        ?.filter { it.email != auth.currentUser?.email }
                     onResult.invoke(Resource.Success(userList))
                 } else {
                     onResult.invoke(Resource.Error(task.exception?.message.toString()))
