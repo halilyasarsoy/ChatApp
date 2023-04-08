@@ -3,9 +3,11 @@ package com.halil.chatapp.ui.activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -72,6 +74,10 @@ class MainActivity : AppCompatActivity() {
                         finish()
                     }
                 }
+                builder.setNegativeButton("no") { _, _ ->
+                    Toast.makeText(this, "Çıkış yapmak için onaylayınız.", Toast.LENGTH_SHORT)
+                        .show()
+                }
 
                 builder.create()
                 builder.show()
@@ -80,20 +86,14 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onPause() {
-        super.onPause()
-        vm.updateStatus("offline")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        vm.updateStatus("offline")
-    }
-
     override fun onResume() {
         super.onResume()
         vm.updateStatus("online")
     }
 
+    override fun onStop() {
+        super.onStop()
+        vm.updateStatus("offline")
+    }
 
 }

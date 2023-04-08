@@ -78,7 +78,7 @@ class MainRepositoryDefault : MainRepositoryInterface {
 
     override fun updateStatus(status: String) {
         val map = HashMap<String, Any>()
-        map["online"] = status
+        map["status"] = status
         getUID()?.let { FirebaseDatabase.getInstance().getReference("users").child(it) }
             ?.updateChildren(map)
     }

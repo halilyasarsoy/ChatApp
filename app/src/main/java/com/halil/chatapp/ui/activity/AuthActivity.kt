@@ -42,8 +42,14 @@ class AuthActivity : AppCompatActivity() {
         }
 
     }
-    override fun onDestroy() {
-        super.onDestroy()
-        vm.updateStatus("offline")
-    }
+//
+//    override fun onResume() {
+//        super.onResume()
+//        vm.updateStatus("offline")
+//    }
+//
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        vm.updateStatus("online")
+//    }
 }

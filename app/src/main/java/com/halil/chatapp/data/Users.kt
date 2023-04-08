@@ -14,7 +14,7 @@ data class Users(
     var profession : String,
     var approved: Boolean = true,
 
-    val online: String = "offline"
+    val status: String = ""
 
     ) : Parcelable {
     init {
