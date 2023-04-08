@@ -1,13 +1,11 @@
 package com.halil.chatapp.ui.activity
 
-import android.content.Context
+import android.app.AlertDialog
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -19,7 +17,6 @@ import com.halil.chatapp.databinding.ActivityMainBinding
 import com.halil.chatapp.other.AppUtil
 import com.halil.chatapp.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -54,10 +51,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-private fun test(){
 
-
-}
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_item, menu)
         return true
@@ -65,10 +59,22 @@ private fun test(){
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.logOut -> vm.logout {
-                val intent = Intent(this, AuthActivity::class.java)
-                startActivity(intent)
-                finish()
+            R.id.logOut -> {
+
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Alert Dialog")
+                builder.setMessage("çıkış yapmak üzeresiniz.")
+                builder.setPositiveButton("yes") { _, _ ->
+
+                    vm.logout {
+                        val intent = Intent(this, AuthActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                }
+
+                builder.create()
+                builder.show()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -76,6 +82,11 @@ private fun test(){
 
     override fun onPause() {
         super.onPause()
+        vm.updateStatus("offline")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
         vm.updateStatus("offline")
     }
 
