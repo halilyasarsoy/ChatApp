@@ -14,6 +14,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.halil.chatapp.R
 import com.halil.chatapp.databinding.ActivityMainBinding
 import com.halil.chatapp.other.AppUtil
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.mainFragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
-
+        getUID()?.let { vm.updateStatus(it, "online") }
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         setupWithNavController(bottomNav, navController)
 
@@ -53,7 +54,10 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
+    fun getUID(): String? {
+        val firebaseAuth = FirebaseAuth.getInstance()
+        return firebaseAuth.uid
+    }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_item, menu)
         return true
@@ -62,13 +66,13 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.logOut -> {
-
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle("Alert Dialog")
                 builder.setMessage("çıkış yapmak üzeresiniz.")
                 builder.setPositiveButton("yes") { _, _ ->
 
                     vm.logout {
+                        getUID()?.let { vm.updateStatus(it, "offline") }
                         val intent = Intent(this, AuthActivity::class.java)
                         startActivity(intent)
                         finish()
@@ -85,15 +89,4 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-    override fun onResume() {
-        super.onResume()
-        vm.updateStatus("online")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        vm.updateStatus("offline")
-    }
-
 }

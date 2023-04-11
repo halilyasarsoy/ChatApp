@@ -1,5 +1,6 @@
 package com.halil.chatapp.repository
 
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -58,10 +59,6 @@ class MainRepositoryDefault : MainRepositoryInterface {
         }
     }
 
-    override fun logout(result: () -> Unit) {
-        auth.signOut()
-        result.invoke()
-    }
 
     override suspend fun getUser(onResult: (Resource<List<Users>>) -> Unit) {
         users.get()
@@ -76,10 +73,20 @@ class MainRepositoryDefault : MainRepositoryInterface {
             }
     }
 
-    override fun updateStatus(status: String) {
+    override fun logout(result: () -> Unit) {
+        getUID()?.let {
+            FirebaseDatabase.getInstance().getReference("User-Status").child(it)
+                .updateChildren(mapOf("status" to "offline"))
+        }
+        auth.signOut()
+        result.invoke()
+    }
+    override fun updateStatus(userId: String, status: String) {
         val map = HashMap<String, Any>()
         map["status"] = status
-        getUID()?.let { FirebaseDatabase.getInstance().getReference("users").child(it) }
-            ?.updateChildren(map)
+        FirebaseDatabase.getInstance().getReference("User-Status").child(userId)
+            .updateChildren(map)
     }
+
+
 }

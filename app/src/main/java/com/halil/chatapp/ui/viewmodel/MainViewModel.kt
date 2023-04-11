@@ -23,10 +23,15 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
     val stats: LiveData<Resource<AuthResult>> = _stats
 
 
+
+    fun updateStatus(userId: String, status: String) {
+        viewModelScope.launch {
+            repository.updateStatus(userId, status)
+        }
+    }
     fun logout(result: () -> Unit) {
         repository.logout(result)
     }
-
     fun getUser() {
         _userList.postValue(Resource.Loading())
         viewModelScope.launch {
@@ -35,12 +40,5 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
             }
         }
     }
-    fun updateStatus(status: String) {
-        viewModelScope.launch {
-             repository.updateStatus(
-                status= status
-            )
-        }
-        repository.updateStatus(status)
-    }
+
 }

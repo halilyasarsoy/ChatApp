@@ -22,5 +22,5 @@ interface MainRepositoryInterface {
     fun logout(result: () -> Unit)
 
     suspend fun getUser(onResult: (Resource<List<Users>>) -> Unit)
-    fun updateStatus(status: String)
+    fun updateStatus(status: String,userId: String)
 }

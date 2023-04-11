@@ -50,10 +50,12 @@ class HomeFragment : Fragment() {
             onResult.invoke(false) // Kullanıcı onaylı değilse, mesaj gönderilemez
         }
     }
+
     private fun adapterSetup() {
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
+
             adapter = listAdapter
         }
 
