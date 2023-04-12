@@ -79,7 +79,8 @@ class ListAdapter(var userList: ArrayList<Users>) :
     }
 
     fun setDataChange(newUserList: ArrayList<Users>) {
-        userList = newUserList.sortedWith(compareByDescending<Users> { it.status }).toMutableList() as ArrayList<Users>
+        userList.clear()
+        userList.addAll(newUserList)
         notifyDataSetChanged()
     }
 }
