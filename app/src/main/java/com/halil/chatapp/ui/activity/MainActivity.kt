@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         val topDestinationIds = setOf(
             R.id.chatScreenFragment,
-            R.id.detailUsersFragment
+            R.id.detailUsersFragment,
         )
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
