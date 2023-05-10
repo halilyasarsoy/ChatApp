@@ -4,7 +4,6 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
-import com.halil.chatapp.data.NotesData
 import com.halil.chatapp.data.User
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.other.Resource
@@ -16,6 +15,9 @@ class MainRepositoryDefault : MainRepositoryInterface {
     private val auth = FirebaseAuth.getInstance()
     private val users = FirebaseFirestore.getInstance().collection("users")
     private val notes = FirebaseFirestore.getInstance().collection("notes")
+    private val firestore = FirebaseFirestore.getInstance()
+    private val userX = FirebaseAuth.getInstance().currentUser
+
 
     fun getUID(): String? {
         val firebaseAuth = FirebaseAuth.getInstance()
@@ -93,14 +95,42 @@ class MainRepositoryDefault : MainRepositoryInterface {
     }
 
     override fun addNotesData(university: String, department: String) {
-        val notesData = NotesData(university, department)
-        notes.add(notesData)
-            .addOnSuccessListener {
 
-            }
-            .addOnFailureListener {
+        val user = FirebaseAuth.getInstance().currentUser
+        val email = user?.email
+        val universityDoc = notes.document(university)
 
+        universityDoc.get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val documentSnapshot = task.result
+                val emailDepartments =
+                    documentSnapshot?.get("users") as? HashMap<String, ArrayList<String>>
+
+                if (emailDepartments != null && email != null) {
+                    val departments = emailDepartments[email]
+                    if (departments != null) {
+                        departments.add(department)
+                    } else {
+                        emailDepartments[email] = arrayListOf(department)
+                    }
+
+                    universityDoc.update("users", emailDepartments)
+                        .addOnSuccessListener {
+                        }
+                        .addOnFailureListener { e ->
+                        }
+                } else if (documentSnapshot == null || !documentSnapshot.exists()) {
+                    val data = hashMapOf(
+                        "users" to hashMapOf(email to arrayListOf(department))
+                    )
+                    universityDoc.set(data)
+                        .addOnSuccessListener {
+                        }
+                        .addOnFailureListener { e ->
+                        }
+                }
             }
+        }
     }
 
 

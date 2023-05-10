@@ -43,11 +43,6 @@ class NotesFragment : Fragment() {
         setAlertDialog()
     }
 
-
-    private fun generateRandomFileName(): String {
-        return "file_${UUID.randomUUID()}"
-    }
-
     private fun setAlertDialog() {
         binding.fabAdd.setOnClickListener {
             val dialogView = layoutInflater.inflate(R.layout.alert_dialog_notes, null)
