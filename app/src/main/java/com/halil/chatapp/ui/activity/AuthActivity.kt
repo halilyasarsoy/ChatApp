@@ -10,12 +10,15 @@ import androidx.navigation.fragment.NavHostFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.halil.chatapp.R
 import com.halil.chatapp.ui.viewmodel.AuthViewModel
+import com.halil.chatapp.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AuthActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private val auth = FirebaseAuth.getInstance()
+    private val vm: MainViewModel by viewModels()
+
     private val viewModel: AuthViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,5 +40,16 @@ class AuthActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
     }
+//
+//    override fun onResume() {
+//        super.onResume()
+//        vm.updateStatus("offline")
+//    }
+//
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        vm.updateStatus("online")
+//    }
 }

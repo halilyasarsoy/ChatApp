@@ -23,6 +23,12 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
     val stats: LiveData<Resource<AuthResult>> = _stats
 
 
+    fun updateStatus(userId: String, status: String) {
+        viewModelScope.launch {
+            repository.updateStatus(userId, status)
+        }
+    }
+
     fun logout(result: () -> Unit) {
         repository.logout(result)
     }
@@ -31,16 +37,14 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
         _userList.postValue(Resource.Loading())
         viewModelScope.launch {
             repository.getUser {
-            _userList.postValue(it)
+                _userList.postValue(it)
             }
         }
     }
-    fun updateStatus(status: String) {
+
+    fun addNoteToFirestore(university: String, department: String) {
         viewModelScope.launch {
-             repository.updateStatus(
-                status= status
-            )
+            repository.addNotesData(university, department)
         }
-        repository.updateStatus(status)
     }
 }

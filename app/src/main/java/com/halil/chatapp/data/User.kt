@@ -7,8 +7,7 @@ data class User(
     var imgUrl :String?=null,
     var uid:String,
     var profession : String,
-
-) {
+    ) {
     init {
         this.name= name.capitalize()
         this.lastname=lastname.capitalize()

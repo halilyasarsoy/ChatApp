@@ -17,5 +17,6 @@
     <color name="toolbarChats">#67625D</color>
 
     <color name="main_color">#282D43</color>
-
+    <color name="offline_red">#910505</color>
+    <color name="online_green">#059514</color>
 </resources>

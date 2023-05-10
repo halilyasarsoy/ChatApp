@@ -2,7 +2,6 @@ package com.halil.chatapp.repository
 
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.halil.chatapp.data.User
@@ -12,8 +11,14 @@ import kotlinx.coroutines.tasks.await
 
 @Suppress("UNREACHABLE_CODE")
 class MainRepositoryDefault : MainRepositoryInterface {
+
     private val auth = FirebaseAuth.getInstance()
     private val users = FirebaseFirestore.getInstance().collection("users")
+    private val notes = FirebaseFirestore.getInstance().collection("notes")
+    private val firestore = FirebaseFirestore.getInstance()
+    private val userX = FirebaseAuth.getInstance().currentUser
+
+
     fun getUID(): String? {
         val firebaseAuth = FirebaseAuth.getInstance()
         return firebaseAuth.uid
@@ -58,17 +63,14 @@ class MainRepositoryDefault : MainRepositoryInterface {
         }
     }
 
-    override fun logout(result: () -> Unit) {
-        auth.signOut()
-        result.invoke()
-    }
 
     override suspend fun getUser(onResult: (Resource<List<Users>>) -> Unit) {
         users.get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    val userList = task.result?.documents?.mapNotNull { it.toObject(Users::class.java) }
-                        ?.filter { it.email != auth.currentUser?.email }
+                    val userList =
+                        task.result?.documents?.mapNotNull { it.toObject(Users::class.java) }
+                            ?.filter { it.email != auth.currentUser?.email }
                     onResult.invoke(Resource.Success(userList))
                 } else {
                     onResult.invoke(Resource.Error(task.exception?.message.toString()))
@@ -76,10 +78,60 @@ class MainRepositoryDefault : MainRepositoryInterface {
             }
     }
 
-    override fun updateStatus(status: String) {
-        val map = HashMap<String, Any>()
-        map["online"] = status
-        getUID()?.let { FirebaseDatabase.getInstance().getReference("users").child(it) }
-            ?.updateChildren(map)
+    override fun logout(result: () -> Unit) {
+        getUID()?.let {
+            FirebaseDatabase.getInstance().getReference("User-Status").child(it)
+                .updateChildren(mapOf("status" to "offline"))
+        }
+        auth.signOut()
+        result.invoke()
     }
+
+    override fun updateStatus(userId: String, status: String) {
+        val map = HashMap<String, Any>()
+        map["status"] = status
+        FirebaseDatabase.getInstance().getReference("User-Status").child(userId)
+            .updateChildren(map)
+    }
+
+    override fun addNotesData(university: String, department: String) {
+
+        val user = FirebaseAuth.getInstance().currentUser
+        val email = user?.email
+        val universityDoc = notes.document(university)
+
+        universityDoc.get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val documentSnapshot = task.result
+                val emailDepartments =
+                    documentSnapshot?.get("users") as? HashMap<String, ArrayList<String>>
+
+                if (emailDepartments != null && email != null) {
+                    val departments = emailDepartments[email]
+                    if (departments != null) {
+                        departments.add(department)
+                    } else {
+                        emailDepartments[email] = arrayListOf(department)
+                    }
+
+                    universityDoc.update("users", emailDepartments)
+                        .addOnSuccessListener {
+                        }
+                        .addOnFailureListener { e ->
+                        }
+                } else if (documentSnapshot == null || !documentSnapshot.exists()) {
+                    val data = hashMapOf(
+                        "users" to hashMapOf(email to arrayListOf(department))
+                    )
+                    universityDoc.set(data)
+                        .addOnSuccessListener {
+                        }
+                        .addOnFailureListener { e ->
+                        }
+                }
+            }
+        }
+    }
+
+
 }

@@ -13,10 +13,10 @@ data class Users(
     var userList: List<Users>,
     var profession : String,
     var approved: Boolean = true,
+    var status: Boolean = false
 
-    val online: String = "offline"
 
-    ) : Parcelable {
+) : Parcelable {
     init {
         this.name= name.capitalize()
         this.lastname=lastname.capitalize()
