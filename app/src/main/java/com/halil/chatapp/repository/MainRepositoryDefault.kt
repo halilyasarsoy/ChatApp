@@ -1,11 +1,10 @@
 package com.halil.chatapp.repository
 
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
+import com.halil.chatapp.data.NotesData
 import com.halil.chatapp.data.User
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.other.Resource
@@ -13,8 +12,11 @@ import kotlinx.coroutines.tasks.await
 
 @Suppress("UNREACHABLE_CODE")
 class MainRepositoryDefault : MainRepositoryInterface {
+
     private val auth = FirebaseAuth.getInstance()
     private val users = FirebaseFirestore.getInstance().collection("users")
+    private val notes = FirebaseFirestore.getInstance().collection("notes")
+
     fun getUID(): String? {
         val firebaseAuth = FirebaseAuth.getInstance()
         return firebaseAuth.uid
@@ -64,8 +66,9 @@ class MainRepositoryDefault : MainRepositoryInterface {
         users.get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    val userList = task.result?.documents?.mapNotNull { it.toObject(Users::class.java) }
-                        ?.filter { it.email != auth.currentUser?.email }
+                    val userList =
+                        task.result?.documents?.mapNotNull { it.toObject(Users::class.java) }
+                            ?.filter { it.email != auth.currentUser?.email }
                     onResult.invoke(Resource.Success(userList))
                 } else {
                     onResult.invoke(Resource.Error(task.exception?.message.toString()))
@@ -81,11 +84,23 @@ class MainRepositoryDefault : MainRepositoryInterface {
         auth.signOut()
         result.invoke()
     }
+
     override fun updateStatus(userId: String, status: String) {
         val map = HashMap<String, Any>()
         map["status"] = status
         FirebaseDatabase.getInstance().getReference("User-Status").child(userId)
             .updateChildren(map)
+    }
+
+    override fun addNotesData(university: String, department: String) {
+        val notesData = NotesData(university, department)
+        notes.add(notesData)
+            .addOnSuccessListener {
+
+            }
+            .addOnFailureListener {
+
+            }
     }
 
 
