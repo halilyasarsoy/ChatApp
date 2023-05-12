@@ -3,6 +3,7 @@ package com.halil.chatapp.ui.fragment
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +27,7 @@ class NotesFragment : Fragment() {
     private val vml: MainViewModel by viewModels()
     private var _binding: FragmentNotesBinding? = null
     private val binding get() = _binding!!
+    private var selectedFileUri: Uri? = null
 
 
     override fun onCreateView(
@@ -59,7 +61,25 @@ class NotesFragment : Fragment() {
             builder.setPositiveButton("Tamam") { dialog, _ ->
                 val university = universityEditText.text.toString()
                 val department = departmentEditText.text.toString()
-                vml.addNoteToFirestore(university, department)
+                val user = FirebaseAuth.getInstance().currentUser
+                val email = user?.email
+                val fileUri = selectedFileUri
+                val userStorage = email?.let { UserStorage(it) }
+
+                if (university.isEmpty() || department.isEmpty() || fileUri == null) {
+                    Toast.makeText(requireContext(), "Lütfen tüm gerekli alanları doldurunuz ve dosya seçiniz.", Toast.LENGTH_SHORT).show()
+                } else {
+                    if (userStorage != null) {
+                        vml.uploadFile(userStorage, fileUri, {
+                            Toast.makeText(requireContext(), "Dosya yüklendi", Toast.LENGTH_SHORT).show()
+                        }, { exception ->
+                            Toast.makeText(requireContext(), "Dosya yüklenirken hata oluştu: ${exception.message}", Toast.LENGTH_SHORT).show()
+                        })
+                    }
+
+                    vml.addNoteToFirestore(university, department)
+                }
+
                 dialog.dismiss()
             }
 
@@ -76,26 +96,10 @@ class NotesFragment : Fragment() {
 
     private val filePickerLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            val user = FirebaseAuth.getInstance().currentUser
-            val email = user?.email
             if (result.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = result.data
                 data?.data?.let { fileUri ->
-                    val user = email?.let { UserStorage(it, "John Doe") }
-                    if (user != null) {
-                        vml.uploadFile(user, fileUri, {
-                            // Dosya yükleme başarılı olduğunda yapılacak işlemler
-                            Toast.makeText(requireContext(), "Dosya yüklendi", Toast.LENGTH_SHORT)
-                                .show()
-                        }, { exception ->
-                            // Dosya yükleme başarısız olduğunda yapılacak işlemler
-                            Toast.makeText(
-                                requireContext(),
-                                "Dosya yüklenirken hata oluştu: ${exception.message}",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        })
-                    }
+                    selectedFileUri = fileUri  // Seçilen dosyanın URI'sini sakla
                 }
             }
         }

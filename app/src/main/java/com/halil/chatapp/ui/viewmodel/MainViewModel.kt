@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.AuthResult
+import com.halil.chatapp.data.NotesData
 import com.halil.chatapp.data.UserStorage
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.other.Resource

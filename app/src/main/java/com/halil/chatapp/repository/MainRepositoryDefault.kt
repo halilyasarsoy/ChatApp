@@ -12,6 +12,8 @@ import com.halil.chatapp.data.UserStorage
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.other.Resource
 import kotlinx.coroutines.tasks.await
+import java.text.SimpleDateFormat
+import java.util.*
 
 @Suppress("UNREACHABLE_CODE")
 class MainRepositoryDefault : MainRepositoryInterface {
@@ -140,13 +142,14 @@ class MainRepositoryDefault : MainRepositoryInterface {
         onSuccess: () -> Unit,
         onFailure: (Exception) -> Unit
     ) {
-        val fileName = "${user.email}_${System.currentTimeMillis()}"
+        val currentTimeMillis = System.currentTimeMillis()
+        val formattedDateTime =
+            SimpleDateFormat("dd.MM.yyyy : HH:mm", Locale.getDefault()).format(currentTimeMillis)
+        val fileName = "${user.email} - $formattedDateTime"
         val fileReference = storageReference.child(fileName)
 
         val uploadTask = fileReference.putFile(fileUri)
         uploadTask.addOnSuccessListener { onSuccess() }
         uploadTask.addOnFailureListener { exception -> onFailure(exception) }
     }
-
-
 }
