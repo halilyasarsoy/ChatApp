@@ -1,10 +1,12 @@
 package com.halil.chatapp.ui.viewmodel
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.AuthResult
+import com.halil.chatapp.data.UserStorage
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.other.Resource
 import com.halil.chatapp.repository.MainRepositoryInterface
@@ -46,5 +48,14 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
         viewModelScope.launch {
             repository.addNotesData(university, department)
         }
+    }
+
+    fun uploadFile(
+        user: UserStorage,
+        fileUri: Uri,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        repository.uploadFile(user, fileUri, onSuccess, onFailure)
     }
 }

@@ -24,6 +24,3 @@ data class Users(
     }
     constructor() : this("", "", "", "", "", listOf(),"")
 }
-
-
-

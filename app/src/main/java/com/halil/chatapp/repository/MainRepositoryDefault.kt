@@ -1,10 +1,14 @@
 package com.halil.chatapp.repository
 
+import android.net.Uri
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.halil.chatapp.data.User
+import com.halil.chatapp.data.UserStorage
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.other.Resource
 import kotlinx.coroutines.tasks.await
@@ -15,8 +19,7 @@ class MainRepositoryDefault : MainRepositoryInterface {
     private val auth = FirebaseAuth.getInstance()
     private val users = FirebaseFirestore.getInstance().collection("users")
     private val notes = FirebaseFirestore.getInstance().collection("notes")
-    private val firestore = FirebaseFirestore.getInstance()
-    private val userX = FirebaseAuth.getInstance().currentUser
+    private val storageReference = Firebase.storage.reference
 
 
     fun getUID(): String? {
@@ -95,11 +98,9 @@ class MainRepositoryDefault : MainRepositoryInterface {
     }
 
     override fun addNotesData(university: String, department: String) {
-
         val user = FirebaseAuth.getInstance().currentUser
         val email = user?.email
         val universityDoc = notes.document(university)
-
         universityDoc.get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val documentSnapshot = task.result
@@ -131,6 +132,20 @@ class MainRepositoryDefault : MainRepositoryInterface {
                 }
             }
         }
+    }
+
+    override fun uploadFile(
+        user: UserStorage,
+        fileUri: Uri,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        val fileName = "${user.email}_${System.currentTimeMillis()}"
+        val fileReference = storageReference.child(fileName)
+
+        val uploadTask = fileReference.putFile(fileUri)
+        uploadTask.addOnSuccessListener { onSuccess() }
+        uploadTask.addOnFailureListener { exception -> onFailure(exception) }
     }
 
 
