@@ -77,9 +77,13 @@ class ListAdapter(var userList: ArrayList<Users>) :
     override fun getItemCount(): Int {
         return userList.size
     }
+    fun updateUserStatus(updatedUserList: ArrayList<Users>) {
+        userList.clear()
+        userList.addAll(updatedUserList)
+        notifyDataSetChanged()
+    }
 
     fun setDataChange(newUserList: ArrayList<Users>) {
-        userList.clear()
         userList.addAll(newUserList)
         notifyDataSetChanged()
     }

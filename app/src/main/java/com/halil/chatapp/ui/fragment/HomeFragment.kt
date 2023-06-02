@@ -100,18 +100,17 @@ class HomeFragment : Fragment() {
                     //progresbar
                 }
                 is Resource.Success -> {
-                    userArrayList = it.data as ArrayList<Users>?
-                    userArrayList?.let { newlist ->
-                        listAdapter.setDataChange(newlist)
-//                            if(newlist.isEmpty()){
-//                                //layoutimage
-//                            }
+                    val userList = it.data as? ArrayList<Users>
+                    val sortedList = userList?.sortedByDescending { user -> user.status }
+                    sortedList?.let { newList ->
+                        listAdapter.updateUserStatus(ArrayList(newList))
                     }
                 }
                 else -> {}
             }
         }
     }
+
 
 }
 
