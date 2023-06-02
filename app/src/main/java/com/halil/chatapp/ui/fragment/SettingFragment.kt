@@ -3,15 +3,17 @@ package com.halil.chatapp.ui.fragment
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.navArgs
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -20,6 +22,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.halil.chatapp.R
 import com.halil.chatapp.databinding.FragmentSettingBinding
 import com.halil.chatapp.ui.activity.AuthActivity
+import com.halil.chatapp.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
@@ -33,7 +36,10 @@ class SettingFragment : Fragment() {
     private lateinit var imageURI: Uri
     private var imgName = ""
     private var imgUrlx: String? = null
-    private val args: SettingFragmentArgs by navArgs()
+    private val vml: MainViewModel by viewModels()
+    private lateinit var viewModel: MainViewModel
+
+
     private val uid = FirebaseAuth.getInstance().uid
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,7 +54,8 @@ class SettingFragment : Fragment() {
         deleteUser()
         update()
         updateBtn()
-
+        changeDepartment()
+        loadSharedPrefData()
 
         val imageViewChange = binding.profileImages
         val docRef = uid?.let { db.collection("users").document(it) }
@@ -59,6 +66,49 @@ class SettingFragment : Fragment() {
                     Glide.with(this).load(mImageView).into(imageViewChange)
                 }
             }
+    }
+
+    private fun changeDepartment() {
+        binding.button2.setOnClickListener {
+            val dialogView = layoutInflater.inflate(R.layout.alert_dialog_notes, null)
+
+            val universityEditText = dialogView.findViewById<EditText>(R.id.university_name)
+            val departmentEditText = dialogView.findViewById<EditText>(R.id.department_name)
+
+            val builder = AlertDialog.Builder(requireContext())
+
+            builder.setView(dialogView)
+            builder.setPositiveButton("Tamam") { dialog, _ ->
+                val university = universityEditText.text.toString()
+                val department = departmentEditText.text.toString()
+
+                if (university.isEmpty() || department.isEmpty()) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Lütfen tüm gerekli alanları doldurunuz ve dosya seçiniz.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    vml.addNoteToFirestore(university, department, requireContext())
+                    loadSharedPrefData()
+                }
+                dialog.dismiss()
+            }
+            val dialog = builder.create()
+            dialog.show()
+        }
+    }
+
+    fun loadSharedPrefData() {
+        val user = FirebaseAuth.getInstance().currentUser
+        val email = user?.email
+        val sharedPreferences =
+            requireContext().getSharedPreferences("MyPrefs_$email", Context.MODE_PRIVATE)
+        val university = sharedPreferences.getString("university", "")
+        val department = sharedPreferences.getString("department", "")
+
+        binding.universityTextView.text = university
+        binding.departmentTextView.text = department
     }
 
     private fun alert() {

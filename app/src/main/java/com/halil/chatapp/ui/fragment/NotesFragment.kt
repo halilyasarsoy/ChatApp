@@ -67,17 +67,26 @@ class NotesFragment : Fragment() {
                 val userStorage = email?.let { UserStorage(it) }
 
                 if (university.isEmpty() || department.isEmpty() || fileUri == null) {
-                    Toast.makeText(requireContext(), "Lütfen tüm gerekli alanları doldurunuz ve dosya seçiniz.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Lütfen tüm gerekli alanları doldurunuz ve dosya seçiniz.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
                     if (userStorage != null) {
                         vml.uploadFile(userStorage, fileUri, {
-                            Toast.makeText(requireContext(), "Dosya yüklendi", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "Dosya yüklendi", Toast.LENGTH_SHORT)
+                                .show()
                         }, { exception ->
-                            Toast.makeText(requireContext(), "Dosya yüklenirken hata oluştu: ${exception.message}", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Dosya yüklenirken hata oluştu: ${exception.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         })
                     }
 
-                    vml.addNoteToFirestore(university, department)
+                    vml.addNoteToFirestore(university, department, requireContext())
                 }
 
                 dialog.dismiss()

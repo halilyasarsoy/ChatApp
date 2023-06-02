@@ -1,6 +1,8 @@
 package com.halil.chatapp.repository
 
+import android.content.Context
 import android.net.Uri
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -22,7 +24,8 @@ class MainRepositoryDefault : MainRepositoryInterface {
     private val users = FirebaseFirestore.getInstance().collection("users")
     private val notes = FirebaseFirestore.getInstance().collection("notes")
     private val storageReference = Firebase.storage.reference
-
+    private val universityLiveData = MutableLiveData<String>()
+    private val departmentLiveData = MutableLiveData<String>()
 
     fun getUID(): String? {
         val firebaseAuth = FirebaseAuth.getInstance()
@@ -99,41 +102,25 @@ class MainRepositoryDefault : MainRepositoryInterface {
             .updateChildren(map)
     }
 
-    override fun addNotesData(university: String, department: String) {
+    override fun addNotesData(university: String, department: String, context: Context) {
         val user = FirebaseAuth.getInstance().currentUser
         val email = user?.email
-        val universityDoc = notes.document(university)
-        universityDoc.get().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val documentSnapshot = task.result
-                val emailDepartments =
-                    documentSnapshot?.get("users") as? HashMap<String, ArrayList<String>>
+        val userDoc = email?.let { notes.document(it) }
 
-                if (emailDepartments != null && email != null) {
-                    val departments = emailDepartments[email]
-                    if (departments != null) {
-                        departments.add(department)
-                    } else {
-                        emailDepartments[email] = arrayListOf(department)
-                    }
-
-                    universityDoc.update("users", emailDepartments)
-                        .addOnSuccessListener {
-                        }
-                        .addOnFailureListener { e ->
-                        }
-                } else if (documentSnapshot == null || !documentSnapshot.exists()) {
-                    val data = hashMapOf(
-                        "users" to hashMapOf(email to arrayListOf(department))
-                    )
-                    universityDoc.set(data)
-                        .addOnSuccessListener {
-                        }
-                        .addOnFailureListener { e ->
-                        }
-                }
+        val universitiesData = hashMapOf(university to arrayListOf(department))
+        userDoc?.collection("user_data")?.document("notes")
+            ?.set(hashMapOf("universities" to universitiesData))
+            ?.addOnSuccessListener {
+                val sharedPreferences =
+                    context.getSharedPreferences("MyPrefs_$email", Context.MODE_PRIVATE)
+                val editor = sharedPreferences.edit()
+                editor.putString("university", university)
+                editor.putString("department", department)
+                editor.apply()
             }
-        }
+            ?.addOnFailureListener { exception ->
+                // Hata durumu
+            }
     }
 
     override fun uploadFile(

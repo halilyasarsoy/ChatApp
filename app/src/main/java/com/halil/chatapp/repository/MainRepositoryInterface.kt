@@ -1,5 +1,6 @@
 package com.halil.chatapp.repository
 
+import android.content.Context
 import android.net.Uri
 import com.google.firebase.auth.AuthResult
 import com.halil.chatapp.data.NotesData
@@ -28,7 +29,7 @@ interface MainRepositoryInterface {
 
     fun updateStatus(status: String, userId: String)
 
-    fun addNotesData(university: String, department: String)
+    fun addNotesData(university: String, department: String,context: Context)
 
     fun uploadFile(
         user: UserStorage,
