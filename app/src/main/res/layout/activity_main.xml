@@ -32,4 +32,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navDrawView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/nav_drawer_menu" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

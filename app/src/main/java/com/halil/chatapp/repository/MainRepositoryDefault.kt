@@ -108,8 +108,7 @@ class MainRepositoryDefault : MainRepositoryInterface {
         val userDoc = email?.let { notes.document(it) }
 
         val universitiesData = hashMapOf(university to arrayListOf(department))
-        userDoc?.collection("user_data")?.document("notes")
-            ?.set(hashMapOf("universities" to universitiesData))
+        userDoc?.set(hashMapOf("universities" to universitiesData))
             ?.addOnSuccessListener {
                 val sharedPreferences =
                     context.getSharedPreferences("MyPrefs_$email", Context.MODE_PRIVATE)
@@ -119,7 +118,6 @@ class MainRepositoryDefault : MainRepositoryInterface {
                 editor.apply()
             }
             ?.addOnFailureListener { exception ->
-                // Hata durumu
             }
     }
 
