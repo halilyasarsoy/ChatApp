@@ -3,7 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navDrawView">
     <item
-        android:id="@+id/profileFragment"
-        android:title="@string/setting" />
+        android:id="@+id/notesFragment"
+        android:title="@string/drawerMenuNotes" />
+    <item
+        android:id="@+id/settingFragment"
+        android:title="@string/drawerMenuSettings" />
 
 </menu>

@@ -2,18 +2,82 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_gravity="center">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profileImageView"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="658dp"
+        android:src="@drawable/ic_baseline_add_24"
+        app:civ_border_color="#FFFFFF"
+        app:civ_border_width="2dp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/navHeaderName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lets Chats"
+        android:layout_margin="20dp"
+        android:text="halil"
         android:textAlignment="center"
         android:textColor="#388E3C"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/profileImageView"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/navHeaderLastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="20dp"
+        android:text="yasarsoy"
+        android:textAlignment="center"
+        android:textColor="#388E3C"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toRightOf="@id/navHeaderName"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/navHeaderProfession"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:text="software"
+        android:textAlignment="center"
+        android:textColor="#388E3C"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toRightOf="@id/profileImageView"
+        app:layout_constraintTop_toBottomOf="@id/navHeaderName" />
+
+    <TextView
+
+        android:id="@+id/deneme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text=""
+        app:layout_constraintLeft_toRightOf="@id/navHeaderProfession"
+        app:layout_constraintTop_toBottomOf="@id/navHeaderLastName" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="20dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profileImageView" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

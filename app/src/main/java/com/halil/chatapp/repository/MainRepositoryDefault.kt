@@ -2,7 +2,6 @@ package com.halil.chatapp.repository
 
 import android.content.Context
 import android.net.Uri
-import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -24,8 +23,6 @@ class MainRepositoryDefault : MainRepositoryInterface {
     private val users = FirebaseFirestore.getInstance().collection("users")
     private val notes = FirebaseFirestore.getInstance().collection("notes")
     private val storageReference = Firebase.storage.reference
-    private val universityLiveData = MutableLiveData<String>()
-    private val departmentLiveData = MutableLiveData<String>()
 
     fun getUID(): String? {
         val firebaseAuth = FirebaseAuth.getInstance()
@@ -107,18 +104,29 @@ class MainRepositoryDefault : MainRepositoryInterface {
         val email = user?.email
         val userDoc = email?.let { notes.document(it) }
 
-        val universitiesData = hashMapOf(university to arrayListOf(department))
+        val universitiesData = hashMapOf("university" to university, "department" to department)
         userDoc?.set(hashMapOf("universities" to universitiesData))
             ?.addOnSuccessListener {
-                val sharedPreferences =
-                    context.getSharedPreferences("MyPrefs_$email", Context.MODE_PRIVATE)
-                val editor = sharedPreferences.edit()
-                editor.putString("university", university)
-                editor.putString("department", department)
-                editor.apply()
+                // Başarılı olduğunda yapılacak işlemler
             }
             ?.addOnFailureListener { exception ->
+                // Hata durumuyla ilgili işlemler
             }
+    }
+
+    override suspend fun getNotesData(context: Context, callback: (List<String>) -> Unit) {
+        val user = FirebaseAuth.getInstance().currentUser
+        val email = user?.email
+        val userDoc = email?.let { notes.document(it) }
+
+        userDoc?.get()?.addOnSuccessListener { document ->
+            val universities = document?.get("universities") as? Map<*, *>
+            val universityList = universities?.values?.toList() as? List<String>
+            callback.invoke(universityList ?: emptyList())
+        }?.addOnFailureListener { exception ->
+            // Hata durumuyla ilgili işlemler
+            callback.invoke(emptyList())
+        }
     }
 
     override fun uploadFile(
@@ -137,4 +145,5 @@ class MainRepositoryDefault : MainRepositoryInterface {
         uploadTask.addOnSuccessListener { onSuccess() }
         uploadTask.addOnFailureListener { exception -> onFailure(exception) }
     }
+
 }

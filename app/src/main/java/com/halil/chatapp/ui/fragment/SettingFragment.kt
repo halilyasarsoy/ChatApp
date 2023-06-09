@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
@@ -24,6 +25,7 @@ import com.halil.chatapp.databinding.FragmentSettingBinding
 import com.halil.chatapp.ui.activity.AuthActivity
 import com.halil.chatapp.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -38,7 +40,9 @@ class SettingFragment : Fragment() {
     private var imgUrlx: String? = null
     private val vml: MainViewModel by viewModels()
     private lateinit var viewModel: MainViewModel
-
+    private lateinit var navView: NavigationView
+    private lateinit var headerView: View
+    private lateinit var profileImageView: CircleImageView
 
     private val uid = FirebaseAuth.getInstance().uid
     override fun onCreateView(
@@ -55,7 +59,7 @@ class SettingFragment : Fragment() {
         update()
         updateBtn()
         changeDepartment()
-        loadSharedPrefData()
+
 
         val imageViewChange = binding.profileImages
         val docRef = uid?.let { db.collection("users").document(it) }
@@ -69,7 +73,7 @@ class SettingFragment : Fragment() {
     }
 
     private fun changeDepartment() {
-        binding.button2.setOnClickListener {
+        binding.changeDepartment.setOnClickListener {
             val dialogView = layoutInflater.inflate(R.layout.alert_dialog_notes, null)
 
             val universityEditText = dialogView.findViewById<EditText>(R.id.university_name)
@@ -90,25 +94,13 @@ class SettingFragment : Fragment() {
                     ).show()
                 } else {
                     vml.addNoteToFirestore(university, department, requireContext())
-                    loadSharedPrefData()
                 }
                 dialog.dismiss()
             }
             val dialog = builder.create()
             dialog.show()
         }
-    }
-
-    fun loadSharedPrefData() {
-        val user = FirebaseAuth.getInstance().currentUser
-        val email = user?.email
-        val sharedPreferences =
-            requireContext().getSharedPreferences("MyPrefs_$email", Context.MODE_PRIVATE)
-        val university = sharedPreferences.getString("university", "")
-        val department = sharedPreferences.getString("department", "")
-
-        binding.universityTextView.text = university
-        binding.departmentTextView.text = department
+        TODO("Edit Buton & UI")
     }
 
     private fun alert() {
@@ -181,7 +173,6 @@ class SettingFragment : Fragment() {
                     R.string.toastChangeImageSuccess,
                     Toast.LENGTH_SHORT
                 ).show()
-
             } else {
                 Toast.makeText(requireContext(), R.string.toastChangeImageElse, Toast.LENGTH_SHORT)
                     .show()
@@ -205,3 +196,4 @@ class SettingFragment : Fragment() {
         }
     }
 }
+

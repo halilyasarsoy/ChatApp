@@ -34,6 +34,9 @@
     <string name="toastSuccess">Silme işlemi başarılı</string>
     <string name="toastChangeImageElse">Bir profil resmi seçmelisiniz</string>
     <string name="toastChangeImageSuccess">Profil resminiz değiştirildi</string>
+    <string name="drawerMenuSettings">Ayarlar</string>
+    <string name="drawerMenuNotes">Notlar</string>
+
 
 
 

@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
+import com.halil.chatapp.R
 import com.halil.chatapp.adapter.ListAdapter
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.databinding.FragmentHomeBinding
@@ -27,6 +29,7 @@ class HomeFragment : Fragment() {
     private lateinit var db: FirebaseFirestore
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private lateinit var headerView: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +44,9 @@ class HomeFragment : Fragment() {
         vm.getUser()
         adapterSetup()
         checkUserList()
+        headerView = requireActivity().findViewById(R.id.navDrawView)
+
+        change()
     }
 
     private fun checkUserApproved(user: Users, onResult: (Boolean) -> Unit) {
@@ -107,6 +113,20 @@ class HomeFragment : Fragment() {
                     }
                 }
                 else -> {}
+            }
+        }
+    }
+
+    fun change() {
+        vm.fetchNotesData(requireContext())
+        vm.universityData.observe(viewLifecycleOwner) { universities ->
+            val denemetext: TextView = headerView.findViewById(R.id.deneme)
+            if (universities.size >= 2) {
+                val university = universities[0]
+                val department = universities[1]
+                denemetext.text = "$university - $department"
+                TODO("Change UI & Variable Names")
+
             }
         }
     }

@@ -33,5 +33,7 @@
     <string name="toastSuccess">Deletion successful</string>
     <string name="toastChangeImageElse">You must choose a profile picture</string>
     <string name="toastChangeImageSuccess">Your profile picture has been changed</string>
+    <string name="drawerMenuSettings">Settings</string>
+    <string name="drawerMenuNotes">Notes</string>
 
 </resources>
