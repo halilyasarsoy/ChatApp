@@ -24,10 +24,6 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
     private val _universityData = MutableLiveData<List<String>>()
     val universityData: LiveData<List<String>> = _universityData
 
-
-    private val universityLiveData = MutableLiveData<String>()
-    private val departmentLiveData = MutableLiveData<String>()
-
     fun updateStatus(userId: String, status: String) {
         viewModelScope.launch {
             repository.updateStatus(userId, status)

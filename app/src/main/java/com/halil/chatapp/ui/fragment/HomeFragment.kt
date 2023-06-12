@@ -125,7 +125,6 @@ class HomeFragment : Fragment() {
                 val university = universities[0]
                 val department = universities[1]
                 denemetext.text = "$university - $department"
-                TODO("Change UI & Variable Names")
 
             }
         }
