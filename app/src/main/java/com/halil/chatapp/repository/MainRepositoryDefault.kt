@@ -24,7 +24,7 @@ class MainRepositoryDefault : MainRepositoryInterface {
     private val notes = FirebaseFirestore.getInstance().collection("notes")
     private val storageReference = Firebase.storage.reference
 
-    fun getUID(): String? {
+    private fun getUID(): String? {
         val firebaseAuth = FirebaseAuth.getInstance()
         return firebaseAuth.uid
     }

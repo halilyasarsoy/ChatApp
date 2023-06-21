@@ -28,7 +28,6 @@ import com.halil.chatapp.ui.fragment.SettingFragment
 import com.halil.chatapp.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import de.hdodenhof.circleimageview.CircleImageView
-import androidx.lifecycle.*
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -57,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         val topDestinationIds = setOf(
             R.id.chatScreenFragment,
             R.id.detailUsersFragment,
+            R.id.fullScreenFragment
         )
 
         navController.addOnDestinationChangedListener { _, destination, _ ->

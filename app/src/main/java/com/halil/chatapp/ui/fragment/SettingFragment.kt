@@ -54,7 +54,6 @@ class SettingFragment : Fragment() {
         update()
         updateBtn()
         changeDepartment()
-        downloadImage()
 
         val imageViewChange = binding.profileImages
         val docRef = uid?.let { db.collection("users").document(it) }
@@ -67,9 +66,8 @@ class SettingFragment : Fragment() {
             }
 
         imageViewChange.setOnClickListener {
-            val imageUriString = imgUrlx ?: ""
             val action =
-                SettingFragmentDirections.actionSettingFragmentToFullScreenFragment(imageUriString)
+                SettingFragmentDirections.actionSettingFragmentToFullScreenFragment()
             findNavController().navigate(action)
         }
 
@@ -81,11 +79,14 @@ class SettingFragment : Fragment() {
         imgName = formatter.format(now)
         val storageReference = FirebaseStorage.getInstance().getReference("images/$imgName")
         storageReference.putFile(imageURI).addOnSuccessListener {
-
+            storageReference.downloadUrl.addOnSuccessListener { uri ->
+                imgUrlx = uri.toString()
+            }
         }.addOnFailureListener {
             Toast.makeText(requireContext(), "failure", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -116,23 +117,6 @@ class SettingFragment : Fragment() {
         }
     }
 
-    private fun downloadImage() {
-        if (imgName.isNotEmpty()) {
-            FirebaseStorage.getInstance().reference.child("images")
-                .child(imgName).downloadUrl.addOnSuccessListener { uri ->
-                    imgUrlx = uri.toString()
-
-                    val action =
-                        SettingFragmentDirections.actionSettingFragmentToFullScreenFragment(
-                            imgUrlx!!
-                        )
-                    findNavController().navigate(action)
-                }
-        } else {
-            Toast.makeText(requireContext(), "hata", Toast.LENGTH_SHORT).show()
-        }
-
-    }
 
     private fun update() {
         binding.editIcon.setOnClickListener {
