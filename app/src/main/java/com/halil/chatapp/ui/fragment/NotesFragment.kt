@@ -12,12 +12,14 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.halil.chatapp.R
+import com.halil.chatapp.adapter.UniversityAdapter
 import com.halil.chatapp.databinding.FragmentNotesBinding
 import com.halil.chatapp.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,6 +34,7 @@ class NotesFragment : Fragment() {
     private val binding get() = _binding!!
     private var selectedFileUri: Uri? = null
     private var fileUrl: String = ""
+    private var adapterUniversities: UniversityAdapter? = null
 
     companion object {
         private const val FILE_PICKER_REQUEST_CODE = 123
@@ -48,6 +51,13 @@ class NotesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setAlertDialog()
+        binding.getNotesRecyclerView.adapter = adapterUniversities
+        binding.getNotesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        vml.getInfoUniversities()
+        vml.universitiesList.observe(viewLifecycleOwner) { universities ->
+            adapterUniversities?.setUniversities(universities)
+        }
     }
 
 
@@ -60,12 +70,12 @@ class NotesFragment : Fragment() {
             }
             val builder = AlertDialog.Builder(requireContext())
             builder.setView(dialogView)
-            builder.setPositiveButton("Tamam") { dialog, _ ->
+            builder.setPositiveButton(R.string.ok) { dialog, _ ->
                 val fileUri = selectedFileUri
                 if (fileUri == null) {
                     Toast.makeText(
                         requireContext(),
-                        "Lütfen tüm gerekli alanları doldurunuz ve dosya seçiniz.",
+                        R.string.pickFile,
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
@@ -95,7 +105,7 @@ class NotesFragment : Fragment() {
             .addOnFailureListener { exception ->
                 Toast.makeText(
                     requireContext(),
-                    "Dosya yüklenirken hata oluştu: ${exception.message}",
+                    R.string.fileError,
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -118,14 +128,14 @@ class NotesFragment : Fragment() {
                 .addOnSuccessListener {
                     Toast.makeText(
                         requireContext(),
-                        "Dosya URL'si veritabanına eklendi",
+                        R.string.fileUploaded,
                         Toast.LENGTH_SHORT
                     ).show()
                 }
                 .addOnFailureListener { exception ->
                     Toast.makeText(
                         requireContext(),
-                        "Dosya URL'si veritabanına eklenirken hata oluştu: ${exception.message}",
+                        R.string.fileError,
                         Toast.LENGTH_SHORT
                     ).show()
                 }

@@ -35,5 +35,8 @@
     <string name="toastChangeImageSuccess">Your profile picture has been changed</string>
     <string name="drawerMenuSettings">Settings</string>
     <string name="drawerMenuNotes">Notes</string>
-
+    <string name="pickFile">Please Select File</string>
+    <string name="ok">Ok</string>
+    <string name="fileUploaded">File uploaded</string>
+    <string name="fileError">Error loading please check your connection and try again</string>
 </resources>

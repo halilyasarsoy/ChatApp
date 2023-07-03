@@ -8,9 +8,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import com.halil.chatapp.data.User
-import com.halil.chatapp.data.UserStorage
-import com.halil.chatapp.data.Users
+import com.halil.chatapp.data.*
 import com.halil.chatapp.other.Resource
 import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
@@ -128,6 +126,40 @@ class MainRepositoryDefault : MainRepositoryInterface {
             callback.invoke(emptyList())
         }
     }
+
+    override fun getUniversitiesInfo(callback: (List<NotesData>) -> Unit) {
+        val user = FirebaseAuth.getInstance().currentUser
+        val email = user?.email
+
+        if (email != null) {
+            notes.document(email).get()
+                .addOnSuccessListener { documentSnapshot ->
+                    val universitiesList = mutableListOf<NotesData>()
+
+                    val universitiesArray =
+                        documentSnapshot.get("universities") as? List<HashMap<String, Any>>
+
+                    universitiesArray?.let { array ->
+                        for (item in array) {
+                            val university = item["university"] as? String
+                            val department = item["department"] as? String
+
+                            if (university != null && department != null) {
+                                val getInfo = NotesData(university = university, department = department)
+                                universitiesList.add(getInfo)
+                            }
+                        }
+                    }
+
+                    callback(universitiesList)
+                }
+                .addOnFailureListener { exception ->
+                    // Handle failure
+                }
+        }
+    }
+
+
 
     override fun uploadFile(
         user: UserStorage,

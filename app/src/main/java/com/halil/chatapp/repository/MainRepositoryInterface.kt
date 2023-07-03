@@ -3,6 +3,7 @@ package com.halil.chatapp.repository
 import android.content.Context
 import android.net.Uri
 import com.google.firebase.auth.AuthResult
+import com.halil.chatapp.data.NotesData
 import com.halil.chatapp.data.UserStorage
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.other.Resource
@@ -38,5 +39,5 @@ interface MainRepositoryInterface {
     )
 
     suspend fun getNotesData(context: Context, callback: (List<String>) -> Unit)
-//    suspend fun getUniversitiesData(email: String)
+    fun getUniversitiesInfo(callback: (List<NotesData>) -> Unit)
 }

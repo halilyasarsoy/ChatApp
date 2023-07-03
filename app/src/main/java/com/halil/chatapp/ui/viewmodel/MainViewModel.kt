@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.halil.chatapp.data.NotesData
 import com.halil.chatapp.data.UserStorage
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.other.Resource
@@ -23,6 +24,9 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
 
     private val _universityData = MutableLiveData<List<String>>()
     val universityData: LiveData<List<String>> = _universityData
+
+    private val _universitiesList = MutableLiveData<List<NotesData>>()
+    val universitiesList: MutableLiveData<List<NotesData>> = _universitiesList
 
     fun updateStatus(userId: String, status: String) {
         viewModelScope.launch {
@@ -54,6 +58,14 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
         viewModelScope.launch {
             repository.getNotesData(context) { universities ->
                 _universityData.value = universities
+            }
+        }
+    }
+
+    fun getInfoUniversities() {
+        viewModelScope.launch {
+            repository.getUniversitiesInfo { universities ->
+                _universitiesList.value = universities
             }
         }
     }
