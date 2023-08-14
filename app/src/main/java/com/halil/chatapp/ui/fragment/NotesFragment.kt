@@ -113,34 +113,58 @@ class NotesFragment : Fragment() {
 
     private fun addFileUrlToFirestore() {
         val currentUser = FirebaseAuth.getInstance().currentUser
-        val userEmail = currentUser?.email
+        val uid = currentUser?.uid
 
-        if (userEmail != null) {
-            val notesRef = FirebaseFirestore.getInstance()
-                .collection("notes")
-                .document(userEmail)
+        if (uid != null) {
+            val usersCollection = FirebaseFirestore.getInstance().collection("users")
+            usersCollection.document(uid).get()
+                .addOnSuccessListener { documentSnapshot ->
+                    val profession = documentSnapshot.get("profession") as? String
 
-            val fieldUpdate = hashMapOf<String, Any>(
-                "userUrls" to FieldValue.arrayUnion(fileUrl)
-            )
+                    if (profession != null) {
+                        val notesRef = FirebaseFirestore.getInstance()
+                            .collection("notes")
+                            .document(profession)
 
-            notesRef.set(fieldUpdate, SetOptions.merge())
-                .addOnSuccessListener {
-                    Toast.makeText(
-                        requireContext(),
-                        R.string.fileUploaded,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        // Department bilgisini Firestore'dan çekmek için departmentRef
+                        val departmentRef = FirebaseFirestore.getInstance()
+                            .collection("university")
+                            .document(uid)
+
+                        departmentRef.get().addOnSuccessListener { departmentDocument ->
+                            val department = departmentDocument.getString("department")
+
+                            if (department != null) {
+                                val fieldUpdate = hashMapOf<String, Any>(
+                                    department to FieldValue.arrayUnion(fileUrl) // userUrls yerine department olarak değiştirildi
+                                )
+
+                                notesRef.set(fieldUpdate, SetOptions.merge())
+                                    .addOnSuccessListener {
+                                        Toast.makeText(
+                                            requireContext(),
+                                            R.string.fileUploaded,
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                    .addOnFailureListener { exception ->
+                                        Toast.makeText(
+                                            requireContext(),
+                                            R.string.fileError,
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                            }
+                        }
+                    }
                 }
                 .addOnFailureListener { exception ->
-                    Toast.makeText(
-                        requireContext(),
-                        R.string.fileError,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    // Handle failure
                 }
         }
     }
+
+
 
     private fun openFilePicker() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)

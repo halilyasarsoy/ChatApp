@@ -20,6 +20,7 @@ class MainRepositoryDefault : MainRepositoryInterface {
     private val auth = FirebaseAuth.getInstance()
     private val users = FirebaseFirestore.getInstance().collection("users")
     private val notes = FirebaseFirestore.getInstance().collection("notes")
+    private val universityInfo = FirebaseFirestore.getInstance().collection("university")
     private val storageReference = Firebase.storage.reference
 
     private fun getUID(): String? {
@@ -99,67 +100,80 @@ class MainRepositoryDefault : MainRepositoryInterface {
 
     override fun addNotesData(university: String, department: String, context: Context) {
         val user = FirebaseAuth.getInstance().currentUser
-        val email = user?.email
-        val userDoc = email?.let { notes.document(it) }
-
-        val universitiesData = hashMapOf("university" to university, "department" to department)
-        userDoc?.set(hashMapOf("universities" to universitiesData))
-            ?.addOnSuccessListener {
-                // Başarılı olduğunda yapılacak işlemler
-            }
-            ?.addOnFailureListener { exception ->
-                // Hata durumuyla ilgili işlemler
-            }
+        val uid = user?.uid
+        if (uid != null) {
+            val universityDoc = universityInfo.document(uid)
+            val data = hashMapOf("university" to university, "department" to department)
+            universityDoc.set(data)
+                .addOnSuccessListener {
+                }
+                .addOnFailureListener { exception ->
+                }
+        }
     }
+
 
     override suspend fun getNotesData(context: Context, callback: (List<String>) -> Unit) {
         val user = FirebaseAuth.getInstance().currentUser
-        val email = user?.email
-        val userDoc = email?.let { notes.document(it) }
-
-        userDoc?.get()?.addOnSuccessListener { document ->
-            val universities = document?.get("universities") as? Map<*, *>
-            val universityList = universities?.values?.toList() as? List<String>
-            callback.invoke(universityList ?: emptyList())
-        }?.addOnFailureListener { exception ->
-            // Hata durumuyla ilgili işlemler
-            callback.invoke(emptyList())
+        val uid = user?.uid
+        if (uid != null) {
+            val userDoc = universityInfo.document(uid)
+            userDoc.get().addOnSuccessListener { document ->
+                val department = document?.get("department") as? String
+                val departmentList = if (department != null) listOf(department) else emptyList<String>()
+                callback.invoke(departmentList)
+            }.addOnFailureListener { exception ->
+                // Hata durumuyla ilgili işlemler
+                callback.invoke(emptyList())
+            }
         }
     }
+
 
     override fun getUniversitiesInfo(callback: (List<NotesData>) -> Unit) {
         val user = FirebaseAuth.getInstance().currentUser
         val email = user?.email
-
-        if (email != null) {
-            notes.document(email).get()
+        val uid = user?.uid
+        val usersCollection = FirebaseFirestore.getInstance().collection("users")
+        if (uid != null) {
+            usersCollection.document(uid).get()
                 .addOnSuccessListener { documentSnapshot ->
-                    val universitiesList = mutableListOf<NotesData>()
+                    val profession = documentSnapshot.get("profession") as? String
 
-                    val universitiesArray =
-                        documentSnapshot.get("universities") as? List<HashMap<String, Any>>
+                    if (email != null) {
+                        if (profession != null) {
+                            notes.document(profession).get()
+                                .addOnSuccessListener { documentSnapshot ->
+                                    val universitiesList = mutableListOf<NotesData>()
 
-                    universitiesArray?.let { array ->
-                        for (item in array) {
-                            val university = item["university"] as? String
-                            val department = item["department"] as? String
+                                    val universitiesArray =
+                                        documentSnapshot.get("universities") as? List<HashMap<String, Any>>
 
-                            if (university != null && department != null) {
-                                val getInfo = NotesData(university = university, department = department)
-                                universitiesList.add(getInfo)
-                            }
+                                    universitiesArray?.let { array ->
+                                        for (item in array) {
+                                            val university = item["university"] as? String
+                                            val department = item["department"] as? String
+
+                                            if (university != null && department != null) {
+                                                val getInfo = NotesData(
+                                                    university = university,
+                                                    department = department
+                                                )
+                                                universitiesList.add(getInfo)
+                                            }
+                                        }
+                                    }
+
+                                    callback(universitiesList)
+                                }
+                                .addOnFailureListener { exception ->
+                                    // Handle failure
+                                }
                         }
                     }
-
-                    callback(universitiesList)
-                }
-                .addOnFailureListener { exception ->
-                    // Handle failure
                 }
         }
     }
-
-
 
     override fun uploadFile(
         user: UserStorage,

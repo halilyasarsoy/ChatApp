@@ -119,13 +119,9 @@ class HomeFragment : Fragment() {
 
     private fun change() {
         vm.fetchNotesData(requireContext())
-        vm.universityData.observe(viewLifecycleOwner) { universities ->
+        vm.universityData.observe(viewLifecycleOwner) { department ->
             val denemetext: TextView = headerView.findViewById(R.id.deneme)
-            if (universities.size >= 2) {
-                val university = universities[0]
-                val department = universities[1]
-                denemetext.text = "$university - $department"
-            }
+            denemetext.text = department.toString()
         }
     }
 }

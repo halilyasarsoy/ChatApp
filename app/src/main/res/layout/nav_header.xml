@@ -16,7 +16,6 @@
         android:src="@drawable/ic_baseline_add_24"
         app:civ_border_color="#FFFFFF"
         app:civ_border_width="2dp"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:text="software"
+        android:text="Universitesy"
         android:textAlignment="center"
         android:textColor="#388E3C"
         android:textSize="15sp"
@@ -58,12 +57,10 @@
         app:layout_constraintTop_toBottomOf="@id/navHeaderName" />
 
     <TextView
-
         android:id="@+id/deneme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:text=""
         app:layout_constraintLeft_toRightOf="@id/navHeaderProfession"
         app:layout_constraintTop_toBottomOf="@id/navHeaderLastName" />
 

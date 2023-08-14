@@ -187,12 +187,10 @@ class SettingFragment : Fragment() {
         val alert = builder.create()
         alert.show()
     }
-
     private fun deleteUser() {
         binding.button.setOnClickListener {
             alert()
         }
     }
-
 }
 

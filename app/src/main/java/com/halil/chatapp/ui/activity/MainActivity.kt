@@ -100,85 +100,86 @@ class MainActivity : AppCompatActivity() {
                 return@addSnapshotListener
             }
 
-            if (snapshot != null && snapshot.exists()) {
-                val mImageView = snapshot.getString("imgUrl")
-                val name = snapshot.getString("name")
-                val lastName = snapshot.getString("lastname")
-                val profession = snapshot.getString("profession")
-                Glide.with(this).load(mImageView).into(profileImageView)
-                nameTextView.text = name
-                lastNameTextView.text = lastName
-                professionTextView.text = profession
+                if (snapshot != null && snapshot.exists()) {
+                    val mImageView = snapshot.getString("imgUrl")
+                    val name = snapshot.getString("name")
+                    val lastName = snapshot.getString("lastname")
+                    val profession = snapshot.getString("profession")
+                    Glide.with(this).load(mImageView).into(profileImageView)
+                    nameTextView.text = name
+                    lastNameTextView.text = lastName
+                    professionTextView.text = profession
+                }
             }
+
         }
 
-    }
+        private fun loadHomeFragment() {
+            val fragment =
+                HomeFragment() // HomeFragment yerine kendi ana sayfa fragmentınızı oluşturun
+            val fragmentManager = supportFragmentManager
+            fragmentManager.beginTransaction()
+                .replace(R.id.mainFragmentContainerView, fragment)
+                .commit()
 
-    private fun loadHomeFragment() {
-        val fragment = HomeFragment() // HomeFragment yerine kendi ana sayfa fragmentınızı oluşturun
-        val fragmentManager = supportFragmentManager
-        fragmentManager.beginTransaction()
-            .replace(R.id.mainFragmentContainerView, fragment)
-            .commit()
+            drawerLayout.closeDrawer(GravityCompat.START)
+        }
 
-        drawerLayout.closeDrawer(GravityCompat.START)
-    }
+        private fun loadSettingsFragment() {
+            val fragment =
+                SettingFragment() // HomeFragment yerine kendi ana sayfa fragmentınızı oluşturun
+            val fragmentManager = supportFragmentManager
+            fragmentManager.beginTransaction()
+                .replace(R.id.mainFragmentContainerView, fragment)
+                .commit()
 
-    private fun loadSettingsFragment() {
-        val fragment =
-            SettingFragment() // HomeFragment yerine kendi ana sayfa fragmentınızı oluşturun
-        val fragmentManager = supportFragmentManager
-        fragmentManager.beginTransaction()
-            .replace(R.id.mainFragmentContainerView, fragment)
-            .commit()
+            drawerLayout.closeDrawer(GravityCompat.START)
+        }
 
-        drawerLayout.closeDrawer(GravityCompat.START)
-    }
+        fun getUID(): String? {
+            val firebaseAuth = FirebaseAuth.getInstance()
+            return firebaseAuth.uid
+        }
 
-    fun getUID(): String? {
-        val firebaseAuth = FirebaseAuth.getInstance()
-        return firebaseAuth.uid
-    }
+        override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+            menuInflater.inflate(R.menu.menu_item, menu)
+            return true
+        }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_item, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.logOut -> {
-                val builder = AlertDialog.Builder(this)
-                builder.setTitle("Alert Dialog")
-                builder.setMessage("çıkış yapmak üzeresiniz.")
-                builder.setPositiveButton("yes") { _, _ ->
-                    vm.logout {
-                        getUID()?.let { vm.updateStatus(it, "offline") }
-                        val intent = Intent(this, AuthActivity::class.java)
-                        startActivity(intent)
-                        finish()
+        override fun onOptionsItemSelected(item: MenuItem): Boolean {
+            when (item.itemId) {
+                R.id.logOut -> {
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle("Alert Dialog")
+                    builder.setMessage("çıkış yapmak üzeresiniz.")
+                    builder.setPositiveButton("yes") { _, _ ->
+                        vm.logout {
+                            getUID()?.let { vm.updateStatus(it, "offline") }
+                            val intent = Intent(this, AuthActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
                     }
-                }
-                builder.setNegativeButton("no") { _, _ ->
-                    Toast.makeText(this, "Çıkış yapmak için onaylayınız.", Toast.LENGTH_SHORT)
-                        .show()
-                }
+                    builder.setNegativeButton("no") { _, _ ->
+                        Toast.makeText(this, "Çıkış yapmak için onaylayınız.", Toast.LENGTH_SHORT)
+                            .show()
+                    }
 
-                builder.create()
-                builder.show()
-            }
-            android.R.id.home -> {
-                if (isDrawerOpen) {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    isDrawerOpen = false
-                } else {
-                    drawerLayout.openDrawer(GravityCompat.START)
-                    isDrawerOpen = true
+                    builder.create()
+                    builder.show()
                 }
-                return true
+                android.R.id.home -> {
+                    if (isDrawerOpen) {
+                        drawerLayout.closeDrawer(GravityCompat.START)
+                        isDrawerOpen = false
+                    } else {
+                        drawerLayout.openDrawer(GravityCompat.START)
+                        isDrawerOpen = true
+                    }
+                    return true
+                }
             }
+            return super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
-    }
 
-}
+    }
