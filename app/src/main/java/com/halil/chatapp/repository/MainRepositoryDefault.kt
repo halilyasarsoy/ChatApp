@@ -109,6 +109,26 @@ class MainRepositoryDefault : MainRepositoryInterface {
             }
     }
 
+    override suspend fun getNotesList(
+        universityName: String,
+        departmentName: String,
+        onResult: (Resource<List<String>>) -> Unit
+    ) {
+        notes.document(universityName).get()
+            .addOnCompleteListener { universityTask ->
+                if (universityTask.isSuccessful) {
+                    val departmentMap = universityTask.result?.data?.get(departmentName) as? List<String>
+                    val noteContentList = departmentMap ?: emptyList()
+                    onResult.invoke(Resource.Success(noteContentList))
+                } else {
+                    onResult.invoke(Resource.Error(universityTask.exception?.message.toString()))
+                }
+            }
+    }
+
+
+
+
 
     override fun logout(result: () -> Unit) {
         getUID()?.let {
@@ -140,7 +160,7 @@ class MainRepositoryDefault : MainRepositoryInterface {
         }
     }
 
-    override suspend fun getNotesData(context: Context, callback: (List<String>) -> Unit) {
+    override suspend fun getUserInfo(context: Context, callback: (List<String>) -> Unit) {
         val user = FirebaseAuth.getInstance().currentUser
         val uid = user?.uid
         if (uid != null) {

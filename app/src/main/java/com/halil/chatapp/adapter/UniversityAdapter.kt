@@ -4,7 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.halil.chatapp.data.GetListUniversityNotes
-import com.halil.chatapp.databinding.GetNotesBinding
+
+import com.halil.chatapp.databinding.GetUniversityListBinding
 
 class UniversityAdapter(private var universityNameList: ArrayList<GetListUniversityNotes>) :
     RecyclerView.Adapter<UniversityAdapter.MyViewHolder>() {
@@ -19,8 +20,8 @@ class UniversityAdapter(private var universityNameList: ArrayList<GetListUnivers
         onItemClickListener = listener
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val binding: GetNotesBinding =
-            GetNotesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding: GetUniversityListBinding =
+            GetUniversityListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
     }
 
@@ -36,7 +37,7 @@ class UniversityAdapter(private var universityNameList: ArrayList<GetListUnivers
         return universityNameList.size
     }
 
-    inner class MyViewHolder(private val binding: GetNotesBinding) :
+    inner class MyViewHolder(private val binding: GetUniversityListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(university: GetListUniversityNotes) {

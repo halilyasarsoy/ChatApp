@@ -53,17 +53,22 @@ class DepartmentListFragment : Fragment() {
                 DepartmentAdapter.OnItemClickListener {
                 override fun onItemClick(university: GetListUniversityNotes) {
                     val action =
-                        NotesFragmentDirections.actionNotesFragmentToDepartmentListFragment(
-                            university.university
-                        )
-                    findNavController().navigate(action)
+                        university.department?.let {
+                            DepartmentListFragmentDirections.actionDepartmentListFragmentToNotesListFragment(
+                                university.university,
+                                university.department
+                            )
+                        }
+                    if (action != null) {
+                        findNavController().navigate(action)
+                    }
                 }
             })
         }
     }
 
     private fun checkDepartmentList() {
-        vm.universityNameList.observe(viewLifecycleOwner) { resource ->
+        vm.departmentList.observe(viewLifecycleOwner) { resource ->
             when (resource) {
                 is Resource.Error -> {
                     Toast.makeText(

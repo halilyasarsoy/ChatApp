@@ -23,6 +23,12 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
     private val _universitiyNameList = MutableLiveData<Resource<List<GetListUniversityNotes>>>()
     val universityNameList = _universitiyNameList
 
+    private val _departmentList = MutableLiveData<Resource<List<GetListUniversityNotes>>>()
+    val departmentList = _departmentList
+
+    private val _notesList = MutableLiveData<Resource<List<String>>>()
+    val notesList = _notesList
+
     private val _universityData = MutableLiveData<List<String>>()
     val universityData: LiveData<List<String>> = _universityData
 
@@ -56,10 +62,19 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
     }
 
     fun getDepartmentList(universityName: String) {
-        _universitiyNameList.postValue(Resource.Loading())
+        _departmentList.postValue(Resource.Loading())
         viewModelScope.launch {
             repository.getDepartmentList(universityName) {
-                _universitiyNameList.postValue(it)
+                _departmentList.postValue(it)
+            }
+        }
+    }
+
+    fun getNotesList(universityName: String, department: String) {
+        _notesList.postValue(Resource.Loading())
+        viewModelScope.launch {
+            repository.getNotesList(universityName, department) {
+                _notesList.postValue(it)
             }
         }
     }
@@ -73,7 +88,7 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
 
     fun fetchNotesData(context: Context) {
         viewModelScope.launch {
-            repository.getNotesData(context) { universities ->
+            repository.getUserInfo(context) { universities ->
                 _universityData.value = universities
             }
         }
