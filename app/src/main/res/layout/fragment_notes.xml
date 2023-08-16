@@ -6,7 +6,7 @@
     tools:context=".ui.fragment.NotesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/getNotesRecyclerView"
+        android:id="@+id/getUniversityNamesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"

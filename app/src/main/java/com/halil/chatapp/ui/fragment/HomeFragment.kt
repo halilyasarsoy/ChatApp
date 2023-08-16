@@ -103,9 +103,10 @@ class HomeFragment : Fragment() {
                     ).show()
                 }
                 is Resource.Loading -> {
-                    //progresbar
+                    binding.progressBarUserList.visibility = View.VISIBLE
                 }
                 is Resource.Success -> {
+                    binding.progressBarUserList.visibility = View.GONE
                     val userList = it.data as? ArrayList<Users>
                     val sortedList = userList?.sortedByDescending { user -> user.status }
                     sortedList?.let { newList ->

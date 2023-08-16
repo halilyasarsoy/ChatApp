@@ -3,6 +3,7 @@ package com.halil.chatapp.repository
 import android.content.Context
 import android.net.Uri
 import com.google.firebase.auth.AuthResult
+import com.halil.chatapp.data.GetListUniversityNotes
 import com.halil.chatapp.data.NotesData
 import com.halil.chatapp.data.UserStorage
 import com.halil.chatapp.data.Users
@@ -31,13 +32,7 @@ interface MainRepositoryInterface {
 
     fun addNotesData(university: String, department: String, context: Context)
 
-    fun uploadFile(
-        user: UserStorage,
-        fileUri: Uri,
-        onSuccess: () -> Unit,
-        onFailure: (Exception) -> Unit
-    )
-
     suspend fun getNotesData(context: Context, callback: (List<String>) -> Unit)
-    fun getUniversitiesInfo(callback: (List<NotesData>) -> Unit)
+
+    suspend fun getUniversityNameList(onResult: (Resource<List<GetListUniversityNotes>>) -> Unit)
 }

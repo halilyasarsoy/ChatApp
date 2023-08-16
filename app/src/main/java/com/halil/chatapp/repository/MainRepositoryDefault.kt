@@ -21,7 +21,6 @@ class MainRepositoryDefault : MainRepositoryInterface {
     private val users = FirebaseFirestore.getInstance().collection("users")
     private val notes = FirebaseFirestore.getInstance().collection("notes")
     private val universityInfo = FirebaseFirestore.getInstance().collection("university")
-    private val storageReference = Firebase.storage.reference
 
     private fun getUID(): String? {
         val firebaseAuth = FirebaseAuth.getInstance()
@@ -82,6 +81,18 @@ class MainRepositoryDefault : MainRepositoryInterface {
             }
     }
 
+    override suspend fun getUniversityNameList(onResult: (Resource<List<GetListUniversityNotes>>) -> Unit) {
+        notes.get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val universityList = task.result?.documents?.map { GetListUniversityNotes(it.id) }
+                    onResult.invoke(Resource.Success(universityList))
+                } else {
+                    onResult.invoke(Resource.Error(task.exception?.message.toString()))
+                }
+            }
+    }
+
     override fun logout(result: () -> Unit) {
         getUID()?.let {
             FirebaseDatabase.getInstance().getReference("User-Status").child(it)
@@ -112,7 +123,6 @@ class MainRepositoryDefault : MainRepositoryInterface {
         }
     }
 
-
     override suspend fun getNotesData(context: Context, callback: (List<String>) -> Unit) {
         val user = FirebaseAuth.getInstance().currentUser
         val uid = user?.uid
@@ -120,76 +130,14 @@ class MainRepositoryDefault : MainRepositoryInterface {
             val userDoc = universityInfo.document(uid)
             userDoc.get().addOnSuccessListener { document ->
                 val department = document?.get("department") as? String
-                val departmentList = if (department != null) listOf(department) else emptyList<String>()
+                val departmentList =
+                    if (department != null) listOf(department) else emptyList<String>()
                 callback.invoke(departmentList)
             }.addOnFailureListener { exception ->
                 // Hata durumuyla ilgili işlemler
                 callback.invoke(emptyList())
             }
         }
-    }
-
-
-    override fun getUniversitiesInfo(callback: (List<NotesData>) -> Unit) {
-        val user = FirebaseAuth.getInstance().currentUser
-        val email = user?.email
-        val uid = user?.uid
-        val usersCollection = FirebaseFirestore.getInstance().collection("users")
-        if (uid != null) {
-            usersCollection.document(uid).get()
-                .addOnSuccessListener { documentSnapshot ->
-                    val profession = documentSnapshot.get("profession") as? String
-
-                    if (email != null) {
-                        if (profession != null) {
-                            notes.document(profession).get()
-                                .addOnSuccessListener { documentSnapshot ->
-                                    val universitiesList = mutableListOf<NotesData>()
-
-                                    val universitiesArray =
-                                        documentSnapshot.get("universities") as? List<HashMap<String, Any>>
-
-                                    universitiesArray?.let { array ->
-                                        for (item in array) {
-                                            val university = item["university"] as? String
-                                            val department = item["department"] as? String
-
-                                            if (university != null && department != null) {
-                                                val getInfo = NotesData(
-                                                    university = university,
-                                                    department = department
-                                                )
-                                                universitiesList.add(getInfo)
-                                            }
-                                        }
-                                    }
-
-                                    callback(universitiesList)
-                                }
-                                .addOnFailureListener { exception ->
-                                    // Handle failure
-                                }
-                        }
-                    }
-                }
-        }
-    }
-
-    override fun uploadFile(
-        user: UserStorage,
-        fileUri: Uri,
-        onSuccess: () -> Unit,
-        onFailure: (Exception) -> Unit
-    ) {
-        val currentTimeMillis = System.currentTimeMillis()
-        val formattedDateTime =
-            SimpleDateFormat("dd.MM.yyyy : HH:mm", Locale.getDefault()).format(currentTimeMillis)
-        val fileName = "${user.email} - $formattedDateTime"
-        val fileReference = storageReference.child(fileName)
-
-        val uploadTask = fileReference.putFile(fileUri)
-        uploadTask.addOnSuccessListener { onSuccess() }
-        uploadTask.addOnFailureListener { exception -> onFailure(exception) }
     }
 
 }

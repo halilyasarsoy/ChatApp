@@ -20,7 +20,9 @@ import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.halil.chatapp.R
 import com.halil.chatapp.adapter.UniversityAdapter
+import com.halil.chatapp.data.GetListUniversityNotes
 import com.halil.chatapp.databinding.FragmentNotesBinding
+import com.halil.chatapp.other.Resource
 import com.halil.chatapp.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -34,7 +36,7 @@ class NotesFragment : Fragment() {
     private val binding get() = _binding!!
     private var selectedFileUri: Uri? = null
     private var fileUrl: String = ""
-    private var adapterUniversities: UniversityAdapter? = null
+    private val universityNamesAdapter = UniversityAdapter(arrayListOf())
 
     companion object {
         private const val FILE_PICKER_REQUEST_CODE = 123
@@ -51,15 +53,39 @@ class NotesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setAlertDialog()
-        binding.getNotesRecyclerView.adapter = adapterUniversities
-        binding.getNotesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        vml.getUniversityName()
+        universityNameAdapterSet()
+        checkUniversityNameList()
+    }
 
-        vml.getInfoUniversities()
-        vml.universitiesList.observe(viewLifecycleOwner) { universities ->
-            adapterUniversities?.setUniversities(universities)
+    private fun universityNameAdapterSet() {
+        binding.getUniversityNamesRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            setHasFixedSize(true)
+            adapter = universityNamesAdapter
         }
     }
 
+    private fun checkUniversityNameList() {
+        vml.universityNameList.observe(viewLifecycleOwner) {
+            when (it) {
+                is Resource.Error -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "Missing or incorrect login information",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                is Resource.Loading -> {
+
+                }
+                is Resource.Success -> {
+                    val universityNameList = it.data as? ArrayList<GetListUniversityNotes>
+                    universityNamesAdapter.setDataChange(ArrayList(universityNameList))
+                }
+            }
+        }
+    }
 
     private fun setAlertDialog() {
         binding.fabAdd.setOnClickListener {
@@ -90,11 +116,12 @@ class NotesFragment : Fragment() {
     }
 
     private fun uploadFile(fileUri: Uri) {
-        val formatter = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
-        val now = Date()
-        val imgName = formatter.format(now)
-        val storageReference = FirebaseStorage.getInstance().getReference("images/$imgName")
-
+        val user = FirebaseAuth.getInstance().currentUser
+        val currentTimeMillis = System.currentTimeMillis()
+        val formattedDateTime =
+            SimpleDateFormat("dd.MM.yyyy : HH:mm", Locale.getDefault()).format(currentTimeMillis)
+        val storageReference =
+            FirebaseStorage.getInstance().getReference("${user?.email} - ${formattedDateTime}")
         storageReference.putFile(fileUri)
             .addOnSuccessListener { taskSnapshot ->
                 storageReference.downloadUrl.addOnSuccessListener { uri ->
@@ -114,31 +141,24 @@ class NotesFragment : Fragment() {
     private fun addFileUrlToFirestore() {
         val currentUser = FirebaseAuth.getInstance().currentUser
         val uid = currentUser?.uid
-
         if (uid != null) {
             val usersCollection = FirebaseFirestore.getInstance().collection("users")
             usersCollection.document(uid).get()
                 .addOnSuccessListener { documentSnapshot ->
                     val profession = documentSnapshot.get("profession") as? String
-
                     if (profession != null) {
                         val notesRef = FirebaseFirestore.getInstance()
                             .collection("notes")
                             .document(profession)
-
-                        // Department bilgisini Firestore'dan çekmek için departmentRef
                         val departmentRef = FirebaseFirestore.getInstance()
                             .collection("university")
                             .document(uid)
-
                         departmentRef.get().addOnSuccessListener { departmentDocument ->
                             val department = departmentDocument.getString("department")
-
                             if (department != null) {
                                 val fieldUpdate = hashMapOf<String, Any>(
-                                    department to FieldValue.arrayUnion(fileUrl) // userUrls yerine department olarak değiştirildi
+                                    department to FieldValue.arrayUnion(fileUrl)
                                 )
-
                                 notesRef.set(fieldUpdate, SetOptions.merge())
                                     .addOnSuccessListener {
                                         Toast.makeText(
@@ -159,12 +179,9 @@ class NotesFragment : Fragment() {
                     }
                 }
                 .addOnFailureListener { exception ->
-                    // Handle failure
                 }
         }
     }
-
-
 
     private fun openFilePicker() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
