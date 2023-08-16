@@ -6,4 +6,6 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class GetListUniversityNotes(
     val university: String,
+    val department: String? = null
+
 ) : Parcelable

@@ -8,7 +8,7 @@
         android:orientation="vertical"
         android:layout_gravity="center">
         <TextView
-            android:id="@+id/universityName"
+            android:id="@+id/departmentName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"

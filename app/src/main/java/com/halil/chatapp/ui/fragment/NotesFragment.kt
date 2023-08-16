@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
@@ -36,7 +37,7 @@ class NotesFragment : Fragment() {
     private val binding get() = _binding!!
     private var selectedFileUri: Uri? = null
     private var fileUrl: String = ""
-    private val universityNamesAdapter = UniversityAdapter(arrayListOf())
+    private var universityNamesAdapter = UniversityAdapter(arrayListOf())
 
     companion object {
         private const val FILE_PICKER_REQUEST_CODE = 123
@@ -62,13 +63,25 @@ class NotesFragment : Fragment() {
         binding.getUniversityNamesRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
+            universityNamesAdapter = UniversityAdapter(arrayListOf())
             adapter = universityNamesAdapter
+
+            universityNamesAdapter.setOnItemClickListener(object :
+                UniversityAdapter.OnItemClickListener {
+                override fun onItemClick(university: GetListUniversityNotes) {
+                    // Üniversiteye tıklandığında yapılacak işlemler
+                    val action =
+                        NotesFragmentDirections.actionNotesFragmentToDepartmentListFragment(university.university)
+                    findNavController().navigate(action)
+                }
+            })
+
         }
     }
 
     private fun checkUniversityNameList() {
-        vml.universityNameList.observe(viewLifecycleOwner) {
-            when (it) {
+        vml.universityNameList.observe(viewLifecycleOwner) { resource ->
+            when (resource) {
                 is Resource.Error -> {
                     Toast.makeText(
                         requireContext(),
@@ -77,10 +90,10 @@ class NotesFragment : Fragment() {
                     ).show()
                 }
                 is Resource.Loading -> {
-
+                    // Yükleme durumu
                 }
                 is Resource.Success -> {
-                    val universityNameList = it.data as? ArrayList<GetListUniversityNotes>
+                    val universityNameList = resource.data as? ArrayList<GetListUniversityNotes>
                     universityNamesAdapter.setDataChange(ArrayList(universityNameList))
                 }
             }

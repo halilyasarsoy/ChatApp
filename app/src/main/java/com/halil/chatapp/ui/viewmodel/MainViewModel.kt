@@ -1,13 +1,11 @@
 package com.halil.chatapp.ui.viewmodel
 
 import android.content.Context
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.halil.chatapp.data.GetListUniversityNotes
-import com.halil.chatapp.data.UserStorage
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.other.Resource
 import com.halil.chatapp.repository.MainRepositoryInterface
@@ -52,6 +50,15 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
         _universitiyNameList.postValue(Resource.Loading())
         viewModelScope.launch {
             repository.getUniversityNameList {
+                _universitiyNameList.postValue(it)
+            }
+        }
+    }
+
+    fun getDepartmentList(universityName: String) {
+        _universitiyNameList.postValue(Resource.Loading())
+        viewModelScope.launch {
+            repository.getDepartmentList(universityName) {
                 _universitiyNameList.postValue(it)
             }
         }

@@ -35,4 +35,5 @@ interface MainRepositoryInterface {
     suspend fun getNotesData(context: Context, callback: (List<String>) -> Unit)
 
     suspend fun getUniversityNameList(onResult: (Resource<List<GetListUniversityNotes>>) -> Unit)
+    suspend fun getDepartmentList(universityName: String, onResult: (Resource<List<GetListUniversityNotes>>) -> Unit)
 }

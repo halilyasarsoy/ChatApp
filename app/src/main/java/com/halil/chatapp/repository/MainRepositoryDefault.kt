@@ -1,18 +1,15 @@
 package com.halil.chatapp.repository
 
 import android.content.Context
-import android.net.Uri
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
-import com.halil.chatapp.data.*
+import com.halil.chatapp.data.GetListUniversityNotes
+import com.halil.chatapp.data.User
+import com.halil.chatapp.data.Users
 import com.halil.chatapp.other.Resource
 import kotlinx.coroutines.tasks.await
-import java.text.SimpleDateFormat
-import java.util.*
 
 @Suppress("UNREACHABLE_CODE")
 class MainRepositoryDefault : MainRepositoryInterface {
@@ -85,13 +82,33 @@ class MainRepositoryDefault : MainRepositoryInterface {
         notes.get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    val universityList = task.result?.documents?.map { GetListUniversityNotes(it.id) }
+                    val universityList =
+                        task.result?.documents?.map { GetListUniversityNotes(it.id) }
                     onResult.invoke(Resource.Success(universityList))
                 } else {
                     onResult.invoke(Resource.Error(task.exception?.message.toString()))
                 }
             }
     }
+
+    override suspend fun getDepartmentList(
+        universityName: String,
+        onResult: (Resource<List<GetListUniversityNotes>>) -> Unit
+    ) {
+        notes.document(universityName).get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val departmentMap = task.result?.data?.keys?.toList() ?: emptyList()
+                    val departmentList = departmentMap.map { department ->
+                        GetListUniversityNotes(universityName, department)
+                    }
+                    onResult.invoke(Resource.Success(departmentList))
+                } else {
+                    onResult.invoke(Resource.Error(task.exception?.message.toString()))
+                }
+            }
+    }
+
 
     override fun logout(result: () -> Unit) {
         getUID()?.let {

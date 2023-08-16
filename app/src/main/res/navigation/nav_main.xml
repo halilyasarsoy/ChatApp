@@ -95,6 +95,14 @@
         <action
             android:id="@+id/action_notesFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_notesFragment_to_departmentListFragment"
+            app:destination="@id/departmentListFragment">
+            <argument
+                android:name="university"
+                app:argType="string" />
+        </action>
+
     </fragment>
     <fragment
         android:id="@+id/fullScreenFragment"
@@ -106,6 +114,15 @@
             android:id="@+id/action_fullScreenFragment_to_settingFragment"
             app:destination="@id/settingFragment" />
 
+    </fragment>
+    <fragment
+        android:id="@+id/departmentListFragment"
+        android:name="com.halil.chatapp.ui.fragment.DepartmentListFragment"
+        android:label="fragment_department_list"
+        tools:layout="@layout/fragment_department_list">
+        <action
+            android:id="@+id/action_departmentListFragment_to_notesFragment"
+            app:destination="@id/notesFragment" />
     </fragment>
 
 </navigation>

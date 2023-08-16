@@ -28,8 +28,7 @@ class ListAdapter(var userList: ArrayList<Users>) :
     }
 
     class MyViewHolder(
-        private val itemBinding: ListItemBinding,
-        private val onItemClickListener: OnItemClickListener
+        private val itemBinding: ListItemBinding
     ) : RecyclerView.ViewHolder(itemBinding.root) {
 
         fun bindItem(user: Users) {
@@ -50,8 +49,7 @@ class ListAdapter(var userList: ArrayList<Users>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder(
-            ListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
-            onItemClickListener
+            ListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 
