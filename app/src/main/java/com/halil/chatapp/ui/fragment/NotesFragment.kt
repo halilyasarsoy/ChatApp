@@ -1,5 +1,6 @@
 package com.halil.chatapp.ui.fragment
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
@@ -12,9 +13,9 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -52,14 +53,13 @@ class NotesFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setAlertDialog()
         vml.getUniversityName()
         universityNameAdapterSet()
         checkUniversityNameList()
-
-
     }
 
     private fun universityNameAdapterSet() {
@@ -74,8 +74,11 @@ class NotesFragment : Fragment() {
                 override fun onItemClick(university: GetListUniversityNotes) {
                     // Üniversiteye tıklandığında yapılacak işlemler
                     val action =
-                        NotesFragmentDirections.actionNotesFragmentToDepartmentListFragment(university.university)
+                        NotesFragmentDirections.actionNotesFragmentToDepartmentListFragment(
+                            university.university
+                        )
                     findNavController().navigate(action)
+
                 }
             })
 
