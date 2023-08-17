@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -57,6 +58,8 @@ class NotesFragment : Fragment() {
         vml.getUniversityName()
         universityNameAdapterSet()
         checkUniversityNameList()
+
+
     }
 
     private fun universityNameAdapterSet() {

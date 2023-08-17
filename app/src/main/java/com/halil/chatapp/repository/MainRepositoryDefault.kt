@@ -126,10 +126,6 @@ class MainRepositoryDefault : MainRepositoryInterface {
             }
     }
 
-
-
-
-
     override fun logout(result: () -> Unit) {
         getUID()?.let {
             FirebaseDatabase.getInstance().getReference("User-Status").child(it)

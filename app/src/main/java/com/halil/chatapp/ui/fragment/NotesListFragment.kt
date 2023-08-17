@@ -1,13 +1,14 @@
 package com.halil.chatapp.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.halil.chatapp.adapter.NotesAdapter
 import com.halil.chatapp.databinding.FragmentNotesListBinding
 import com.halil.chatapp.other.Resource
@@ -44,7 +45,7 @@ class NotesListFragment : Fragment() {
 
     private fun notesAdapterSetup() {
         binding.notesListRecyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = GridLayoutManager(context, 2)
             setHasFixedSize(true)
             notesListAdapter = NotesAdapter(arrayListOf())
             adapter = notesListAdapter
@@ -62,12 +63,17 @@ class NotesListFragment : Fragment() {
                     ).show()
                 }
                 is Resource.Loading -> {
-                    // Yükleme durumu
+                    binding.progressBarNotesList.visibility = View.VISIBLE
                 }
                 is Resource.Success -> {
+                    binding.progressBarNotesList.visibility = View.GONE
+
                     val departmentList = resource.data as? ArrayList<String>
                     departmentList?.let { ArrayList(it) }
-                        ?.let { notesListAdapter.setDataChange(it) }
+                        ?.let {
+                            Log.e("URLs :::", departmentList.toString())
+                            notesListAdapter.setDataChange(it)
+                        }
                 }
             }
         }
