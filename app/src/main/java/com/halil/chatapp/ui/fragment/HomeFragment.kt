@@ -45,7 +45,6 @@ class HomeFragment : Fragment() {
         adapterSetup()
         checkUserList()
         headerView = requireActivity().findViewById(R.id.navDrawView)
-
         change()
     }
 

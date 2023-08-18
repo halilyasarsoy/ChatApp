@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="Users"
-        android:icon="@drawable/ic_baseline_person_24"
-        android:id="@+id/homeFragment"/>
-    <item android:title="Settings"
-        android:id="@+id/settingFragment"
-        android:icon="@drawable/ic_baseline_settings_24"/>
-    <item android:title="Notes"
+    <item
         android:id="@+id/notesFragment"
         android:icon="@drawable/ic_baseline_notes_24"
-        />
+        android:title="@string/notes" />
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="@string/users" />
+    <item
+        android:id="@+id/communicationFragment"
+        android:icon="@drawable/ic_baseline_insert_comment_24"
+        android:title="@string/communication" />
 </menu>

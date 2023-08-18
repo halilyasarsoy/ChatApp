@@ -16,12 +16,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.halil.chatapp.R
 import com.halil.chatapp.databinding.FragmentSettingBinding
-import com.halil.chatapp.ui.activity.AuthActivity
 import com.halil.chatapp.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -32,7 +30,6 @@ class SettingFragment : Fragment() {
     private var _binding: FragmentSettingBinding? = null
     private val binding get() = _binding!!
     private val db = FirebaseFirestore.getInstance()
-    private val mRef = FirebaseDatabase.getInstance().reference
     private lateinit var imageURI: Uri
     private var imgName = ""
     private var imgUrlx: String? = null
@@ -50,7 +47,6 @@ class SettingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        deleteUser()
         update()
         updateBtn()
         changeDepartment()
@@ -87,7 +83,6 @@ class SettingFragment : Fragment() {
         }
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
@@ -96,7 +91,6 @@ class SettingFragment : Fragment() {
             uploadImage()
         }
     }
-
 
     @SuppressLint("CheckResult")
     private fun updateBtn() {
@@ -117,7 +111,6 @@ class SettingFragment : Fragment() {
         }
     }
 
-
     private fun update() {
         binding.editIcon.setOnClickListener {
             val intent = Intent()
@@ -127,20 +120,16 @@ class SettingFragment : Fragment() {
         }
     }
 
-
     private fun changeDepartment() {
         binding.changeDepartment.setOnClickListener {
             val dialogView = layoutInflater.inflate(R.layout.alert_dialog_notes, null)
             val universityEditText = dialogView.findViewById<EditText>(R.id.university_name)
             val departmentEditText = dialogView.findViewById<EditText>(R.id.department_name)
-
             val builder = AlertDialog.Builder(requireContext())
-
             builder.setView(dialogView)
             builder.setPositiveButton("Tamam") { dialog, _ ->
                 val university = universityEditText.text.toString()
                 val department = departmentEditText.text.toString()
-
                 if (university.isEmpty() || department.isEmpty()) {
                     Toast.makeText(
                         requireContext(),
@@ -154,42 +143,6 @@ class SettingFragment : Fragment() {
             }
             val dialog = builder.create()
             dialog.show()
-        }
-    }
-
-    private fun alert() {
-        val builder = AlertDialog.Builder(activity)
-        builder.setTitle(R.string.titleAlert)
-        builder.setMessage(R.string.titleQuest)
-        builder.setPositiveButton(R.string.yesAnswer) { _, _ ->
-            mRef.child(FirebaseAuth.getInstance().currentUser!!.uid).removeValue()
-                .addOnSuccessListener {
-                    FirebaseAuth.getInstance().currentUser!!.delete()
-                        .addOnCompleteListener {
-                            val intent = Intent(requireContext(), AuthActivity::class.java)
-                            startActivity(intent)
-                            activity?.finish()
-                            Toast.makeText(
-                                requireContext(),
-                                R.string.toastSuccess,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                }
-            db.collection("users").document(FirebaseAuth.getInstance().currentUser!!.uid).delete()
-                .addOnFailureListener {
-                    Toast.makeText(requireContext(), "Account not found", Toast.LENGTH_SHORT).show()
-                }
-        }
-        builder.setNegativeButton(R.string.noAnswer) { dialog, _ ->
-            dialog.cancel()
-        }
-        val alert = builder.create()
-        alert.show()
-    }
-    private fun deleteUser() {
-        binding.button.setOnClickListener {
-            alert()
         }
     }
 }

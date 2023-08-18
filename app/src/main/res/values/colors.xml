@@ -15,8 +15,10 @@
     <color name="bannerChats">#FFFFFF</color>
     <color name="actionBar">#075e54</color>
     <color name="toolbarChats">#67625D</color>
-
     <color name="main_color">#282D43</color>
     <color name="offline_red">#910505</color>
     <color name="online_green">#059514</color>
+    <color name="bottom_sheet_color">#2C2B2B</color>
+    <color name="clicked_bottom_sheet">#FFA500</color> <!-- Turuncu renk -->
+
 </resources>

@@ -5,8 +5,23 @@
     <item
         android:id="@+id/notesFragment"
         android:title="@string/drawerMenuNotes" />
-    <item
-        android:id="@+id/settingFragment"
-        android:title="@string/drawerMenuSettings" />
+
+
+    <item android:title="@string/setting">
+        <menu>
+            <item
+                android:id="@+id/settingFragment"
+                android:title="@string/drawerMenuSettings" />
+            <item
+                android:id="@+id/deleteAccount"
+                android:title="@string/deleteAccounts" />
+        </menu>
+    </item>
+    <item android:title="@string/communication">
+        <menu>
+            <item android:id="@+id/communicationFragment"
+                android:title="@string/communication"/>
+        </menu>
+    </item>
 
 </menu>

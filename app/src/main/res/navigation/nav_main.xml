@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/notesFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -21,7 +21,9 @@
         <action
             android:id="@+id/action_homeFragment_to_notesFragment"
             app:destination="@id/notesFragment" />
-
+        <action
+            android:id="@+id/action_homeFragment_to_communicationFragment"
+            app:destination="@id/communicationFragment" />
 
     </fragment>
     <fragment
@@ -39,6 +41,9 @@
         <action
             android:id="@+id/action_settingFragment_to_fullScreenFragment"
             app:destination="@id/fullScreenFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_communicationFragment"
+            app:destination="@id/communicationFragment" />
     </fragment>
     <fragment
         android:id="@+id/chatScreenFragment"
@@ -109,6 +114,9 @@
                 android:name="university"
                 app:argType="string" />
         </action>
+        <action
+            android:id="@+id/action_notesFragment_to_communicationFragment"
+            app:destination="@id/communicationFragment" />
 
     </fragment>
     <fragment
@@ -150,6 +158,21 @@
         <action
             android:id="@+id/action_notesListFragment_to_notesFragment2"
             app:destination="@id/notesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/communicationFragment"
+        android:name="com.halil.chatapp.ui.fragment.CommunicationFragment"
+        android:label="fragment_communication"
+        tools:layout="@layout/fragment_communication" >
+        <action
+            android:id="@+id/action_communicationFragment_to_notesFragment"
+            app:destination="@id/notesFragment" />
+        <action
+            android:id="@+id/action_communicationFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_communicationFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 
 </navigation>

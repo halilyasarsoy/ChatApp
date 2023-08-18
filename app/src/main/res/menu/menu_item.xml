@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/settingFragment"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="@string/setting" />
     <item
         android:id="@+id/logOut"
         android:icon="@drawable/ic_baseline_login_24"
-        android:title="Logout"
-        app:showAsAction="ifRoom" />
-
+        android:title="@string/logOut" />
 </menu>
