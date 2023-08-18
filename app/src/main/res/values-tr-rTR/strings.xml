@@ -49,5 +49,8 @@
     <string name="notes">Notlar</string>
     <string name="users">Kullanıcılar</string>
     <string name="communication">İletişim</string>
+    <string name="send">Gönder</string>
+    <string name="your_message">Mesajınız</string>
+    <string name="submit_your_problem_or_feedback">Sorununuzu veya geri bildiriminizi gönderin</string>
 
 </resources>

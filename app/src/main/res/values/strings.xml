@@ -48,4 +48,8 @@
     <string name="notes">Notes</string>
     <string name="users">Users</string>
     <string name="communication">Communication</string>
+    <string name="send">Send</string>
+    <string name="your_message">Your Message</string>
+    <string name="submit_your_problem_or_feedback">Submit your problem or feedback</string>
+
 </resources>
