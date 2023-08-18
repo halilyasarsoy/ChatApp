@@ -4,21 +4,20 @@ import android.content.Context
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import com.halil.chatapp.data.GetListUniversityNotes
-import com.halil.chatapp.data.User
-import com.halil.chatapp.data.Users
+import com.halil.chatapp.data.*
 import com.halil.chatapp.other.Resource
 import kotlinx.coroutines.tasks.await
 
 @Suppress("UNREACHABLE_CODE")
 class MainRepositoryDefault : MainRepositoryInterface {
-
+    private val message_field = "messages"
     private val auth = FirebaseAuth.getInstance()
     private val users = FirebaseFirestore.getInstance().collection("users")
     private val notes = FirebaseFirestore.getInstance().collection("notes")
     private val universityInfo = FirebaseFirestore.getInstance().collection("university")
-
+    private val contacts = FirebaseFirestore.getInstance().collection("Contacts")
     private fun getUID(): String? {
         val firebaseAuth = FirebaseAuth.getInstance()
         return firebaseAuth.uid
@@ -117,13 +116,34 @@ class MainRepositoryDefault : MainRepositoryInterface {
         notes.document(universityName).get()
             .addOnCompleteListener { universityTask ->
                 if (universityTask.isSuccessful) {
-                    val departmentMap = universityTask.result?.data?.get(departmentName) as? List<String>
+                    val departmentMap =
+                        universityTask.result?.data?.get(departmentName) as? List<String>
                     val noteContentList = departmentMap ?: emptyList()
                     onResult.invoke(Resource.Success(noteContentList))
                 } else {
                     onResult.invoke(Resource.Error(universityTask.exception?.message.toString()))
                 }
             }
+    }
+
+    override suspend fun sendMessage(messageText: String, time: String) {
+        val contact = Contact()
+        val message = ContactMessage()
+        contact.mail = auth.currentUser?.email.toString()
+        contact.uid = auth.currentUser?.uid.toString()
+        message.messageText = messageText
+        message.time = time
+        val userMail = auth.currentUser?.email.toString()
+        val docRef = contacts.document(userMail)
+        docRef.get().addOnSuccessListener { document ->
+            if (document.data != null) {
+                docRef.update(message_field,FieldValue.arrayUnion(message))
+            }
+            else{
+                contacts.document(userMail).set(contact)
+                docRef.update(message_field,FieldValue.arrayUnion(message))
+            }
+        }
     }
 
     override fun logout(result: () -> Unit) {

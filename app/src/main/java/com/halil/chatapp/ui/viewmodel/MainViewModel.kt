@@ -17,6 +17,10 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(private val repository: MainRepositoryInterface) :
     ViewModel() {
+
+    private val _addStatus = MutableLiveData<Resource<Any>>()
+    val addStatus: LiveData<Resource<Any>> = _addStatus
+
     private val _userList = MutableLiveData<Resource<List<Users>>>()
     val userList = _userList
 
@@ -91,6 +95,12 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
             repository.getUserInfo(context) { universities ->
                 _universityData.value = universities
             }
+        }
+    }
+
+    fun sendMessages(messageText: String, time: String) {
+        viewModelScope.launch {
+            repository.sendMessage(messageText, time)
         }
     }
 

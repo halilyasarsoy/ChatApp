@@ -43,4 +43,6 @@ interface MainRepositoryInterface {
         department: String,
         onResult: (Resource<List<String>>) -> Unit
     )
+
+    suspend fun sendMessage(messageText: String, time: String)
 }
