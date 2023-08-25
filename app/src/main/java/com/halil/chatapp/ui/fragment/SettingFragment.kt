@@ -57,7 +57,7 @@ class SettingFragment : Fragment() {
             ?.addOnSuccessListener { document ->
                 if (document != null) {
                     val mImageView = document.getString("imgUrl")
-                    Glide.with(this).load(mImageView).into(imageViewChange)
+                    Glide.with(requireContext()).load(mImageView).into(imageViewChange)
                 }
             }
 
@@ -79,7 +79,7 @@ class SettingFragment : Fragment() {
                 imgUrlx = uri.toString()
             }
         }.addOnFailureListener {
-            Toast.makeText(requireContext(), "failure", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireActivity(), "failure", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -100,12 +100,12 @@ class SettingFragment : Fragment() {
                 db.collection("users").document(FirebaseAuth.getInstance().currentUser!!.uid)
                     .update(mapUpdate)
                 Toast.makeText(
-                    requireContext(),
+                    requireActivity(),
                     R.string.toastChangeImageSuccess,
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                Toast.makeText(requireContext(), R.string.toastChangeImageElse, Toast.LENGTH_SHORT)
+                Toast.makeText(requireActivity(), R.string.toastChangeImageElse, Toast.LENGTH_SHORT)
                     .show()
             }
         }
@@ -125,7 +125,7 @@ class SettingFragment : Fragment() {
             val dialogView = layoutInflater.inflate(R.layout.alert_dialog_notes, null)
             val universityEditText = dialogView.findViewById<EditText>(R.id.university_name)
             val departmentEditText = dialogView.findViewById<EditText>(R.id.department_name)
-            val builder = AlertDialog.Builder(requireContext())
+            val builder = AlertDialog.Builder(requireActivity())
             builder.setView(dialogView)
             builder.setPositiveButton("Tamam") { dialog, _ ->
                 val university = universityEditText.text.toString()

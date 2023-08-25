@@ -44,6 +44,7 @@ class NotesListFragment : Fragment() {
     }
 
     private fun notesAdapterSetup() {
+
         binding.notesListRecyclerView.apply {
             layoutManager = GridLayoutManager(context, 2)
             setHasFixedSize(true)

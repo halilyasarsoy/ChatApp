@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="44dp"
-                android:layout_marginBottom="48dp"
+                android:layout_marginBottom="40dp"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:text="@string/send"
@@ -86,9 +86,11 @@
                 android:cropToPadding="true"
                 app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etxtMessage"
-                app:srcCompat="@drawable/support" />
+                app:layout_constraintVertical_bias="0.486"
+                app:srcCompat="@drawable/pngegg" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

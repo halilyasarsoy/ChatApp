@@ -50,6 +50,11 @@
     <string name="users">Kullanıcılar</string>
     <string name="communication">İletişim</string>
     <string name="send">Gönder</string>
-    <string name="your_message">Mesajınız</string>
+    <string name="your_message">Paylaşımcı olmak için lütfen iletişime geçiniz.</string>
+    <string name="message_confirm">Message Sent</string>
+    <string name="message_confirm_message">Are you sure you want to send us a message?</string>
+    <string name="message_sent_title">Message Sent</string>
+    <string name="message_sent_msg">Your message has reached us. We will get back to you by e-mail as soon as possible.</string>
+    <string name="message_empty_error">Please write something</string>
 
 </resources>

@@ -28,7 +28,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.halil.chatapp.R
 import com.halil.chatapp.databinding.ActivityMainBinding
 import com.halil.chatapp.ui.fragment.NotesFragment
+import com.halil.chatapp.ui.fragment.NotesFragmentDirections
 import com.halil.chatapp.ui.fragment.SettingFragment
+import com.halil.chatapp.ui.fragment.SettingFragmentDirections
 import com.halil.chatapp.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import de.hdodenhof.circleimageview.CircleImageView
@@ -46,6 +48,12 @@ class MainActivity : AppCompatActivity() {
     private val db = FirebaseFirestore.getInstance()
     private val mRef = FirebaseDatabase.getInstance().reference
 
+    private val topDestinationIds = setOf(
+        R.id.chatScreenFragment,
+        R.id.detailUsersFragment,
+        R.id.fullScreenFragment
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -61,11 +69,7 @@ class MainActivity : AppCompatActivity() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         setupWithNavController(bottomNav, navController)
 
-        val topDestinationIds = setOf(
-            R.id.chatScreenFragment,
-            R.id.detailUsersFragment,
-            R.id.fullScreenFragment
-        )
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id !in topDestinationIds) {
                 binding.bottomNavigationView.visibility = View.VISIBLE
@@ -103,7 +107,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
     private fun setupNavigationMenuListener() {
         val navigationView: NavigationView = findViewById(R.id.navDrawView)
         navigationView.setNavigationItemSelectedListener { menuItem ->
