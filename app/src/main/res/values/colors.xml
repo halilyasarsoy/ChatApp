@@ -20,5 +20,6 @@
     <color name="online_green">#059514</color>
     <color name="bottom_sheet_color">#2C2B2B</color>
     <color name="clicked_bottom_sheet">#FFA500</color> <!-- Turuncu renk -->
-
+    <color name="ui_login">#FFAF5A</color>
+    <color name="starter_icon">#2F6C6D</color>
 </resources>

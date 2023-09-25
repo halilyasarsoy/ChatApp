@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/mainbg"
     tools:context=".ui.fragment.LoginScreenFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/ui_login"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,45 +23,40 @@
             android:layout_height="335dp"
             android:layout_gravity="center"
             android:layout_marginTop="92dp"
-            android:background="@drawable/login_blur_layout"
             android:gravity="center"
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="320dp"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
-
-                app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp"
-                app:hintTextColor="@color/white">
+                android:layout_marginTop="10dp"
+                app:startIconDrawable="@drawable/custom_start_email">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email_text"
                     android:layout_width="320dp"
-                    android:layout_height="60dp"
+                    android:layout_height="50dp"
                     android:background="@drawable/custom_input"
-                    android:ems="10"
-                    android:hint="@string/email"
-                    android:inputType="textEmailAddress"
-                    android:textColorHint="#1E1D1A"
+                    android:hint="Email"
+                    android:textColorHint="#80FFFFFF"
+                    android:textFontWeight="600"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="320dp"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp"
                 app:hintTextColor="@color/white"
-                app:passwordToggleEnabled="true">
+                app:passwordToggleEnabled="true"
+                app:startIconDrawable="@drawable/custom_start_password">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password_text"
                     android:layout_width="320dp"
-                    android:layout_height="60dp"
+                    android:layout_height="50dp"
                     android:background="@drawable/custom_input"
                     android:ems="10"
                     android:hint="@string/password"
@@ -109,11 +104,11 @@
 
         </LinearLayout>
 
-      <ImageView
-          android:id="@+id/changeLang"
-          android:layout_width="45dp"
-          android:layout_height="45dp"
-          android:src="@drawable/language"/>
+        <ImageView
+            android:id="@+id/changeLang"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/language" />
     </LinearLayout>
 
     <ProgressBar

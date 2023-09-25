@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.mainFragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
+
         getUID()?.let { vm.updateStatus(it, "online") }
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         setupWithNavController(bottomNav, navController)
@@ -122,7 +123,6 @@ class MainActivity : AppCompatActivity() {
                             .setTitle(R.string.deleteAccounts)
                             .setMessage(R.string.lastAlert)
                             .setPositiveButton(R.string.yesAnswer) { _, _ ->
-                                // Perform deletion operations here
                                 mRef.child(FirebaseAuth.getInstance().currentUser!!.uid)
                                     .removeValue()
                                     .addOnSuccessListener {

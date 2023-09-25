@@ -21,6 +21,7 @@ class CommunicationFragment : Fragment() {
     private val viewModel: MainViewModel by viewModels()
     private var _binding: FragmentCommunicationBinding? = null
     private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -55,7 +56,7 @@ class CommunicationFragment : Fragment() {
                             viewModel.sendMessages(msg, myLdt)
                             MaterialAlertDialogBuilder(requireContext(), 2)
                                 .setTitle(getString(R.string.message_sent_title))
-                                .setMessage(getString(R.string.message_sent_msg))
+                                .setMessage( getString(R.string.message_sent_msg))
                                 .setView(mDialogView)
                                 .setPositiveButton("OK") { dialog, which ->
                                     binding.etxtMessage.text.clear()
@@ -80,5 +81,4 @@ class CommunicationFragment : Fragment() {
             }
         }
     }
-
 }

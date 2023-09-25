@@ -3,9 +3,12 @@ package com.halil.chatapp.ui.fragment
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +16,13 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
@@ -60,6 +66,52 @@ class NotesFragment : Fragment() {
         vml.getUniversityName()
         universityNameAdapterSet()
         checkUniversityNameList()
+        approvedUser()
+    }
+
+    private fun approvedUser() {
+        val user = FirebaseAuth.getInstance().currentUser
+        val userEmail = user?.email
+        if (userEmail != null) {
+            val sanitizedEmail = userEmail.replace(".", "_dot_")
+            val databaseReference = FirebaseDatabase.getInstance().getReference("approved-user")
+            val userReference = databaseReference.child(sanitizedEmail).child("approved")
+            val sharedPreferences =
+                requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+
+            userReference.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if (!dataSnapshot.exists()) {
+                        userReference.setValue(false)
+                    }
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.e(TAG, "Veritabanı hatası: ${databaseError.message}")
+                }
+            })
+
+            userReference.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val isApproved = dataSnapshot.getValue(Boolean::class.java) ?: false
+
+                    if (isApproved) {
+                        val editor = sharedPreferences.edit()
+                        editor.putBoolean("isApproved", true)
+                        editor.apply()
+                        binding.fabAddProgressBar.visibility = View.GONE
+                        binding.fabAdd.visibility = View.VISIBLE
+                    } else {
+                        binding.fabAddProgressBar.visibility = View.GONE
+                        binding.fabAdd.visibility = View.GONE
+                    }
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.e(TAG, "Veritabanı hatası: ${databaseError.message}")
+                }
+            })
+        }
     }
 
     private fun universityNameAdapterSet() {
@@ -72,7 +124,6 @@ class NotesFragment : Fragment() {
             universityNamesAdapter.setOnItemClickListener(object :
                 UniversityAdapter.OnItemClickListener {
                 override fun onItemClick(university: GetListUniversityNotes) {
-                    // Üniversiteye tıklandığında yapılacak işlemler
                     val action =
                         NotesFragmentDirections.actionNotesFragmentToDepartmentListFragment(
                             university.university
@@ -85,6 +136,7 @@ class NotesFragment : Fragment() {
         }
     }
 
+
     private fun checkUniversityNameList() {
         vml.universityNameList.observe(viewLifecycleOwner) { resource ->
             when (resource) {
@@ -96,17 +148,20 @@ class NotesFragment : Fragment() {
                     ).show()
                 }
                 is Resource.Loading -> {
-                    // Yükleme durumu
+                    binding.fabAddProgressBar.visibility = View.VISIBLE
                 }
                 is Resource.Success -> {
                     val universityNameList = resource.data as? ArrayList<GetListUniversityNotes>
                     universityNamesAdapter.setDataChange(ArrayList(universityNameList))
+                    binding.fabAddProgressBar.visibility = View.GONE
+
                 }
             }
         }
     }
 
     private fun setAlertDialog() {
+
         binding.fabAdd.setOnClickListener {
             val dialogView = layoutInflater.inflate(R.layout.alert_dialog_pick_file, null)
             val selectFileButton = dialogView.findViewById<Button>(R.id.select_file_notes)
