@@ -28,11 +28,11 @@ class AuthActivity : AppCompatActivity() {
                 viewModel.isLoading.value
             }
         }
-       application.setTheme(R.style.DarkTheme)
+        application.setTheme(R.style.DarkTheme)
         setContentView(R.layout.activity_auth)
 
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.authFragmentContainerView) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.authFragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
 
         if (auth.currentUser != null) {

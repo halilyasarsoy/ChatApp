@@ -15,7 +15,6 @@ interface MainRepositoryInterface {
         password: String,
         confirmPassword: String,
         profession: String,
-
         imgUrl: String
     ): Resource<AuthResult>
 

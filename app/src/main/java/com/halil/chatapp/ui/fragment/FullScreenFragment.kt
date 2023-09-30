@@ -27,6 +27,7 @@ class FullScreenFragment : Fragment() {
     ): View {
 
         _binding = FragmentFullScreenBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -45,11 +46,6 @@ class FullScreenFragment : Fragment() {
                         if (!mImageView.isNullOrEmpty()) {
                             Glide.with(this).load(mImageView).into(binding.fullScreenImageView)
                         } else {
-                            // Eğer imageUrl boş ise, hata mesajı veya varsayılan bir resim gösterebilirsiniz.
-                            // Örneğin:
-                            // Glide.with(this).load(R.drawable.placeholder_image).into(binding.fullScreenImageView)
-                            // veya
-                            // binding.fullScreenImageView.setImageResource(R.drawable.placeholder_image)
                         }
                     }
                     .addOnFailureListener { exception ->
@@ -60,7 +56,8 @@ class FullScreenFragment : Fragment() {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 // Geri tuşuna basıldığında SettingFragment'a geri dön
-                val action = FullScreenFragmentDirections.actionFullScreenFragmentToSettingFragment()
+                val action =
+                    FullScreenFragmentDirections.actionFullScreenFragmentToSettingFragment()
                 findNavController().navigate(action)
             }
         }
