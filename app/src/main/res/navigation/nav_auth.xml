@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_auth"
-    app:startDestination="@id/loginScreenFragment">
+    app:startDestination="@id/selectionScreenFragment">
 
     <fragment
         android:id="@+id/loginScreenFragment"
         android:name="com.halil.chatapp.ui.fragment.LoginScreenFragment"
         android:label="fragment_login_screen"
-        tools:layout="@layout/fragment_login_screen" >
+        tools:layout="@layout/fragment_login_screen">
         <action
             android:id="@+id/action_loginScreenFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
@@ -30,9 +30,21 @@
         android:id="@+id/registerSuccessFragment"
         android:name="com.halil.chatapp.ui.fragment.RegisterSuccessFragment"
         android:label="fragment_register_success"
-        tools:layout="@layout/fragment_register_success" >
+        tools:layout="@layout/fragment_register_success">
         <action
             android:id="@+id/action_registerSuccessFragment_to_loginScreenFragment"
             app:destination="@id/loginScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectionScreenFragment"
+        android:name="com.halil.chatapp.ui.fragment.SelectionScreenFragment"
+        android:label="fragment_selection_screen"
+        tools:layout="@layout/fragment_selection_screen">
+        <action
+            android:id="@+id/action_selectionScreenFragment_to_loginScreenFragment"
+            app:destination="@id/loginScreenFragment" />
+        <action
+            android:id="@+id/action_selectionScreenFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
     </fragment>
 </navigation>

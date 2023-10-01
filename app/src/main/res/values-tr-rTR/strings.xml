@@ -56,5 +56,9 @@
     <string name="message_sent_title">Message Sent</string>
     <string name="message_sent_msg">Your message has reached us. We will get back to you by e-mail as soon as possible.</string>
     <string name="message_empty_error">Please write something</string>
+    <string name="register">Kayıt Ol</string>
+    <string name="welcome_campus">Kampüs\'e Hoşgeldin</string>
+    <string name="explanationFirstScreen">Ders notları paylaşımını kolaylaştıran Kampüs uygulaması ile üniversite yaşamınızı zenginleştirin! 📚✨</string>
+    <string name="confirm_password">Şifreyi Onayla</string>
 
 </resources>

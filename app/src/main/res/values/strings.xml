@@ -2,7 +2,7 @@
     <string name="app_name">ChatApp</string>
     <string name="StringSplashText">Welcome to Chat</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="login">Log in</string>
+    <string name="login">Login</string>
     <string name="please_enter_name">Enter your name..</string>
     <string name="please_enter_last_name">Enter your last name..</string>
     <string name="please_enter_email">Enter your email..</string>
@@ -55,5 +55,9 @@
     <string name="message_sent_title">Message Sent</string>
     <string name="message_sent_msg">Your message has reached us. We will get back to you by e-mail as soon as possible.</string>
     <string name="message_empty_error">Please write something</string>
+    <string name="register">Register</string>
+    <string name="welcome_campus">Welcome to Campus</string>
+    <string name="explanationFirstScreen">Enrich your university life with the Campus application, which makes it easy to share lecture notes! 📚✨</string>
+    <string name="confirm_password">Confirm Password</string>
 
 </resources>

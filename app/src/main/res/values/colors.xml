@@ -22,4 +22,5 @@
     <color name="clicked_bottom_sheet">#FFA500</color> <!-- Turuncu renk -->
     <color name="ui_login">#FFAF5A</color>
     <color name="starter_icon">#2F6C6D</color>
+    <color name="button_main_login_page">#51abcb</color>
 </resources>

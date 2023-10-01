@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Mavi arka plan -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#00B0EA" />
+        </shape>
+    </item>
+
+    <!-- Beyaz oval dışarı doğru genişletilecek -->
+    <item
+        android:bottom="-400dp"
+        android:left="-100dp"
+        android:right="00dp"
+        android:top="-250dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="90"
+                android:endColor="#65FFFFFF"
+                android:startColor="#65FFFFFF" />
+        </shape>
+    </item>
+
+</layer-list>
