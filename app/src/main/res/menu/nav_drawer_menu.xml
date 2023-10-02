@@ -4,13 +4,13 @@
     tools:showIn="navDrawView">
     <item
         android:id="@+id/notesFragment"
-        android:title="@string/drawerMenuNotes" />
+        android:title="@string/notes" />
 
     <item android:title="@string/setting">
         <menu>
             <item
                 android:id="@+id/settingFragment"
-                android:title="@string/drawerMenuSettings" />
+                android:title="@string/setting" />
             <item
                 android:id="@+id/deleteAccount"
                 android:title="@string/deleteAccounts" />

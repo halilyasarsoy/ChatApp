@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".ui.fragment.LoginScreenFragment">
 
 
@@ -106,6 +106,7 @@
         app:layout_constraintTop_toBottomOf="@+id/password_text" />
 
     <ImageView
+        android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="false"
@@ -121,21 +122,22 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="10dp"
         android:text="@string/dontAccount"
         android:textColor="@color/black"
         android:textSize="16sp"
-        android:layout_marginStart="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_login" />
+        app:layout_constraintTop_toBottomOf="@id/button_login"
+        app:layout_constraintVertical_bias="0.056" />
 
     <Button
         android:id="@+id/button_signup_auth"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="50dp"
         android:hint="@string/signUp"
         android:textColorHint="@color/black"
@@ -143,6 +145,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@id/button_login"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bottom_component_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:alpha="0.4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/button_login"
         app:layout_constraintVertical_bias="0.0" />
 

@@ -59,5 +59,6 @@
     <string name="welcome_campus">Welcome to Campus</string>
     <string name="explanationFirstScreen">Enrich your university life with the Campus application, which makes it easy to share lecture notes! 📚✨</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="iconDesc">Please select profile photo</string>
 
 </resources>

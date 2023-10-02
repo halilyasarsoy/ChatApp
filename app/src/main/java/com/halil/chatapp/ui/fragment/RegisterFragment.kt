@@ -4,9 +4,7 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.media.MediaMetadataCompat.TextKey
 import android.text.method.TextKeyListener
-import android.text.method.TextKeyListener.Capitalize
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +28,7 @@ class RegisterFragment : Fragment() {
     private val binding get() = _binding!!
     private val vm: AuthViewModel by viewModels()
     private lateinit var imageURI: Uri
-    private var imgUrlx: String?=null
+    private var imgUrlx: String? = null
     private var imgName = ""
     private lateinit var progressBar: ProgressBar
 
@@ -59,7 +57,7 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun registerSuccess(it :TextKeyListener.Capitalize): TextKeyListener.Capitalize {
+    private fun registerSuccess(it: TextKeyListener.Capitalize): TextKeyListener.Capitalize {
         binding.registerButtonAuth.setOnClickListener {
             if (imgUrlx?.isNotEmpty() == true) {
                 val test = imgUrlx
@@ -70,12 +68,13 @@ class RegisterFragment : Fragment() {
                 val confirmPassword = binding.registerConfirmpasswordText.text.toString().trim()
                 val profession = binding.tvProfession.text.toString().trim()
                 test?.let { its ->
-                    vm.register(name, lastname, email, password, confirmPassword, profession ,its)
+                    vm.register(name, lastname, email, password, confirmPassword, profession, its)
                 }
                 downloadImage()
             } else {
                 Toast.makeText(context, "fillblank", Toast.LENGTH_SHORT).show()
             }
+            uploadImage()
         }
         return it
     }
@@ -87,15 +86,18 @@ class RegisterFragment : Fragment() {
                     Toast.makeText(requireContext(), "Please fill all blanks", Toast.LENGTH_LONG)
                         .show()
                 }
+
                 is Resource.Loading -> {
                     progressBar.visibility = View.VISIBLE
                 }
+
                 is Resource.Success -> {
                     progressBar.visibility = View.GONE
                     val action =
                         RegisterFragmentDirections.actionRegisterFragmentToRegisterSuccessFragment()
                     findNavController().navigate(action)
                 }
+
                 else -> {}
             }
         }
@@ -118,7 +120,11 @@ class RegisterFragment : Fragment() {
         if (requestCode == 0 && resultCode == RESULT_OK && data != null) {
             imageURI = data.data!!
             binding.imageView.setImageURI(imageURI)
-            uploadImage()
+        }
+        if (data.toString().isNotEmpty()) {
+            binding.descChooseProfileImage.visibility = View.GONE
+        } else {
+            binding.descChooseProfileImage.visibility = View.VISIBLE
         }
     }
 
