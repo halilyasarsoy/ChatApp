@@ -48,13 +48,7 @@ class HomeFragment : Fragment() {
         change()
     }
 
-    private fun checkUserApproved(user: Users, onResult: (Boolean) -> Unit) {
-        if (user.approved) {
-            onResult.invoke(true) // Kullanıcı onaylıysa, mesaj gönderilebilir
-        } else {
-            onResult.invoke(false) // Kullanıcı onaylı değilse, mesaj gönderilemez
-        }
-    }
+
 
     private fun adapterSetup() {
         binding.recyclerView.apply {
@@ -66,8 +60,8 @@ class HomeFragment : Fragment() {
 
         listAdapter.setOnItemClickListener(object : ListAdapter.OnItemClickListener {
             override fun onItemClick(user: Users) {
-                checkUserApproved(user) { approved ->
-                    if (approved) {
+
+
                         val direction = user.imgUrl?.let {
                             HomeFragmentDirections.actionHomeFragmentToChatScreenFragment(
                                 user.name,
@@ -79,7 +73,7 @@ class HomeFragment : Fragment() {
                         if (direction != null) {
                             findNavController().navigate(direction)
                         }
-                    } else {
+                     else {
                         Toast.makeText(
                             requireContext(),
                             "Bu kullanıcı henüz onaylanmadı!",
@@ -87,7 +81,7 @@ class HomeFragment : Fragment() {
                         ).show()
                     }
                 }
-            }
+
         })
     }
 

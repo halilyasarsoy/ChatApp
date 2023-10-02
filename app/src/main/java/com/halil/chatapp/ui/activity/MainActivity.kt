@@ -60,16 +60,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         drawerLayout = findViewById(R.id.drawer_layout)
-        drawerLayout = findViewById(R.id.drawer_layout)
         navView = findViewById(R.id.navDrawView)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.mainFragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
 
         getUID()?.let { vm.updateStatus(it, "online") }
+
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         setupWithNavController(bottomNav, navController)
-
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id !in topDestinationIds) {
@@ -108,6 +107,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun setupNavigationMenuListener() {
         val navigationView: NavigationView = findViewById(R.id.navDrawView)
         navigationView.setNavigationItemSelectedListener { menuItem ->
@@ -164,37 +164,30 @@ class MainActivity : AppCompatActivity() {
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
+
                 R.id.notesFragment -> {
                     loadNotesFragment()
-                    drawerLayout.closeDrawer(GravityCompat.START)// close menu
+                    drawerLayout.closeDrawer(GravityCompat.START) // close menu
                     true
                 }
+
                 R.id.settingFragment -> {
                     loadSettingFragment()
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
+
                 else -> false
             }
         }
     }
 
     private fun loadNotesFragment() {
-        val fragment =
-            NotesFragment()
-        val fragmentManager = supportFragmentManager
-        fragmentManager.beginTransaction()
-            .replace(R.id.mainFragmentContainerView, fragment)
-            .commit()
+        navController.navigate(R.id.notesFragment)
     }
 
     private fun loadSettingFragment() {
-        val fragment =
-            SettingFragment()
-        val fragmentManager = supportFragmentManager
-        fragmentManager.beginTransaction()
-            .replace(R.id.mainFragmentContainerView, fragment)
-            .commit()
+        navController.navigate(R.id.settingFragment)
     }
 
     fun getUID(): String? {
@@ -229,10 +222,12 @@ class MainActivity : AppCompatActivity() {
                 builder.create()
                 builder.show()
             }
+
             R.id.settingFragment -> {
                 loadSettingFragment()
 
             }
+
             android.R.id.home -> {
                 if (isDrawerOpen) {
                     drawerLayout.closeDrawer(GravityCompat.START)

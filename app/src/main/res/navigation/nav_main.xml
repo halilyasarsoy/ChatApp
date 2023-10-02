@@ -12,8 +12,7 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_chatScreenFragment"
-            app:destination="@id/chatScreenFragment"
-            app:enterAnim="@anim/slide_in_right" />
+            app:destination="@id/chatScreenFragment" />
 
         <action
             android:id="@+id/action_homeFragment_to_settingFragment"
