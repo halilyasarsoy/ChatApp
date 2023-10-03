@@ -36,7 +36,7 @@
     <string name="drawerMenuSettings">Settings</string>
     <string name="drawerMenuNotes">Notes</string>
     <string name="pickFile">Please Select File</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="fileUploaded">File uploaded</string>
     <string name="fileError">Error loading please check your connection and try again</string>
     <string name="acSet">a.Setting</string>
@@ -60,5 +60,7 @@
     <string name="explanationFirstScreen">Enrich your university life with the Campus application, which makes it easy to share lecture notes! 📚✨</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="iconDesc">Please select profile photo</string>
+    <string name="homeFragment">Users</string>
+    <string name="please_enter_department">Please enter your department to share</string>
 
 </resources>

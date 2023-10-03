@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -46,6 +47,8 @@ class NotesFragment : Fragment() {
     private var selectedFileUri: Uri? = null
     private var fileUrl: String = ""
     private var universityNamesAdapter = UniversityAdapter(arrayListOf())
+    private lateinit var headerView: View
+
 
     companion object {
         private const val FILE_PICKER_REQUEST_CODE = 123
@@ -67,6 +70,9 @@ class NotesFragment : Fragment() {
         universityNameAdapterSet()
         checkUniversityNameList()
         approvedUser()
+        headerView = requireActivity().findViewById(R.id.navDrawView)
+        change()
+
     }
 
     private fun approvedUser() {
@@ -114,6 +120,14 @@ class NotesFragment : Fragment() {
         }
     }
 
+    private fun change() {
+        vml.fetchNotesData(requireContext())
+        vml.universityData.observe(viewLifecycleOwner) { department ->
+            val denemetext: TextView = headerView.findViewById(R.id.departmentNameHeaderView)
+            denemetext.text = department.toString()
+        }
+    }
+
     private fun universityNameAdapterSet() {
         binding.getUniversityNamesRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
@@ -136,7 +150,6 @@ class NotesFragment : Fragment() {
         }
     }
 
-
     private fun checkUniversityNameList() {
         vml.universityNameList.observe(viewLifecycleOwner) { resource ->
             when (resource) {
@@ -147,9 +160,11 @@ class NotesFragment : Fragment() {
                         Toast.LENGTH_LONG
                     ).show()
                 }
+
                 is Resource.Loading -> {
                     binding.fabAddProgressBar.visibility = View.VISIBLE
                 }
+
                 is Resource.Success -> {
                     val universityNameList = resource.data as? ArrayList<GetListUniversityNotes>
                     universityNamesAdapter.setDataChange(ArrayList(universityNameList))
@@ -161,32 +176,44 @@ class NotesFragment : Fragment() {
     }
 
     private fun setAlertDialog() {
-
         binding.fabAdd.setOnClickListener {
-            val dialogView = layoutInflater.inflate(R.layout.alert_dialog_pick_file, null)
-            val selectFileButton = dialogView.findViewById<Button>(R.id.select_file_notes)
-            selectFileButton.setOnClickListener {
-                openFilePicker()
-            }
-            val builder = AlertDialog.Builder(requireContext())
-            builder.setView(dialogView)
-            builder.setPositiveButton(R.string.ok) { dialog, _ ->
-                val fileUri = selectedFileUri
-                if (fileUri == null) {
+            vml.fetchNotesData(requireContext())
+            vml.universityData.observe(viewLifecycleOwner) { department ->
+                if (department.isEmpty()) {
                     Toast.makeText(
                         requireContext(),
-                        R.string.pickFile,
-                        Toast.LENGTH_SHORT
+                        getString(R.string.please_enter_department),
+                        Toast.LENGTH_LONG
                     ).show()
                 } else {
-                    uploadFile(fileUri)
-                }
-                dialog.dismiss()
-            }
+                    val dialogView = layoutInflater.inflate(R.layout.alert_dialog_pick_file, null)
+                    val selectFileButton = dialogView.findViewById<Button>(R.id.select_file_notes)
+                    selectFileButton.setOnClickListener {
+                        openFilePicker()
+                    }
+                    val builder = AlertDialog.Builder(requireContext())
+                    builder.setView(dialogView)
+                    builder.setPositiveButton(R.string.ok) { dialog, _ ->
+                        val fileUri = selectedFileUri
+                        if (fileUri == null) {
+                            Toast.makeText(
+                                requireContext(),
+                                R.string.pickFile,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            uploadFile(fileUri)
+                        }
+                        dialog.dismiss()
+                    }
 
-            val dialog = builder.create()
-            dialog.show()
+                    val dialog = builder.create()
+                    dialog.show()
+                }
+            }
         }
+
+
     }
 
     private fun uploadFile(fileUri: Uri) {

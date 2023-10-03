@@ -1,18 +1,14 @@
 package com.halil.chatapp.ui.fragment
 
-//import com.halil.chatapp.data.Message
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.firestore.FirebaseFirestore
-import com.halil.chatapp.R
 import com.halil.chatapp.adapter.ListAdapter
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.databinding.FragmentHomeBinding
@@ -24,12 +20,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private val vm: MainViewModel by viewModels()
-    private var userArrayList: ArrayList<Users>? = null
     private val listAdapter = ListAdapter(arrayListOf())
-    private lateinit var db: FirebaseFirestore
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var headerView: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,10 +37,7 @@ class HomeFragment : Fragment() {
         vm.getUser()
         adapterSetup()
         checkUserList()
-        headerView = requireActivity().findViewById(R.id.navDrawView)
-        change()
     }
-
 
 
     private fun adapterSetup() {
@@ -62,25 +52,24 @@ class HomeFragment : Fragment() {
             override fun onItemClick(user: Users) {
 
 
-                        val direction = user.imgUrl?.let {
-                            HomeFragmentDirections.actionHomeFragmentToChatScreenFragment(
-                                user.name,
-                                user.lastname,
-                                it,
-                                user.uid
-                            )
-                        }
-                        if (direction != null) {
-                            findNavController().navigate(direction)
-                        }
-                     else {
-                        Toast.makeText(
-                            requireContext(),
-                            "Bu kullanıcı henüz onaylanmadı!",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+                val direction = user.imgUrl?.let {
+                    HomeFragmentDirections.actionHomeFragmentToChatScreenFragment(
+                        user.name,
+                        user.lastname,
+                        it,
+                        user.uid
+                    )
                 }
+                if (direction != null) {
+                    findNavController().navigate(direction)
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Bu kullanıcı henüz onaylanmadı!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
 
         })
     }
@@ -95,9 +84,11 @@ class HomeFragment : Fragment() {
                         Toast.LENGTH_LONG
                     ).show()
                 }
+
                 is Resource.Loading -> {
                     binding.progressBarUserList.visibility = View.VISIBLE
                 }
+
                 is Resource.Success -> {
                     binding.progressBarUserList.visibility = View.GONE
                     val userList = it.data as? ArrayList<Users>
@@ -106,16 +97,9 @@ class HomeFragment : Fragment() {
                         listAdapter.updateUserStatus(ArrayList(newList))
                     }
                 }
+
                 else -> {}
             }
-        }
-    }
-
-    private fun change() {
-        vm.fetchNotesData(requireContext())
-        vm.universityData.observe(viewLifecycleOwner) { department ->
-            val denemetext: TextView = headerView.findViewById(R.id.deneme)
-            denemetext.text = department.toString()
         }
     }
 }

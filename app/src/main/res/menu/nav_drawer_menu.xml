@@ -18,9 +18,9 @@
     </item>
     <item android:title="@string/communication">
         <menu>
-            <item android:id="@+id/communicationFragment"
-                android:title="@string/communication"/>
+            <item
+                android:id="@+id/communicationFragment"
+                android:title="@string/communication" />
         </menu>
     </item>
-
 </menu>

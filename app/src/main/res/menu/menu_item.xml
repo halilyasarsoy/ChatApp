@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/settingFragment"
+        android:enabled="true"
         android:icon="@drawable/ic_baseline_settings_24"
-        android:title="@string/setting" />
+        android:title="@string/setting"
+        android:visible="true"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/logOut"
+        android:enabled="true"
         android:icon="@drawable/ic_baseline_login_24"
-        android:title="@string/logOut" />
+        android:title="@string/logOut"
+        android:visible="true"
+        app:showAsAction="ifRoom" />
 </menu>

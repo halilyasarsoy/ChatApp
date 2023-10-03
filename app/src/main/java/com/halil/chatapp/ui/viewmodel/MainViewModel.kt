@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.halil.chatapp.data.GetListUniversityNotes
+import com.halil.chatapp.data.User
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.other.Resource
 import com.halil.chatapp.repository.MainRepositoryInterface
@@ -17,9 +18,6 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(private val repository: MainRepositoryInterface) :
     ViewModel() {
-
-    private val _addStatus = MutableLiveData<Resource<Any>>()
-    val addStatus: LiveData<Resource<Any>> = _addStatus
 
     private val _userList = MutableLiveData<Resource<List<Users>>>()
     val userList = _userList
@@ -36,6 +34,8 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
     private val _universityData = MutableLiveData<List<String>>()
     val universityData: LiveData<List<String>> = _universityData
 
+    private val _userData = MutableLiveData<Resource<User>>()
+    val userData = _userData
 
     fun updateStatus(userId: String, status: String) {
         viewModelScope.launch {
@@ -83,10 +83,10 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
         }
     }
 
-    fun addNoteToFirestore(university: String, department: String, context: Context) {
+    fun addNoteToFirestore(department: String, context: Context) {
         viewModelScope.launch {
-            repository.addNotesData(university, department, context)
-            _universityData.value = listOf(university)
+            repository.addNotesData(department, context)
+            _universityData.value = listOf(department)
         }
     }
 
@@ -104,4 +104,11 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
         }
     }
 
+    fun getUserData() {
+        _userData.postValue(Resource.Loading())
+        viewModelScope.launch {
+            val user = repository.getUserFromFirestoreCollection()
+            _userData.postValue(user)
+        }
+    }
 }

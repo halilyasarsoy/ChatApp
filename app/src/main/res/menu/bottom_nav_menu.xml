@@ -9,11 +9,12 @@
         android:icon="@drawable/ic_baseline_person_24"
         android:title="@string/users" />
     <item
+        android:id="@+id/settingFragment"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="@string/setting" />
+    <item
         android:id="@+id/communicationFragment"
         android:icon="@drawable/ic_baseline_insert_comment_24"
         android:title="@string/communication" />
-    <item
-        android:id="@+id/settingFragment"
-        android:icon="@drawable/ic_baseline_insert_comment_24"
-        android:title="@string/setting" />
+
 </menu>

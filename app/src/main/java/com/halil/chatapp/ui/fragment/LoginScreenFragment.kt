@@ -1,17 +1,12 @@
 package com.halil.chatapp.ui.fragment
 
-import android.app.Activity
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -21,7 +16,7 @@ import com.halil.chatapp.other.Resource
 import com.halil.chatapp.ui.activity.MainActivity
 import com.halil.chatapp.ui.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
+
 
 @AndroidEntryPoint
 class LoginScreenFragment : Fragment() {
@@ -44,8 +39,6 @@ class LoginScreenFragment : Fragment() {
         navigateToRegister()
         loginCheck()
         login()
-
-
     }
     private fun navigateToRegister() {
         binding.buttonSignupAuth.setOnClickListener {

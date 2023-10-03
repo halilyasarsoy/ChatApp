@@ -137,12 +137,22 @@ class MainRepositoryDefault : MainRepositoryInterface {
         val docRef = contacts.document(userMail)
         docRef.get().addOnSuccessListener { document ->
             if (document.data != null) {
-                docRef.update(message_field,FieldValue.arrayUnion(message))
-            }
-            else{
+                docRef.update(message_field, FieldValue.arrayUnion(message))
+            } else {
                 contacts.document(userMail).set(contact)
-                docRef.update(message_field,FieldValue.arrayUnion(message))
+                docRef.update(message_field, FieldValue.arrayUnion(message))
             }
+        }
+    }
+
+    override suspend fun getUserFromFirestoreCollection(): Resource<User> {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid.toString()
+
+        try {
+            val user = users.document(userId).get().await().toObject(User::class.java)
+            return Resource.Success(user)
+        } catch (e: Exception) {
+            return Resource.Error(e.message.toString())
         }
     }
 
@@ -162,17 +172,13 @@ class MainRepositoryDefault : MainRepositoryInterface {
             .updateChildren(map)
     }
 
-    override fun addNotesData(university: String, department: String, context: Context) {
+    override fun addNotesData(department: String, context: Context) {
         val user = FirebaseAuth.getInstance().currentUser
         val uid = user?.uid
         if (uid != null) {
             val universityDoc = universityInfo.document(uid)
-            val data = hashMapOf("university" to university, "department" to department)
+            val data = mapOf("department" to department)
             universityDoc.set(data)
-                .addOnSuccessListener {
-                }
-                .addOnFailureListener { exception ->
-                }
         }
     }
 

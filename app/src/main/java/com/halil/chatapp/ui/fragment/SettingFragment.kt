@@ -35,7 +35,6 @@ class SettingFragment : Fragment() {
     private var imgUrlx: String? = null
     private val vml: MainViewModel by viewModels()
 
-
     private val uid = FirebaseAuth.getInstance().uid
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -123,21 +122,20 @@ class SettingFragment : Fragment() {
     private fun changeDepartment() {
         binding.changeDepartment.setOnClickListener {
             val dialogView = layoutInflater.inflate(R.layout.alert_dialog_notes, null)
-            val universityEditText = dialogView.findViewById<EditText>(R.id.university_name)
             val departmentEditText = dialogView.findViewById<EditText>(R.id.department_name)
             val builder = AlertDialog.Builder(requireActivity())
             builder.setView(dialogView)
             builder.setPositiveButton("Tamam") { dialog, _ ->
-                val university = universityEditText.text.toString()
+
                 val department = departmentEditText.text.toString()
-                if (university.isEmpty() || department.isEmpty()) {
+                if (department.isEmpty()) {
                     Toast.makeText(
                         requireContext(),
                         "Lütfen tüm gerekli alanları doldurunuz ve dosya seçiniz.",
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
-                    vml.addNoteToFirestore(university, department, requireContext())
+                    vml.addNoteToFirestore(department, requireContext())
                 }
                 dialog.dismiss()
             }

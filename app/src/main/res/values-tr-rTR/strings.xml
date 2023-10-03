@@ -61,5 +61,7 @@
     <string name="explanationFirstScreen">Ders notları paylaşımını kolaylaştıran Kampüs uygulaması ile üniversite yaşamınızı zenginleştirin! 📚✨</string>
     <string name="confirm_password">Şifreyi Onayla</string>
     <string name="iconDesc">Lütfen profil fotoğrafı seçiniz</string>
+    <string name="homeFragment">Users</string>
+    <string name="please_enter_department">Paylaşımda bulunabilmek için lütfen bölümünüzü giriniz.</string>
 
 </resources>
