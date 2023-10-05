@@ -6,10 +6,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -18,7 +21,12 @@ import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.halil.chatapp.R
 import com.halil.chatapp.databinding.ActivityMainBinding
 import com.halil.chatapp.ui.viewmodel.MainViewModel
@@ -33,13 +41,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var headerView: View
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var profileImageView: CircleImageView
-
+    private val db = FirebaseFirestore.getInstance()
+    private val mRef = FirebaseDatabase.getInstance().reference
+    private lateinit var drawerLayout: DrawerLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         vm.getUserData()
-
+        drawerLayout = findViewById(R.id.drawerLayout)
+        setupNavigationMenuListener()
         updateNavHeader()
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.mainFragmentContainerView) as NavHostFragment
@@ -59,7 +70,9 @@ class MainActivity : AppCompatActivity() {
 
                 }
             }
-            appBarConfiguration = AppBarConfiguration(navController.graph, binding.drawerLayout)
+            appBarConfiguration = AppBarConfiguration(
+                navController.graph, binding.drawerLayout
+            )
             setupActionBarWithNavController(navController, appBarConfiguration)
             binding.navDrawView.setupWithNavController(navController)
             binding.bottomNavigationView.background = null
@@ -80,7 +93,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val navController = findNavController(R.id.mainFragmentContainerView)
         when (item.itemId) {
             R.id.logOut -> {
                 val builder = AlertDialog.Builder(this)
@@ -102,22 +114,37 @@ class MainActivity : AppCompatActivity() {
                 builder.create()
                 builder.show()
             }
+            R.id.deleteAccount ->{
 
-            else ->
-                item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
+            }
 
         }
         return super.onOptionsItemSelected(item)
     }
+
+    private fun setupNavigationMenuListener() {
+        binding.navDrawView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.deleteAccount -> {
+                    Toast.makeText(this, "Delete Account tıklandı!", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                else -> false
+            }
+        }
+
+    }
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.mainFragmentContainerView)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }
+
     private fun updateNavHeader() {
         val navHeaderView = binding.navDrawView.getHeaderView(0)
-        headerView = navHeaderView // headerView'i başlat
+        headerView = navHeaderView
         profileImageView = headerView.findViewById(R.id.profileImageView)
         val navUsername = navHeaderView.findViewById<TextView>(R.id.navHeaderName)
         val navUserLastName = navHeaderView.findViewById<TextView>(R.id.navHeaderLastName)
@@ -131,6 +158,7 @@ class MainActivity : AppCompatActivity() {
                     navUserLastName.text = it.data?.lastname
                     navUniversity.text = it.data?.profession
                 }
+
                 else -> {}
             }
         }

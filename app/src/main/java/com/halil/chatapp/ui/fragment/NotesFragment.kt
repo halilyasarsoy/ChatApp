@@ -8,15 +8,20 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
@@ -35,6 +40,7 @@ import com.halil.chatapp.databinding.FragmentNotesBinding
 import com.halil.chatapp.other.Resource
 import com.halil.chatapp.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -48,6 +54,8 @@ class NotesFragment : Fragment() {
     private var fileUrl: String = ""
     private var universityNamesAdapter = UniversityAdapter(arrayListOf())
     private lateinit var headerView: View
+    private lateinit var searchView: SearchView
+    private lateinit var editText: EditText
 
 
     companion object {
@@ -70,10 +78,66 @@ class NotesFragment : Fragment() {
         universityNameAdapterSet()
         checkUniversityNameList()
         approvedUser()
+        editText = view.findViewById(R.id.searchView)
+        searchViewCreated()
         headerView = requireActivity().findViewById(R.id.navDrawView)
         change()
 
     }
+
+    private fun searchViewCreated() {
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                vml.searchUniversity(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+    }
+
+    private fun checkUniversityNameList() {
+        lifecycleScope.launch {
+            vml.universityNameList.collect { resource ->
+                // UI'ı güncelleme işlemleri
+                when (resource) {
+                    is Resource.Error -> {
+                        // Hata durumu: Boş liste
+                        Toast.makeText(
+                            requireContext(),
+                            "Universities not found",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+
+                    is Resource.Success -> {
+                        // Başarılı durumu: Liste dolu, adapter'ı güncelle
+                        val universityNameList = resource.data
+                        if (universityNameList!!.isNotEmpty()) {
+                            universityNamesAdapter.setDataChange(ArrayList(universityNameList))
+                        } else {
+                            // Hata durumu: Boş liste
+                            Toast.makeText(
+                                requireContext(),
+                                "Universities not found",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                        binding.fabAddProgressBar.visibility = View.GONE
+                    }
+
+                    is Resource.Loading -> {
+                        // Yükleme durumu: İstediğiniz güncellemeleri yapabilirsiniz
+                        binding.fabAddProgressBar.visibility = View.VISIBLE
+                    }
+
+                    else -> {}
+                }
+            }
+        }
+    }
+
 
     private fun approvedUser() {
         val user = FirebaseAuth.getInstance().currentUser
@@ -143,36 +207,13 @@ class NotesFragment : Fragment() {
                             university.university
                         )
                     findNavController().navigate(action)
-
                 }
             })
-
         }
     }
 
-    private fun checkUniversityNameList() {
-        vml.universityNameList.observe(viewLifecycleOwner) { resource ->
-            when (resource) {
-                is Resource.Error -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "Missing or incorrect login information",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
 
-                is Resource.Loading -> {
-                    binding.fabAddProgressBar.visibility = View.VISIBLE
-                }
-
-                is Resource.Success -> {
-                    val universityNameList = resource.data as? ArrayList<GetListUniversityNotes>
-                    universityNamesAdapter.setDataChange(ArrayList(universityNameList))
-                    binding.fabAddProgressBar.visibility = View.GONE
-
-                }
-            }
-        }
+    private fun searchViewTest() {
     }
 
     private fun setAlertDialog() {

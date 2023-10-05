@@ -1,14 +1,17 @@
 package com.halil.chatapp.repository
 
 import android.content.Context
+import android.util.Log
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.halil.chatapp.data.*
 import com.halil.chatapp.other.Resource
 import kotlinx.coroutines.tasks.await
+import com.google.firebase.firestore.Query
 
 @Suppress("UNREACHABLE_CODE")
 class MainRepositoryDefault : MainRepositoryInterface {
@@ -199,4 +202,17 @@ class MainRepositoryDefault : MainRepositoryInterface {
         }
     }
 
+    override suspend fun searchUniversity(query: String): List<GetListUniversityNotes> {
+        return try {
+           val snapshot = notes
+                .whereEqualTo(FieldPath.documentId(),query)
+                .get()
+                .await()
+
+            val universityList = snapshot.toObjects(GetListUniversityNotes::class.java)
+            return universityList
+        } catch (e: Exception) {
+            return emptyList()
+        }
+    }
 }

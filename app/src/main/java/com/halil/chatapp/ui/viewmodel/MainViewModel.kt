@@ -11,6 +11,8 @@ import com.halil.chatapp.data.Users
 import com.halil.chatapp.other.Resource
 import com.halil.chatapp.repository.MainRepositoryInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,8 +24,6 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
     private val _userList = MutableLiveData<Resource<List<Users>>>()
     val userList = _userList
 
-    private val _universitiyNameList = MutableLiveData<Resource<List<GetListUniversityNotes>>>()
-    val universityNameList = _universitiyNameList
 
     private val _departmentList = MutableLiveData<Resource<List<GetListUniversityNotes>>>()
     val departmentList = _departmentList
@@ -56,11 +56,23 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
         }
     }
 
+    private val _universitiyNameList = MutableStateFlow<Resource<List<GetListUniversityNotes>>>(Resource.Loading())
+    val universityNameList: StateFlow<Resource<List<GetListUniversityNotes>>> = _universitiyNameList
+
     fun getUniversityName() {
-        _universitiyNameList.postValue(Resource.Loading())
         viewModelScope.launch {
-            repository.getUniversityNameList {
-                _universitiyNameList.postValue(it)
+            repository.getUniversityNameList { result ->
+                _universitiyNameList.value = result
+            }
+        }
+    }
+    fun searchUniversity(query: String) {
+        viewModelScope.launch {
+            try {
+                val result = repository.searchUniversity(query)
+                _universitiyNameList.value = Resource.Success(result)
+            } catch (e: Exception) {
+                _universitiyNameList.value = Resource.Error("Arama sırasında bir hata oluştu: ${e.message}")
             }
         }
     }

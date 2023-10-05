@@ -47,5 +47,5 @@ interface MainRepositoryInterface {
     suspend fun sendMessage(messageText: String, time: String)
 
     suspend fun getUserFromFirestoreCollection(): Resource<User>
-
+    suspend fun searchUniversity(query: String): List<GetListUniversityNotes>
 }
