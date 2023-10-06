@@ -204,15 +204,22 @@ class MainRepositoryDefault : MainRepositoryInterface {
 
     override suspend fun searchUniversity(query: String): List<GetListUniversityNotes> {
         return try {
-           val snapshot = notes
-                .whereEqualTo(FieldPath.documentId(),query)
+            val querySnapshot = notes
                 .get()
                 .await()
 
-            val universityList = snapshot.toObjects(GetListUniversityNotes::class.java)
+            val universityList = mutableListOf<GetListUniversityNotes>()
+
+            for (document in querySnapshot.documents) {
+                // Belge isimlerini al ve listeye ekle
+                val universityNote = GetListUniversityNotes(document.id)
+                universityList.add(universityNote)
+            }
+
             return universityList
         } catch (e: Exception) {
             return emptyList()
         }
     }
+
 }

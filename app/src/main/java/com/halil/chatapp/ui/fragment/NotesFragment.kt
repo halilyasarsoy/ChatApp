@@ -87,22 +87,34 @@ class NotesFragment : Fragment() {
 
     private fun searchViewCreated() {
         editText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {  vml.searchUniversity(s.toString())}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 vml.searchUniversity(s.toString())
             }
 
-            override fun afterTextChanged(s: Editable?) {}
+            override fun afterTextChanged(s: Editable?) {  vml.searchUniversity(s.toString())}
         })
     }
 
     private fun checkUniversityNameList() {
-        lifecycleScope.launch {
-            vml.universityNameList.collect { resource ->
-                // UI'ı güncelleme işlemleri
-                when (resource) {
-                    is Resource.Error -> {
+        vml.universityNameList.observe(viewLifecycleOwner) { resource ->
+            // UI'ı güncelleme işlemleri
+            when (resource) {
+                is Resource.Error -> {
+                    // Hata durumu: Boş liste
+                    Toast.makeText(
+                        requireContext(),
+                        "Universities not found",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+                is Resource.Success -> {
+                    val universityNameList = resource.data
+                    if (universityNameList!!.isNotEmpty()) {
+                        updateRecyclerView(universityNameList)
+                    } else {
                         // Hata durumu: Boş liste
                         Toast.makeText(
                             requireContext(),
@@ -110,32 +122,21 @@ class NotesFragment : Fragment() {
                             Toast.LENGTH_LONG
                         ).show()
                     }
-
-                    is Resource.Success -> {
-                        // Başarılı durumu: Liste dolu, adapter'ı güncelle
-                        val universityNameList = resource.data
-                        if (universityNameList!!.isNotEmpty()) {
-                            universityNamesAdapter.setDataChange(ArrayList(universityNameList))
-                        } else {
-                            // Hata durumu: Boş liste
-                            Toast.makeText(
-                                requireContext(),
-                                "Universities not found",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                        binding.fabAddProgressBar.visibility = View.GONE
-                    }
-
-                    is Resource.Loading -> {
-                        // Yükleme durumu: İstediğiniz güncellemeleri yapabilirsiniz
-                        binding.fabAddProgressBar.visibility = View.VISIBLE
-                    }
-
-                    else -> {}
+                    binding.fabAddProgressBar.visibility = View.GONE
                 }
+
+                is Resource.Loading -> {
+                    // Yükleme durumu: İstediğiniz güncellemeleri yapabilirsiniz
+                    binding.fabAddProgressBar.visibility = View.VISIBLE
+                }
+
+                else -> {}
             }
         }
+    }
+
+    private fun updateRecyclerView(universityNameList: List<GetListUniversityNotes>) {
+        universityNamesAdapter.setDataChange(ArrayList(universityNameList))
     }
 
 

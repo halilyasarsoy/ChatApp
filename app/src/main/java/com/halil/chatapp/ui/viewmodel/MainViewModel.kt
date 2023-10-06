@@ -55,24 +55,23 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
             }
         }
     }
-
-    private val _universitiyNameList = MutableStateFlow<Resource<List<GetListUniversityNotes>>>(Resource.Loading())
-    val universityNameList: StateFlow<Resource<List<GetListUniversityNotes>>> = _universitiyNameList
-
+    private val _universityNameList = MutableLiveData<Resource<List<GetListUniversityNotes>>>()
+    val universityNameList: LiveData<Resource<List<GetListUniversityNotes>>> = _universityNameList
     fun getUniversityName() {
         viewModelScope.launch {
             repository.getUniversityNameList { result ->
-                _universitiyNameList.value = result
+                _universityNameList.value = result
             }
         }
     }
+
     fun searchUniversity(query: String) {
         viewModelScope.launch {
             try {
                 val result = repository.searchUniversity(query)
-                _universitiyNameList.value = Resource.Success(result)
+                _universityNameList.value = Resource.Success(result)
             } catch (e: Exception) {
-                _universitiyNameList.value = Resource.Error("Arama sırasında bir hata oluştu: ${e.message}")
+                _universityNameList.value = Resource.Error("Arama sırasında bir hata oluştu: ${e.message}")
             }
         }
     }
