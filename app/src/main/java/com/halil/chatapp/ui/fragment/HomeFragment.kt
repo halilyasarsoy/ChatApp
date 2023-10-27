@@ -57,7 +57,8 @@ class HomeFragment : Fragment() {
                         user.name,
                         user.lastname,
                         it,
-                        user.uid
+                        user.uid,
+                        user.profession
                     )
                 }
                 if (direction != null) {

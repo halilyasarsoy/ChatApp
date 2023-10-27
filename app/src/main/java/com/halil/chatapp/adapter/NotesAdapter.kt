@@ -1,12 +1,11 @@
 package com.halil.chatapp.adapter
 
-import android.content.Context
-import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -14,6 +13,8 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.halil.chatapp.databinding.GetNotesListBinding
+import com.halil.chatapp.ui.fragment.NotesListFragmentDirections
+import com.halil.chatapp.ui.fragment.WebViewFragment
 
 class NotesAdapter(private var notesList: ArrayList<String>) :
     RecyclerView.Adapter<NotesAdapter.MyViewHolder>() {
@@ -38,11 +39,11 @@ class NotesAdapter(private var notesList: ArrayList<String>) :
         init {
             binding.notesImage.setOnClickListener {
                 val note = notesList[adapterPosition]
-                openUrlInBrowser(binding.root.context, note)
+                val action =
+                    NotesListFragmentDirections.actionNotesListFragmentToWebViewFragment(note)
+                it.findNavController().navigate(action)
             }
         }
-
-
         fun bind(note: String) {
             val uri = Uri.parse(note)
             binding.progressBar.visibility = View.VISIBLE
@@ -70,22 +71,14 @@ class NotesAdapter(private var notesList: ArrayList<String>) :
                         }
                         return false
                     }
-
                 })
                 .preload()
             binding.progressBar.visibility = View.GONE
-
         }
     }
-
     fun setDataChange(newDepartmentList: ArrayList<String>) {
         notesList.clear()
         notesList.addAll(newDepartmentList)
         notifyDataSetChanged()
-    }
-
-    private fun openUrlInBrowser(context: Context, url: String) {
-        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        context.startActivity(browserIntent)
     }
 }

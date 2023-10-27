@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
+        android:layout_marginBottom="62dp"
         tools:listitem="@layout/list_item" />
 
     <ProgressBar

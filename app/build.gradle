@@ -15,7 +15,6 @@ android {
     namespace 'com.halil.chatapp'
     compileSdk 33
 
-
     defaultConfig {
         applicationId "com.halil.chatapp"
         minSdk 21

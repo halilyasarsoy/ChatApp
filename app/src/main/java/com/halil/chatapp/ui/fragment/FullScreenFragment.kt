@@ -68,6 +68,5 @@ class FullScreenFragment : Fragment() {
         super.onDestroyView()
         _binding = null
         (requireActivity() as AppCompatActivity).supportActionBar?.show()
-
     }
 }

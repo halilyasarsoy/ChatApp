@@ -153,7 +153,8 @@ class ChatScreenFragment : Fragment() {
                 ChatScreenFragmentDirections.actionChatScreenFragmentToDetailUsersFragment(
                     args.name,
                     args.lastname,
-                    args.imgUrl
+                    args.imgUrl,
+                    args.university
                 )
             findNavController().navigate(actionToUser)
         }

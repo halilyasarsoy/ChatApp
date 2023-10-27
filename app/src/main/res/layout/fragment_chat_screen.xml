@@ -81,14 +81,14 @@
     <LinearLayout
         android:id="@+id/linearContent"
         android:layout_width="match_parent"
-        android:layout_height="470dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewChats"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="605dp"
             android:layout_marginTop="10dp"
             android:visibility="visible" />
     </LinearLayout>
@@ -97,8 +97,8 @@
         android:id="@+id/linearPosting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:layout_alignParentBottom="true"
-        android:layout_above="@id/linearContent"
         android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
@@ -119,7 +119,7 @@
                 android:padding="8dp">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
@@ -140,21 +140,6 @@
 
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/attachmentItem"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:padding="9dp"
-                    android:src="@drawable/ic_baseline_attachment_24" />
-
-                <ImageView
-                    android:id="@+id/cameraItem"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:padding="9dp"
-                    android:src="@drawable/ic_baseline_camera_alt_24" />
 
             </LinearLayout>
 

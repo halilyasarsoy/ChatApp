@@ -196,7 +196,6 @@ class MainRepositoryDefault : MainRepositoryInterface {
                     if (department != null) listOf(department) else emptyList<String>()
                 callback.invoke(departmentList)
             }.addOnFailureListener { exception ->
-                // Hata durumuyla ilgili işlemler
                 callback.invoke(emptyList())
             }
         }
@@ -209,17 +208,15 @@ class MainRepositoryDefault : MainRepositoryInterface {
                 .await()
 
             val universityList = mutableListOf<GetListUniversityNotes>()
-
             for (document in querySnapshot.documents) {
-                // Belge isimlerini al ve listeye ekle
+
                 val universityNote = GetListUniversityNotes(document.id)
                 universityList.add(universityNote)
             }
-
-            return universityList
+            val filteredList = universityList.filter { it.university.contains(query, ignoreCase = true) }
+            return filteredList
         } catch (e: Exception) {
             return emptyList()
         }
     }
-
 }

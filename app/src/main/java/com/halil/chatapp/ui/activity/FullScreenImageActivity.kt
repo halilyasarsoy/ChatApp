@@ -14,7 +14,5 @@ class FullScreenImageActivity : AppCompatActivity() {
         val imageUri = intent.getStringExtra("imageUri")
         val imageView = findViewById<ImageView>(R.id.fullScreenImageView)
         Glide.with(this).load(imageUri).into(imageView)
-
-
     }
 }

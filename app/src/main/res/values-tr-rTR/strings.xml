@@ -63,5 +63,198 @@
     <string name="iconDesc">Lütfen profil fotoğrafı seçiniz</string>
     <string name="homeFragment">Users</string>
     <string name="please_enter_department">Paylaşımda bulunabilmek için lütfen bölümünüzü giriniz.</string>
+    <string name="search">Arama</string>
+    <string name="select_your_university">Üniversite Seçiniz..</string>
+    <string name="departmentListLabel">Bölümler</string>
+    <string name="universityNameLabel">Üniversiteler</string>
+    <string-array name="university_names">
+        <item>Üniversite Seçiniz..</item>
+        <item>Abant İzzet Baysal Üniversitesi</item>
+        <item>Abdullah Gül Üniversitesi</item>
+        <item>Acıbadem Mehmet Ali Aydınlar Üniversitesi</item>
+        <item>Adana Bilim ve Teknoloji Üniversitesi</item>
+        <item>Adıyaman Üniversitesi</item>
+        <item>Adnan Menderes Üniversitesi</item>
+        <item>Afyon Kocatepe Üniversitesi</item>
+        <item>Ağrı İbrahim Çeçen Üniversitesi</item>
+        <item>Ahi Evran Üniversitesi</item>
+        <item>Akdeniz Üniversitesi</item>
+        <item>Aksaray Üniversitesi</item>
+        <item>Alanya Alaaddin Keykubat Üniversitesi</item>
+        <item>Alanya Hamdullah Emin Paşa Üniversitesi</item>
+        <item>Altınbaş Üniversitesi</item>
+        <item>Amasya Üniversitesi</item>
+        <item>Anadolu Üniversitesi</item>
+        <item>Anka Teknoloji Üniversitesi</item>
+        <item>Ankara Müzik ve Güzel Sanatlar Üniversitesi</item>
+        <item>Ankara Sosyal Bilimler Üniversitesi</item>
+        <item>Ankara Üniversitesi</item>
+        <item>Ankara Yıldırım Beyazıt Üniversitesi</item>
+        <item>Antalya AKEV Üniversitesi</item>
+        <item>Antalya Bilim Üniversitesi</item>
+        <item>Ardahan Üniversitesi</item>
+        <item>Artvin Çoruh Üniversitesi</item>
+        <item>Ataşehir Adıgüzel Meslek Yüksekokulu</item>
+        <item>Atatürk Üniversitesi</item>
+        <item>Atilim Üniversitesi</item>
+        <item>Avrasya Üniversitesi</item>
+        <item>Avrupa Meslek Yüksekokulu</item>
+        <item>Bahçeşehir Üniversitesi</item>
+        <item>Balıkesir Üniversitesi</item>
+        <item>Bandırma Onyedi Eylül Üniversitesi</item>
+        <item>Bartın Üniversitesi</item>
+        <item>Başkent Üniversitesi</item>
+        <item>Batman Üniversitesi</item>
+        <item>Bayburt Üniversitesi</item>
+        <item>Beykent Üniversitesi</item>
+        <item>Beykoz Üniversitesi</item>
+        <item>Bezm-İ Âlem Vakıf Üniversitesi</item>
+        <item>Bilecik Şeyh Edebali Üniversitesi</item>
+        <item>Bingöl Üniversitesi</item>
+        <item>Biruni Üniversitesi</item>
+        <item>Bitlis Eren Üniversitesi</item>
+        <item>Boğaziçi Üniversitesi</item>
+        <item>Bozok Üniversitesi</item>
+        <item>Bursa Teknik Üniversitesi</item>
+        <item>Bülent Ecevit Üniversitesi</item>
+        <item>Cumhuriyet Üniversitesi</item>
+        <item>Çağ Üniversitesi</item>
+        <item>Çanakkale Onsekiz Mart Üniversitesi</item>
+        <item>Çankaya Üniversitesi</item>
+        <item>Çankırı Karatekin Üniversitesi</item>
+        <item>Çukurova Üniversitesi</item>
+        <item>Dicle Üniversitesi</item>
+        <item>Doğuş Üniversitesi</item>
+        <item>Dokuz Eylül Üniversitesi</item>
+        <item>Dumlupınar Üniversitesi</item>
+        <item>Düzce Üniversitesi</item>
+        <item>Ege Üniversitesi</item>
+        <item>Erciyes Üniversitesi</item>
+        <item>Erzincan Üniversitesi</item>
+        <item>Erzurum Teknik Üniversitesi</item>
+        <item>Eskişehir Osmangazi Üniversitesi</item>
+        <item>Faruk Saraç Tasarım Meslek Yüksekokulu</item>
+        <item>Fatih Sultan Mehmet Vakıf Üniversitesi</item>
+        <item>Fenerbahçe Üniversitesi</item>
+        <item>Fırat Üniversitesi</item>
+        <item>Galatasaray Üniversitesi</item>
+        <item>Gazi Üniversitesi</item>
+        <item>Gaziantep Üniversitesi</item>
+        <item>Gaziosmanpaşa Üniversitesi</item>
+        <item>Gebze Teknik Üniversitesi</item>
+        <item>Giresun Üniversitesi</item>
+        <item>Gümüşhane Üniversitesi</item>
+        <item>Hacettepe Üniversitesi</item>
+        <item>Hakkari Üniversitesi</item>
+        <item>Halıcı Üniversitesi</item>
+        <item>Harran Üniversitesi</item>
+        <item>Hasan Kalyoncu Üniversitesi</item>
+        <item>Hitit Üniversitesi</item>
+        <item>Iğdır Üniversitesi</item>
+        <item>Işık Üniversitesi</item>
+        <item>İbn Haldun Üniversitesi</item>
+        <item>İhsan Doğramacı Bilkent Üniversitesi</item>
+        <item>İnönü Üniversitesi</item>
+        <item>İskenderun Teknik Üniversitesi</item>
+        <item>İstanbul Arel Üniversitesi</item>
+        <item>İstanbul Aydın Üniversitesi</item>
+        <item>İstanbul Ayvansaray Üniversitesi</item>
+        <item>İstanbul Bilgi Üniversitesi</item>
+        <item>İstanbul Bilim Üniversitesi</item>
+        <item>İstanbul Esenyurt Üniversitesi</item>
+        <item>İstanbul Gedik Üniversitesi</item>
+        <item>İstanbul Gelişim Üniversitesi</item>
+        <item>İstanbul Haliç Üniversitesi</item>
+        <item>İstanbul Kavram Meslek Yüksekokulu</item>
+        <item>İstanbul Kent Üniversitesi</item>
+        <item>İstanbul Kültür Üniversitesi</item>
+        <item>İstanbul Medeniyet Üniversitesi</item>
+        <item>İstanbul Medipol Üniversitesi</item>
+        <item>İstanbul Rumeli Üniversitesi</item>
+        <item>İstanbul Sabahattin Zaim Üniversitesi</item>
+        <item>İstanbul Şehir Üniversitesi</item>
+        <item>İstanbul Şişli Meslek Yüksekokulu</item>
+        <item>İstanbul Teknik Üniversitesi</item>
+        <item>İstanbul Ticaret Üniversitesi</item>
+        <item>İstanbul Üniversitesi</item>
+        <item>İstanbul Yeni Yüzyıl Üniversitesi</item>
+        <item>İstanbul 29 Mayıs Üniversitesi</item>
+        <item>İstinye Üniversitesi</item>
+        <item>İzmir Bakırçay Üniversitesi</item>
+        <item>İzmir Demokrasi Üniversitesi</item>
+        <item>İzmir Ekonomi Üniversitesi</item>
+        <item>İzmir Katip Çelebi Üniversitesi</item>
+        <item>İzmir Yüksek Teknoloji Enstitüsü</item>
+        <item>Kadir Has Üniversitesi</item>
+        <item>Kafkas Üniversitesi</item>
+        <item>Kahramanmaraş Sütçü İmam Üniversitesi</item>
+        <item>Kapadokya Üniversitesi</item>
+        <item>Karabük Üniversitesi</item>
+        <item>Karadeniz Teknik Üniversitesi</item>
+        <item>Karamanoğlu Mehmetbey Üniversitesi</item>
+        <item>Kastamonu Üniversitesi</item>
+        <item>Kırıkkale Üniversitesi</item>
+        <item>Kırklareli Üniversitesi</item>
+        <item>Kilis 7 Aralık Üniversitesi</item>
+        <item>Kocaeli Üniversitesi</item>
+        <item>Koç Üniversitesi</item>
+        <item>Konya Gıda ve Tarım Üniversitesi</item>
+        <item>KTO Karatay Üniversitesi</item>
+        <item>Lokman Hekim Üniversitesi</item>
+        <item>Maltepe Üniversitesi</item>
+        <item>Manisa Celâl Bayar Üniversitesi</item>
+        <item>Mardin Artuklu Üniversitesi</item>
+        <item>Marmara Üniversitesi</item>
+        <item>Mef Üniversitesi</item>
+        <item>Mehmet Akif Ersoy Üniversitesi</item>
+        <item>Mersin Üniversitesi</item>
+        <item>Mimar Sinan Güzel Sanatlar Üniversitesi</item>
+        <item>Muğla Sıtkı Koçman Üniversitesi</item>
+        <item>Munzur Üniversitesi</item>
+        <item>Mustafa Kemal Üniversitesi</item>
+        <item>Muş Alparslan Üniversitesi</item>
+        <item>Namık Kemal Üniversitesi</item>
+        <item>Necmettin Erbakan Üniversitesi</item>
+        <item>Nevşehir Hacı Bektaş Veli Üniversitesi</item>
+        <item>Niğde Ömer Halisdemir Üniversitesi</item>
+        <item>Nişantaşı Üniversitesi</item>
+        <item>Nuh Nacı Yazgan Üniversitesi</item>
+        <item>Okan Üniversitesi</item>
+        <item>Ondokuz Mayıs Üniversitesi</item>
+        <item>Ordu Üniversitesi</item>
+        <item>Orta Doğu Teknik Üniversitesi</item>
+        <item>Osmaniye Korkut Ata Üniversitesi</item>
+        <item>OSTİM Teknik Üniversitesi</item>
+        <item>Özyeğin Üniversitesi</item>
+        <item>Pamukkale Üniversitesi</item>
+        <item>Piri Reis Üniversitesi</item>
+        <item>Recep Tayyip Erdoğan Üniversitesi</item>
+        <item>Sabancı Üniversitesi</item>
+        <item>Sağlık Bilimleri Üniversitesi</item>
+        <item>Sakarya Üniversitesi</item>
+        <item>Sanko Üniversitesi</item>
+        <item>Selçuk Üniversitesi</item>
+        <item>Siirt Üniversitesi</item>
+        <item>Sinop Üniversitesi</item>
+        <item>Süleyman Demirel Üniversitesi</item>
+        <item>Şırnak Üniversitesi</item>
+        <item>TED Üniversitesi</item>
+        <item>TOBB Ekonomi ve Teknoloji Üniversitesi</item>
+        <item>Toros Üniversitesi</item>
+        <item>Trakya Üniversitesi</item>
+        <item>Türk Hava Kurumu Üniversitesi</item>
+        <item>Türk-Alman Üniversitesi</item>
+        <item>Türkiye Uluslararası İslam, Bilim ve Teknoloji Üniversitesi</item>
+        <item>Ufuk Üniversitesi</item>
+        <item>Uludağ Üniversitesi</item>
+        <item>Uşak Üniversitesi</item>
+        <item>Üsküdar Üniversitesi</item>
+        <item>Yaşar Üniversitesi</item>
+        <item>Yeditepe Üniversitesi</item>
+        <item>Yıldız Teknik Üniversitesi</item>
+        <item>Yüksek İhtisas Üniversitesi</item>
+        <item>Yüzüncü Yıl Üniversitesi</item>
+    </string-array>
+    <string-array name="department_name"></string-array>
 
 </resources>

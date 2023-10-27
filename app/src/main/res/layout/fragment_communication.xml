@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="44dp"
-                android:layout_marginBottom="40dp"
+                android:layout_marginBottom="172dp"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:text="@string/send"
@@ -35,12 +35,13 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
+
             <EditText
                 android:id="@+id/etxtMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="24dp"
                 android:background="@drawable/contact_us_bg"
                 android:elevation="10dp"
@@ -61,9 +62,9 @@
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtCustomerMsg" />
-
 
             <TextView
                 android:id="@+id/txtCustomerMsg"
@@ -75,7 +76,6 @@
                 app:layout_constraintStart_toStartOf="@+id/etxtMessage"
                 app:layout_constraintTop_toTopOf="parent" />
 <!--                android:text="@string/submit_your_problem_or_feedback"-->
-
 
             <ImageView
                 android:id="@+id/imageView5"
@@ -89,7 +89,7 @@
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etxtMessage"
-                app:layout_constraintVertical_bias="0.486"
+                app:layout_constraintVertical_bias="0.369"
                 app:srcCompat="@drawable/pngegg" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/notesFragment">
+    app:startDestination="@id/universityListFragment">
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.halil.chatapp.ui.fragment.HomeFragment"
-        android:label="fragment_user"
+        android:label="@string/users"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_chatScreenFragment"
@@ -18,9 +18,6 @@
             android:id="@+id/action_homeFragment_to_settingFragment"
             app:destination="@id/settingFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_notesFragment"
-            app:destination="@id/notesFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_communicationFragment"
             app:destination="@id/communicationFragment" />
 
@@ -28,15 +25,13 @@
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.halil.chatapp.ui.fragment.SettingFragment"
-        android:label="SettingFragment"
+        android:label="@string/setting"
         tools:layout="@layout/fragment_setting">
         <action
             android:id="@+id/action_settingFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
 
-        <action
-            android:id="@+id/action_settingFragment_to_notesFragment"
-            app:destination="@id/notesFragment" />
+
         <action
             android:id="@+id/action_settingFragment_to_fullScreenFragment"
             app:destination="@id/fullScreenFragment" />
@@ -64,6 +59,9 @@
         <argument
             android:name="userId"
             app:argType="string" />
+        <argument
+            android:name="university"
+            app:argType="string" />
         <action
             android:id="@+id/action_chatScreenFragment_to_detailUsersFragment"
             app:destination="@id/detailUsersFragment" />
@@ -86,21 +84,24 @@
         <argument
             android:name="imgUrl"
             app:argType="string" />
+        <argument
+            android:name="university"
+            app:argType="string" />
 
     </fragment>
     <fragment
-        android:id="@+id/notesFragment"
-        android:name="com.halil.chatapp.ui.fragment.NotesFragment"
-        android:label="fragment_notes"
+        android:id="@+id/universityListFragment"
+        android:name="com.halil.chatapp.ui.fragment.UniversityListFragment"
+        android:label="@string/universityNameLabel"
         tools:layout="@layout/fragment_notes">
         <action
-            android:id="@+id/action_notesFragment_to_settingFragment"
+            android:id="@+id/action_universityListFragment_to_settingFragment"
             app:destination="@id/settingFragment" />
         <action
-            android:id="@+id/action_notesFragment_to_homeFragment"
+            android:id="@+id/action_universityListFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
         <action
-            android:id="@+id/action_notesFragment_to_departmentListFragment"
+            android:id="@+id/action_universityListFragment_to_departmentListFragment"
             app:destination="@id/departmentListFragment">
             <argument
                 android:name="university"
@@ -132,11 +133,9 @@
     <fragment
         android:id="@+id/departmentListFragment"
         android:name="com.halil.chatapp.ui.fragment.DepartmentListFragment"
-        android:label="fragment_department_list"
+        android:label="@string/departmentListLabel"
         tools:layout="@layout/fragment_department_list">
-        <action
-            android:id="@+id/action_departmentListFragment_to_notesFragment"
-            app:destination="@id/notesFragment" />
+
         <action
             android:id="@+id/action_departmentListFragment_to_notesListFragment"
             app:destination="@id/notesListFragment">
@@ -151,21 +150,21 @@
     <fragment
         android:id="@+id/notesListFragment"
         android:name="com.halil.chatapp.ui.fragment.NotesListFragment"
-        android:label="fragment_notes_list"
+        android:label="@string/notes"
         tools:layout="@layout/fragment_notes_list" >
 
+
         <action
-            android:id="@+id/action_notesListFragment_to_notesFragment2"
-            app:destination="@id/notesFragment" />
+            android:id="@+id/action_notesListFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/communicationFragment"
         android:name="com.halil.chatapp.ui.fragment.CommunicationFragment"
-        android:label="fragment_communication"
+        android:label="@string/communication"
         tools:layout="@layout/fragment_communication" >
-        <action
-            android:id="@+id/action_communicationFragment_to_notesFragment"
-            app:destination="@id/notesFragment" />
+
         <action
             android:id="@+id/action_communicationFragment_to_settingFragment"
             app:destination="@id/settingFragment" />
@@ -173,5 +172,21 @@
             android:id="@+id/action_communicationFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="com.halil.chatapp.ui.fragment.WebViewFragment"
+        android:label="WebViewFragment" >
+        <action
+            android:id="@+id/action_webViewFragment_to_notesListFragment"
+            app:destination="@id/notesListFragment" />
+        <argument
+            android:name="url"
+            app:argType="string"/>
+    </fragment>
+    <dialog
+        android:id="@+id/deleteBottomSheetFragment"
+        android:name="com.halil.chatapp.ui.fragment.DeleteBottomSheetFragment"
+        android:label="fragment_delete_bottom_sheet"
+        tools:layout="@layout/fragment_delete_bottom_sheet" />
 
 </navigation>

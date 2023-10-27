@@ -2,9 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navDrawView">
-    <item
-        android:id="@+id/notesFragment"
-        android:title="@string/notes" />
 
     <item android:title="@string/setting">
         <menu>
@@ -12,8 +9,9 @@
                 android:id="@+id/settingFragment"
                 android:title="@string/setting" />
             <item
-                android:id="@+id/deleteAccount"
+                android:id="@+id/deleteBottomSheetFragment"
                 android:title="@string/deleteAccounts" />
+
         </menu>
     </item>
     <item android:title="@string/communication">
@@ -23,4 +21,5 @@
                 android:title="@string/communication" />
         </menu>
     </item>
+
 </menu>

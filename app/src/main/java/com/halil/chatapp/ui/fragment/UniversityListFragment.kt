@@ -12,6 +12,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -21,7 +23,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
@@ -40,12 +41,11 @@ import com.halil.chatapp.databinding.FragmentNotesBinding
 import com.halil.chatapp.other.Resource
 import com.halil.chatapp.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
 @AndroidEntryPoint
-class NotesFragment : Fragment() {
+class UniversityListFragment : Fragment() {
 
     private val vml: MainViewModel by viewModels()
     private var _binding: FragmentNotesBinding? = null
@@ -56,7 +56,7 @@ class NotesFragment : Fragment() {
     private lateinit var headerView: View
     private lateinit var searchView: SearchView
     private lateinit var editText: EditText
-
+    private var fileType = ""
 
     companion object {
         private const val FILE_PICKER_REQUEST_CODE = 123
@@ -70,15 +70,19 @@ class NotesFragment : Fragment() {
         return binding.root
     }
 
+
     @SuppressLint("ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+
         setAlertDialog()
         vml.getUniversityName()
         universityNameAdapterSet()
         checkUniversityNameList()
         approvedUser()
-        editText = view.findViewById(R.id.searchView)
+        editText = view.findViewById(R.id.editTextSearch)
         searchViewCreated()
         headerView = requireActivity().findViewById(R.id.navDrawView)
         change()
@@ -87,13 +91,17 @@ class NotesFragment : Fragment() {
 
     private fun searchViewCreated() {
         editText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {  vml.searchUniversity(s.toString())}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                vml.searchUniversity(s.toString())
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                vml.searchUniversity(p0.toString())
             }
 
-            override fun afterTextChanged(s: Editable?) {  vml.searchUniversity(s.toString())}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                vml.searchUniversity(p0.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                vml.searchUniversity(s.toString())
+            }
         })
     }
 
@@ -112,16 +120,7 @@ class NotesFragment : Fragment() {
 
                 is Resource.Success -> {
                     val universityNameList = resource.data
-                    if (universityNameList!!.isNotEmpty()) {
-                        updateRecyclerView(universityNameList)
-                    } else {
-                        // Hata durumu: Boş liste
-                        Toast.makeText(
-                            requireContext(),
-                            "Universities not found",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
+                    updateRecyclerView(universityNameList ?: emptyList())
                     binding.fabAddProgressBar.visibility = View.GONE
                 }
 
@@ -204,17 +203,13 @@ class NotesFragment : Fragment() {
                 UniversityAdapter.OnItemClickListener {
                 override fun onItemClick(university: GetListUniversityNotes) {
                     val action =
-                        NotesFragmentDirections.actionNotesFragmentToDepartmentListFragment(
+                        UniversityListFragmentDirections.actionUniversityListFragmentToDepartmentListFragment(
                             university.university
                         )
                     findNavController().navigate(action)
                 }
             })
         }
-    }
-
-
-    private fun searchViewTest() {
     }
 
     private fun setAlertDialog() {
@@ -268,7 +263,7 @@ class NotesFragment : Fragment() {
         storageReference.putFile(fileUri)
             .addOnSuccessListener { taskSnapshot ->
                 storageReference.downloadUrl.addOnSuccessListener { uri ->
-                    fileUrl = uri.toString()
+                    fileUrl = uri.toString() + fileType
                     addFileUrlToFirestore()
                 }
             }
@@ -336,8 +331,17 @@ class NotesFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == FILE_PICKER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val fileUri: Uri? = data?.data
+            if (data?.data.toString().contains("image")) {
+                fileType = ".img"
+            } else {
+                fileType = ".pdf"
+            }
             selectedFileUri = fileUri
         }
+    }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_item, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onDestroyView() {

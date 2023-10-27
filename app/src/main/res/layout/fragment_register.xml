@@ -117,15 +117,25 @@
             style="@style/FocusedEditTextStyle"
             android:layout_width="320dp"
             android:layout_height="50dp"
-            android:hint="@string/enterJobs"
-            android:inputType="textEmailAddress"
             android:textColorHint="#000000"
+            android:hint="@string/select_your_university"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@id/register_passwordtext"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.505"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="TextContrastCheck" />
+            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/universityDropdown"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/baseline_arrow_drop_down_24"
+            app:layout_constraintBottom_toBottomOf="@id/tvProfession"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.824"
+            app:layout_constraintStart_toStartOf="@+id/tvProfession"
+            app:layout_constraintTop_toTopOf="@id/tvProfession"
+            app:layout_constraintVertical_bias="0.45" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/register_passwordtext"
@@ -139,8 +149,21 @@
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@id/register_confirmpassword_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/passwordVisibilityToggle"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/baseline_visibility_24"
+            app:layout_constraintBottom_toBottomOf="@id/register_passwordtext"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.844"
+            app:layout_constraintStart_toStartOf="@+id/register_passwordtext"
+            app:layout_constraintTop_toTopOf="@id/register_passwordtext"
+            app:layout_constraintVertical_bias="0.423" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/register_confirmpassword_text"
@@ -154,10 +177,22 @@
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@id/register_passwordtext"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="517dp" />
 
+        <ImageView
+            android:id="@+id/confirmPasswordVisibilityToggle"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/baseline_visibility_24"
+            app:layout_constraintBottom_toBottomOf="@id/register_confirmpassword_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.844"
+            app:layout_constraintStart_toStartOf="@+id/register_confirmpassword_text"
+            app:layout_constraintTop_toTopOf="@id/register_confirmpassword_text"
+            app:layout_constraintVertical_bias="0.423" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/registerButtonAuth"
