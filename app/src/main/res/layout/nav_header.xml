@@ -10,7 +10,7 @@
         android:id="@+id/profileImageView"
         android:layout_width="72dp"
         android:layout_height="72dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="658dp"
         android:src="@drawable/ic_baseline_add_24"
@@ -35,7 +35,7 @@
         android:id="@+id/navHeaderLastName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="20dp"
         android:text="yasarsoy"
         android:textAlignment="center"
@@ -48,7 +48,7 @@
         android:id="@+id/navHeaderProfession"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:text="Universitesy"
         android:textAlignment="center"
         android:textColor="#388E3C"
@@ -60,9 +60,10 @@
         android:id="@+id/departmentNameHeaderView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        app:layout_constraintLeft_toRightOf="@id/navHeaderProfession"
-        app:layout_constraintTop_toBottomOf="@id/navHeaderLastName" />
+        android:layout_marginStart="20dp"
+        android:text="asdasdsad"
+        app:layout_constraintTop_toBottomOf="@id/navHeaderProfession"
+        app:layout_constraintLeft_toRightOf="@id/profileImageView"/>
 
     <View
         android:id="@+id/view"
