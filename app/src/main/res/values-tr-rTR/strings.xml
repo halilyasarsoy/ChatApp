@@ -64,9 +64,15 @@
     <string name="homeFragment">Users</string>
     <string name="please_enter_department">Paylaşımda bulunabilmek için lütfen bölümünüzü giriniz.</string>
     <string name="search">Arama</string>
+    <string name="search_department">Bölüm Seçiniz..</string>
     <string name="select_your_university">Üniversite Seçiniz..</string>
     <string name="departmentListLabel">Bölümler</string>
     <string name="universityNameLabel">Üniversiteler</string>
+    <string name="sozelBolumler">Sözel Bölümler</string>
+    <string name="sayisalBolumler">Sayısal Bölümler</string>
+    <string name="esitAgirlik">Eşit Ağırlık Bölümleri</string>
+    <string name="fourYears">2 Yıllık Bölümler</string>
+    <string name="twoYears">4 Yıllık Bölümler</string>
     <string-array name="university_names">
         <item>Üniversite Seçiniz..</item>
         <item>Abant İzzet Baysal Üniversitesi</item>
@@ -145,7 +151,7 @@
         <item>Giresun Üniversitesi</item>
         <item>Gümüşhane Üniversitesi</item>
         <item>Hacettepe Üniversitesi</item>
-        <item>Hakkari Üniversitesi</item>
+        <item>Hakkarı Üniversitesi</item>
         <item>Halıcı Üniversitesi</item>
         <item>Harran Üniversitesi</item>
         <item>Hasan Kalyoncu Üniversitesi</item>
@@ -255,6 +261,353 @@
         <item>Yüksek İhtisas Üniversitesi</item>
         <item>Yüzüncü Yıl Üniversitesi</item>
     </string-array>
-    <string-array name="department_name"></string-array>
+    <string-array name="departmentall_names">
+        <item>Bölüm Seçiniz</item>
+        <item>Acil Durum ve Afet Yönetimi</item>
+        <item>Acil Yardım ve Afet Yönetimi</item>
+        <item>Adalet</item>
+        <item>Adli Bilimler</item>
+        <item>Adli Bilişim Mühendisliği</item>
+        <item>Ağız ve Diş Sağlığı</item>
+        <item>Alternatif Enerji Kaynakları Teknolojisi</item>
+        <item>Ameliyathane Hizmetleri</item>
+        <item>Anestezi</item>
+        <item>Antrenörlük Eğitimi</item>
+        <item>Arkeoloji</item>
+        <item>Astronomi ve Uzay Bilimleri</item>
+        <item>Aşçılık</item>
+        <item>Ayakkabı Tasarım ve Üretimi</item>
+        <item>Ayakkabı Tasarımı ve Üretimi</item>
+        <item>Bankacılık</item>
+        <item>Bankacılık ve Finans</item>
+        <item>Bankacılık ve Sigortacılık</item>
+        <item>Basım Teknolojileri</item>
+        <item>Basım ve Yayın Teknolojileri</item>
+        <item>Basın ve Yayın</item>
+        <item>Beden Eğitimi ve Spor Öğretmenliği</item>
+        <item>Beslenme ve Diyetetik</item>
+        <item>Bilgi Güvenliği Teknolojisi</item>
+        <item>Bilgi Güvenliği Teknolojisi</item>
+        <item>Bilgi ve Belge Yönetimi</item>
+        <item>Bilgi Yönetimi</item>
+        <item>Bilgisayar Bilimleri</item>
+        <item>Bilgisayar Destekli Tasarım ve Animasyon</item>
+        <item>Bilgisayar Mühendisliği</item>
+        <item>Bilgisayar Operatörlüğü</item>
+        <item>Bilgisayar Programcılığı</item>
+        <item>Bilgisayar Teknolojisi</item>
+        <item>Bilgisayar Teknolojisi ve Bilişim Sistemleri</item>
+        <item>Bilgisayar ve Öğretim Teknolojileri Öğretmenliği</item>
+        <item>Bilim Tarihi</item>
+        <item>Bilişim Sistemleri Mühendisliği</item>
+        <item>Bilişim Sistemleri ve Teknolojileri</item>
+        <item>Bitki Koruma</item>
+        <item>Bitki Koruma</item>
+        <item>Bitkisel Üretim ve Teknolojileri</item>
+        <item>Biyokimya</item>
+        <item>Biyokimya</item>
+        <item>Biyoloji Öğretmenliği</item>
+        <item>Biyomedikal Mühendisliği</item>
+        <item>Biyo sistem Mühendisliği</item>
+        <item>Boya Teknolojisi</item>
+        <item>Büro Yönetimi ve Yönetici Asistanlığı</item>
+        <item>Coğrafi Bilgi Sistemleri</item>
+        <item>Coğrafi Bilgi Sistemleri ve Teknolojileri</item>
+        <item>Coğrafya</item>
+        <item>Coğrafya Öğretmenliği</item>
+        <item>Çağdaş Türk Lehçeleri ve Edebiyatları</item>
+        <item>Çalışma Ekonomisi ve Endüstri İlişkileri</item>
+        <item>Çevre Koruma ve Kontrol</item>
+        <item>Çevre Mühendisliği</item>
+        <item>Çevre Sağlığı</item>
+        <item>Çevre Temizliği ve Denetimi</item>
+        <item>Çim Alan Tesisi ve Yönetimi</item>
+        <item>Çizgi Film ve Animasyon</item>
+        <item>Çocuk Gelişimi</item>
+        <item>Çocuk Gelişimi</item>
+        <item>Çocuk Koruma ve Bakım Hizmetleri</item>
+        <item>Deniz Bilimleri ve Teknolojisi Mühendisliği</item>
+        <item>Deniz Brokerliği</item>
+        <item>Deniz Ulaştırma İşletme Mühendisliği</item>
+        <item>Deniz Ulaştırma ve İşletme</item>
+        <item>Deniz ve Liman İşletmeciliği</item>
+        <item>Denizcilik İşletmeleri Yönetimi</item>
+        <item>Deri Mühendisliği</item>
+        <item>Deri Teknolojisi</item>
+        <item>Dış Ticaret</item>
+        <item>Dijital Oyun Tasarımı</item>
+        <item>Diş Hekimliği (5 Yıllık)</item>
+        <item>Diş Protez Teknolojisi</item>
+        <item>Diyaliz</item>
+        <item>Doğal Yapı Taşları Teknolojisi</item>
+        <item>Doğalgaz ve Tesisatı Teknolojisi</item>
+        <item>Döküm</item>
+        <item>Eczacılık (5 Yıllık)</item>
+        <item>Egzersiz ve Spor Bilimleri</item>
+        <item>Ekonometri</item>
+        <item>Ekonomi ve Finans</item>
+        <item>Elektrik</item>
+        <item>Elektrik Enerjisi Üretim, İletim ve Dağıtımı</item>
+        <item>Elektrik Mühendisliği</item>
+        <item>Elektrik-Elektronik Mühendisliği</item>
+        <item>Elektrikli Cihaz Teknolojisi</item>
+        <item>Elektromekanik Taşıyıcılar</item>
+        <item>Elektronik Haberleşme Teknolojisi</item>
+        <item>Elektronik Mühendisliği</item>
+        <item>Elektronik Teknolojisi</item>
+        <item>Elektronik ve Haberleşme Mühendisliği</item>
+        <item>Emlak ve Emlak Yönetimi</item>
+        <item>Endüstri Mühendisliği</item>
+        <item>Endüstri Ürünleri Tasarımı</item>
+        <item>Endüstriyel Cam ve Seramik</item>
+        <item>Endüstriyel Kalıpçılık</item>
+        <item>Endüstriyel Tasarım</item>
+        <item>Endüstriyel Tasarım Mühendisliği</item>
+        <item>Endüstriyel Tavukçuluk</item>
+        <item>Enerji Mühendisliği</item>
+        <item>Enerji Sistemleri Mühendisliği</item>
+        <item>Enerji Tesisleri İşletmeciliği</item>
+        <item>Enerji Yönetimi</item>
+        <item>Engelli Bakımı ve Rehabilitasyon</item>
+        <item>Felsefe</item>
+        <item>Fen Bilgisi Öğretmenliği</item>
+        <item>Fizik</item>
+        <item>Fizik Mühendisliği</item>
+        <item>Fizyoterapi ve Rehabilitasyon</item>
+        <item>Fotoğraf ve Video</item>
+        <item>Fotoğrafçılık ve Kameramanlık</item>
+        <item>Gastronomi ve Mutfak Sanatları</item>
+        <item>Gayrimenkul Geliştirme ve Yönetimi</item>
+        <item>Gaz ve Tesisatı Teknolojisi</item>
+        <item>Gazetecilik</item>
+        <item>Geleneksel El Sanatları</item>
+        <item>Gemi Makineleri İşletme</item>
+        <item>Gemi Makineleri İşletme Mühendisliği</item>
+        <item>Gemi ve Deniz Teknolojisi Mühendisliği</item>
+        <item>Gemi ve Yat Tasarımı</item>
+        <item>Genetik ve Biyomühendislik</item>
+        <item>Genetik ve Yaşam Bilimleri Programları</item>
+        <item>Gıda Kalite Kontrolü ve Analizi</item>
+        <item>Gıda Mühendisliği</item>
+        <item>Gıda Teknolojisi</item>
+        <item>Girişimcilik</item>
+        <item>Giyim Üretim Teknolojisi</item>
+        <item>Görsel Sanatlar ve İletişim</item>
+        <item>Grafik</item>
+        <item>Grafik Tasarımı</item>
+        <item>Gümrük İşletme</item>
+        <item>Halkla İlişkiler</item>
+        <item>Halkla İlişkiler ve Reklamcılık</item>
+        <item>Halkla İlişkiler ve Tanıtım</item>
+        <item>Harita ve Kadastro</item>
+        <item>Hava Lojistiği</item>
+        <item>Havacılık Elektrik ve Elektronik</item>
+        <item>Havacılık ve Uzay Mühendisliği</item>
+        <item>Havacılık Yönetimi</item>
+        <item>Hayvansal Üretim ve Teknolojileri</item>
+        <item>Hemşirelik</item>
+        <item>Hukuk</item>
+        <item>İç Mekan Tasarımı</item>
+        <item>İç Mimarlık</item>
+        <item>İç Mimarlık ve Çevre Tasarımı</item>
+        <item>İklimlendirme ve Soğutma Teknolojisi</item>
+        <item>İktisadi ve İdari Bilimler Programları</item>
+        <item>İktisadi ve İdari Programlar</item>
+        <item>İktisat</item>
+        <item>İlahiyat</item>
+        <item>İletişim Bilimleri</item>
+        <item>İletişim Fakültesi</item>
+        <item>İletişim Sanatları</item>
+        <item>İletişim Tasarımı ve Yönetimi</item>
+        <item>İletişim ve Tasarım</item>
+        <item>İlk ve Acil Yardım</item>
+        <item>İlköğretim Matematik Öğretmenliği</item>
+        <item>İmalat Mühendisliği</item>
+        <item>İnsan Kaynakları Yönetimi</item>
+        <item>İnsan Kaynakları Yönetimi</item>
+        <item>İnşaat Mühendisliği</item>
+        <item>İnşaat Teknolojisi</item>
+        <item>İnternet ve Ağ Teknolojileri</item>
+        <item>İslam Bilimleri</item>
+        <item>İslam İktisadı ve Finans</item>
+        <item>İslami İlimler</item>
+        <item>İstatistik</item>
+        <item>İstatistik ve Bilgisayar Bilimleri</item>
+        <item>İş Makineleri Operatörlüğü</item>
+        <item>İş Sağlığı ve Güvenliği</item>
+        <item>İş Sağlığı ve Güvenliği</item>
+        <item>İş ve Uğraşı Terapisi</item>
+        <item>İşletme</item>
+        <item>İşletme Mühendisliği</item>
+        <item>İşletme Yönetimi</item>
+        <item>Jeofizik Mühendisliği</item>
+        <item>Jeoloji Mühendisliği</item>
+        <item>Kamu Yönetimi</item>
+        <item>Kimya</item>
+        <item>Kimya Mühendisliği</item>
+        <item>Kimya Öğretmenliği</item>
+        <item>Kimya Teknolojisi</item>
+        <item>Kontrol ve Otomasyon Mühendisliği</item>
+        <item>Kontrol ve Otomasyon Teknolojisi</item>
+        <item>Kurgu, Ses ve Görüntü Yönetimi</item>
+        <item>Kuyumculuk ve Mücevher Tasarımı</item>
+        <item>Kuyumculuk ve Takı Tasarımı</item>
+        <item>Laborant ve Veteriner Sağlık</item>
+        <item>Laboratuvar Teknolojisi</item>
+        <item>Lastik ve Plastik Teknolojisi</item>
+        <item>Lojistik</item>
+        <item>Lojistik Yönetimi</item>
+        <item>Maden Mühendisliği</item>
+        <item>Makine</item>
+        <item>Makine Mühendisliği</item>
+        <item>Maliye</item>
+        <item>Malzeme Bilimi ve Mühendisliği</item>
+        <item>Marina ve Yat İşletmeciliği</item>
+        <item>Marka İletişimi</item>
+        <item>Matematik</item>
+        <item>Matematik Mühendisliği</item>
+        <item>Matematik Öğretmenliği</item>
+        <item>Matematik ve Bilgisayar Bilimleri</item>
+        <item>Medya ve Görsel Sanatlar</item>
+        <item>Medya ve İletişim</item>
+        <item>Mekatronik Mühendisliği</item>
+        <item>Meteoroloji Mühendisliği</item>
+        <item>Mimari Restorasyon</item>
+        <item>Mimarlık</item>
+        <item>Mobil Teknolojileri</item>
+        <item>Mobilya ve Dekorasyon</item>
+        <item>Moda Yönetimi</item>
+        <item>Moleküler Biyoloji ve Genetik</item>
+        <item>Moleküler Biyoteknoloji</item>
+        <item>Muhasebe ve Denetim</item>
+        <item>Muhasebe ve Finans Yönetimi</item>
+        <item>Muhasebe ve Vergi Uygulamaları</item>
+        <item>Nanoteknoloji Mühendisliği</item>
+        <item>Nükleer Enerji Mühendisliği</item>
+        <item>Nükleer Tıp Teknikleri</item>
+        <item>Okul Öncesi Öğretmenliği</item>
+        <item>Organik Tarım</item>
+        <item>Organik Tarım İşletmeciliği</item>
+        <item>Orman Endüstrisi Mühendisliği</item>
+        <item>Orman Mühendisliği</item>
+        <item>Ormancılık ve Orman Ürünleri</item>
+        <item>Otel Yöneticiliği</item>
+        <item>Otomotiv Mühendisliği</item>
+        <item>Otomotiv Teknolojisi</item>
+        <item>Otopsi Yardımcılığı</item>
+        <item>Özel Eğitim Öğretmenliği</item>
+        <item>Özel Güvenlik ve Koruma</item>
+        <item>Patoloji Laboratuvar Teknikleri</item>
+        <item>Pazarlama</item>
+        <item>Perakende Satış ve Mağaza Yönetimi</item>
+        <item>Petrol ve Doğalgaz Mühendisliği</item>
+        <item>Politika ve Ekonomi</item>
+        <item>Psikoloji</item>
+        <item>Psikolojik Danışmanlık ve Rehberlik Öğretmenliği</item>
+        <item>Radyo ve Televizyon Programcılığı</item>
+        <item>Radyo ve Televizyon Teknolojisi</item>
+        <item>Radyo, Televizyon ve Sinema</item>
+        <item>Radyoterapi</item>
+        <item>Raylı Sistemler İşletmeciliği</item>
+        <item>Raylı Sistemler Makine Teknolojisi</item>
+        <item>Raylı Sistemler Makinistlik</item>
+        <item>Raylı Sistemler Mühendisliği</item>
+        <item>Rehberlik ve Psikolojik Danışmanlık</item>
+        <item>Reklamcılık</item>
+        <item>Sağlık Bilgi Sistemleri Teknikerliği</item>
+        <item>Sağlık Turizmi İşletmeciliği</item>
+        <item>Sanat Tarihi</item>
+        <item>Sanat ve Kültür Yönetimi</item>
+        <item>Sanat ve Sosyal Bilimler Programları</item>
+        <item>Sermaye Piyasası</item>
+        <item>Seyahat İşletmeciliği ve Turizm Rehberliği</item>
+        <item>Sınıf Öğretmenliği</item>
+        <item>Sigortacılık</item>
+        <item>Sigortacılık ve Risk Yönetimi</item>
+        <item>Sigortacılık ve Sosyal Güvenlik</item>
+        <item>Sinema ve Dijital Medya</item>
+        <item>Sivil Havacılık Kabin Hizmetleri</item>
+        <item>Sivil Savunma ve İtfaiyecilik</item>
+        <item>Siyasal Bilimler</item>
+        <item>Siyaset Bilimi ve Kamu Yönetimi</item>
+        <item>Siyaset Bilimi ve Uluslararası İlişkiler</item>
+        <item>Sosyal Bilgiler Öğretmenliği</item>
+        <item>Sosyal Güvenlik</item>
+        <item>Sosyal Hizmetler</item>
+        <item>Sosyal ve Siyasal Bilimler</item>
+        <item>Sosyoloji</item>
+        <item>Spor Yöneticiliği</item>
+        <item>Su Ürünleri Mühendisliği</item>
+        <item>Süs Bitkileri Yetiştiriciliği</item>
+        <item>Süt Teknolojisi</item>
+        <item>Süt ve Ürünleri Teknolojisi</item>
+        <item>Şehir ve Bölge Planlama</item>
+        <item>Takı Tasarımı</item>
+        <item>Tapu Kadastro</item>
+        <item>Tapu ve Kadastro</item>
+        <item>Tarım Makineleri</item>
+        <item>Tarım Makineleri ve Teknolojileri Mühendisliği</item>
+        <item>Tarım Ticareti ve İşletmeciliği</item>
+        <item>Tarımsal Biyoteknoloji</item>
+        <item>Tarımsal Genetik Mühendisliği</item>
+        <item>Tarımsal İşletmecilik</item>
+        <item>Tarımsal Yapılar ve Sulama</item>
+        <item>Tarih</item>
+        <item>Tarih Öğretmenliği</item>
+        <item>Tarla Bitkileri</item>
+        <item>Teknoloji ve Bilgi Yönetimi</item>
+        <item>Tekstil Mühendisliği</item>
+        <item>Tekstil Teknolojisi</item>
+        <item>Tekstil ve Moda Tasarımı</item>
+        <item>Televizyon Haberciliği ve Programcılığı</item>
+        <item>Tıbbi Laboratuvar Teknikleri</item>
+        <item>Tıbbi Tanıtım ve Pazarlama</item>
+        <item>Tıp (6 Yıllık)</item>
+        <item>Tıp Mühendisliği</item>
+        <item>Tohum Bilimi ve Teknolojisi</item>
+        <item>Tohumculuk</item>
+        <item>Toprak Bilimi ve Bitki Besleme</item>
+        <item>Turist Rehberliği (2 Yıllık)</item>
+        <item>Turizm İşletmeciliği</item>
+        <item>Turizm ve Otel İşletmeciliği</item>
+        <item>Türk Dili ve Edebiyatı Öğretmenliği</item>
+        <item>Türk İslam Arkeolojisi</item>
+        <item>Türkçe Öğretmenliği</item>
+        <item>Uçak Bakım ve Onarım</item>
+        <item>Uçak Elektrik ve Elektroniği</item>
+        <item>Uçak Gövde ve Motor Bakımı</item>
+        <item>Uçak Mühendisliği</item>
+        <item>Uçak Teknolojisi</item>
+        <item>Ulaştırma ve Trafik Hizmetleri</item>
+        <item>Uluslararası Ekonomik İlişkiler</item>
+        <item>Uluslararası Finans</item>
+        <item>Uluslararası Finans ve Bankacılık</item>
+        <item>Uluslararası İlişkiler</item>
+        <item>Uluslararası İşletme Yönetimi</item>
+        <item>Uluslararası Ticaret ve Finans</item>
+        <item>Uluslararası Ticaret ve Finansman</item>
+        <item>Uluslararası Ticaret ve İşletmecilik</item>
+        <item>Uluslararası Ticaret ve Lojistik</item>
+        <item>Uluslararası Ulaştırma Sistemleri</item>
+        <item>Uzay Bilimleri ve Teknolojileri</item>
+        <item>Uzay Mühendisliği</item>
+        <item>Uzay ve Uydu Mühendisliği</item>
+        <item>Veteriner (5 Yıllık)</item>
+        <item>Web Tasarımı ve Kodlama</item>
+        <item>Yapay Zeka Mühendisliği</item>
+        <item>Yapay Zeka ve Veri Mühendisliği</item>
+        <item>Yapı Denetimi</item>
+        <item>Yapı Ressamlığı</item>
+        <item>Yapı Tesisat Teknolojisi</item>
+        <item>Yat İşletme ve Yönetimi</item>
+        <item>Yazılım Geliştirme</item>
+        <item>Yazılım Mühendisliği</item>
+        <item>Yeni Medya ve İletişim</item>
+        <item>Yiyecek ve İçecek İşletmeciliği</item>
+        <item>Yönetim Bilimleri Programları</item>
+        <item>Yönetim Bilişim Sistemleri</item>
+        <item>Zeytincilik ve Zeytin İşleme Teknolojisi</item>
+        <item>Ziraat Mühendisliği Programları</item>
+    </string-array>
 
 </resources>

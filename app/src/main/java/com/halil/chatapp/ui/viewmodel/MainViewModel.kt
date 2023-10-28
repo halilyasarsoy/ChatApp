@@ -11,6 +11,7 @@ import com.halil.chatapp.data.Users
 import com.halil.chatapp.other.Resource
 import com.halil.chatapp.repository.MainRepositoryInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -24,7 +25,6 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
     private val _userList = MutableLiveData<Resource<List<Users>>>()
     val userList = _userList
 
-
     private val _departmentList = MutableLiveData<Resource<List<GetListUniversityNotes>>>()
     val departmentList = _departmentList
 
@@ -36,6 +36,10 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
 
     private val _userData = MutableLiveData<Resource<User>>()
     val userData = _userData
+
+    private val _department = MutableLiveData<String>()
+    val department: LiveData<String>
+        get() = _department
 
     fun updateStatus(userId: String, status: String) {
         viewModelScope.launch {
@@ -55,6 +59,7 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
             }
         }
     }
+
     private val _universityNameList = MutableLiveData<Resource<List<GetListUniversityNotes>>>()
     val universityNameList: LiveData<Resource<List<GetListUniversityNotes>>> = _universityNameList
     fun getUniversityName() {
@@ -71,7 +76,8 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
                 val result = repository.searchUniversity(query)
                 _universityNameList.value = Resource.Success(result)
             } catch (e: Exception) {
-                _universityNameList.value = Resource.Error("Arama sırasında bir hata oluştu: ${e.message}")
+                _universityNameList.value =
+                    Resource.Error("Arama sırasında bir hata oluştu: ${e.message}")
             }
         }
     }
@@ -121,5 +127,13 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
             val user = repository.getUserFromFirestoreCollection()
             _userData.postValue(user)
         }
+    }
+    fun bind() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.getDepartmentNameDb { departmentInfo ->
+                _department.postValue(departmentInfo)
+            }
+        }
+
     }
 }

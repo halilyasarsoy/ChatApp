@@ -48,4 +48,6 @@ interface MainRepositoryInterface {
 
     suspend fun getUserFromFirestoreCollection(): Resource<User>
     suspend fun searchUniversity(query: String): List<GetListUniversityNotes>
+
+    suspend fun getDepartmentNameDb(onResult: (String) -> Unit)
 }

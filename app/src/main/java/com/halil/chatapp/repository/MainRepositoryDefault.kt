@@ -213,10 +213,31 @@ class MainRepositoryDefault : MainRepositoryInterface {
                 val universityNote = GetListUniversityNotes(document.id)
                 universityList.add(universityNote)
             }
-            val filteredList = universityList.filter { it.university.contains(query, ignoreCase = true) }
+            val filteredList =
+                universityList.filter { it.university.contains(query, ignoreCase = true) }
             return filteredList
         } catch (e: Exception) {
             return emptyList()
+        }
+    }
+
+    override suspend fun getDepartmentNameDb(onResult: (String) -> Unit) {
+        val user = FirebaseAuth.getInstance().currentUser
+        val uid = user?.uid
+        if (uid != null) {
+            universityInfo.document(uid)
+                .get()
+                .addOnSuccessListener { documentSnapshot ->
+                    if (documentSnapshot.exists()) {
+                        val department = documentSnapshot.getString("department")
+                        onResult(department ?: "Bilgi Yok")
+                    } else {
+                        onResult("Kullanıcı Bulunamadı")
+                    }
+                }
+                .addOnFailureListener { e ->
+                    onResult("Hata: $e")
+                }
         }
     }
 }

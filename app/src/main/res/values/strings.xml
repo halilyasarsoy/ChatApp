@@ -63,10 +63,15 @@
     <string name="homeFragment">Users</string>
     <string name="please_enter_department">Please enter your department to share</string>
     <string name="search">Search</string>
+    <string name="search_department">Select Department..</string>
     <string name="select_your_university">Select University..</string>
     <string name="departmentListLabel">Departments</string>
     <string name="universityNameLabel">Universities</string>
-
+    <string name="sozelBolumler">Verbal Parts</string>
+    <string name="sayisalBolumler">Numerical Sections</string>
+    <string name="esitAgirlik">Equal Weight Sections</string>
+    <string name="fourYears">4-Year Departments</string>
+    <string name="twoYears">2-Year Departments</string>
     <string-array name="university_names">
         <item>Select University..</item>
         <item>Abant İzzet Baysal University</item>
@@ -255,8 +260,353 @@
         <item>Yüksek İhtisas University</item>
         <item>Yüzüncü Yıl University</item>
     </string-array>
-    <string-array name="department_name">
-
+    <string-array name="departmentall_names">
+        <item>Accounting and Auditing</item>
+        <item>Accounting and Finance Management</item>
+        <item>Accounting and Tax Practices</item>
+        <item>Advertising</item>
+        <item>Aerospace Engineering</item>
+        <item>Agricultural Biotechnology</item>
+        <item>Agricultural Engineering Programs</item>
+        <item>Agricultural Genetic Engineering</item>
+        <item>Agricultural Machinery and Technologies Engineering</item>
+        <item>Agricultural Machinery</item>
+        <item>Agricultural Management</item>
+        <item>Agricultural Structures and Irrigation</item>
+        <item>Agricultural Trade and Business Management</item>
+        <item>Air Logistics</item>
+        <item>Aircraft Body and Engine Maintenance</item>
+        <item>Aircraft Electrical and Electronics</item>
+        <item>Aircraft Engineering</item>
+        <item>Aircraft Maintenance and Repair</item>
+        <item>Aircraft Technology</item>
+        <item>Alternative Energy Sources Technology</item>
+        <item>Anesthesia</item>
+        <item>Animal Production and Technologies</item>
+        <item>Archaeology</item>
+        <item>Architectural Drafting</item>
+        <item>Architectural Restoration</item>
+        <item>Architecture</item>
+        <item>Art and Cultural Management</item>
+        <item>Art and Social Sciences Programs</item>
+        <item>Art History</item>
+        <item>Artificial Intelligence and Data Engineering</item>
+        <item>Artificial Intelligence Engineering</item>
+        <item>Astronomy and Space Sciences</item>
+        <item>Automotive Engineering</item>
+        <item>Automotive Technology</item>
+        <item>Autopsy Assistance</item>
+        <item>Aviation and Space Engineering</item>
+        <item>Aviation Electrical and Electronics</item>
+        <item>Aviation Management</item>
+        <item>Banking and Finance</item>
+        <item>Banking and Insurance</item>
+        <item>Banking</item>
+        <item>Biochemistry</item>
+        <item>Biochemistry</item>
+        <item>Biology Teaching</item>
+        <item>Biomedical Engineering</item>
+        <item>Biosystems Engineering</item>
+        <item>Brand Communication</item>
+        <item>Building Inspection</item>
+        <item>Building Services Technology</item>
+        <item>Business Administration</item>
+        <item>Business Management</item>
+        <item>Capital Markets</item>
+        <item>Cartoon and Animation</item>
+        <item>Casting</item>
+        <item>Chemical Engineering</item>
+        <item>Chemical Technology</item>
+        <item>Chemistry Teaching</item>
+        <item>Chemistry</item>
+        <item>Child Development</item>
+        <item>Child Development</item>
+        <item>Child Protection and Care Services</item>
+        <item>Cinema and Digital Media</item>
+        <item>Civil Aviation Cabin Services</item>
+        <item>Civil Defense and Firefighting</item>
+        <item>Civil Engineering</item>
+        <item>Classroom Teaching</item>
+        <item>Clothing Production Technology</item>
+        <item>Coaching Education</item>
+        <item>Communication and Design</item>
+        <item>Communication Arts</item>
+        <item>Communication Design and Management</item>
+        <item>Communication Sciences</item>
+        <item>Computer and Instructional Technology Teaching</item>
+        <item>Computer Engineering</item>
+        <item>Computer Forensics Engineering</item>
+        <item>Computer Operation</item>
+        <item>Computer Programming</item>
+        <item>Computer Science</item>
+        <item>Computer Technology and Information Systems</item>
+        <item>Computer Technology</item>
+        <item>Computer-Aided Design and Animation</item>
+        <item>Construction Technology</item>
+        <item>Contemporary Turkish Dialects and Literatures</item>
+        <item>Control and Automation Engineering</item>
+        <item>Control and Automation Technology</item>
+        <item>Cooking</item>
+        <item>Customs Management</item>
+        <item>Dairy and Dairy Products Technology</item>
+        <item>Dairy Technology</item>
+        <item>Dental Prosthesis Technology</item>
+        <item>Dentistry (5 Years)</item>
+        <item>Dialysis</item>
+        <item>Digital Game Design</item>
+        <item>Disabled Care and Rehabilitation</item>
+        <item>Econometrics</item>
+        <item>Economic and Administrative Programs</item>
+        <item>Economic and Administrative Sciences Programs</item>
+        <item>Economics and Finance</item>
+        <item>Economics</item>
+        <item>Editing, Sound, and Image Management</item>
+        <item>Electrical and Electronic Engineering</item>
+        <item>Electrical Appliance Technology</item>
+        <item>Electrical Engineering</item>
+        <item>Electricity Generation, Transmission, and Distribution</item>
+        <item>Electricity</item>
+        <item>Electromechanical Carriers</item>
+        <item>Electronic and Communication Engineering</item>
+        <item>Electronic Communication Technology</item>
+        <item>Electronic Engineering</item>
+        <item>Electronic Technology</item>
+        <item>Emergency Aid and Disaster Management</item>
+        <item>Emergency and Disaster Management</item>
+        <item>Energy Engineering</item>
+        <item>Energy Facility Management</item>
+        <item>Energy Management</item>
+        <item>Energy Systems Engineering</item>
+        <item>Entrepreneurship</item>
+        <item>Environmental Cleaning and Inspection</item>
+        <item>Environmental Engineering</item>
+        <item>Environmental Health</item>
+        <item>Environmental Protection and Control</item>
+        <item>Exercise and Sports Sciences</item>
+        <item>Faculty of Communication</item>
+        <item>Fashion Management</item>
+        <item>Field Crops</item>
+        <item>Finance</item>
+        <item>First Aid and Emergency Assistance</item>
+        <item>Fisheries Engineering</item>
+        <item>Food and Beverage Management</item>
+        <item>Food Engineering</item>
+        <item>Food Quality Control and Analysis</item>
+        <item>Food Technology</item>
+        <item>Foreign Trade</item>
+        <item>Forensic Sciences</item>
+        <item>Forest Engineering</item>
+        <item>Forest Industry Engineering</item>
+        <item>Forestry and Forest Products</item>
+        <item>Furniture and Decoration</item>
+        <item>Gas and Plumbing Technology</item>
+        <item>Gastronomy and Culinary Arts</item>
+        <item>Genetics and Bioengineering</item>
+        <item>Genetics and Life Sciences Programs</item>
+        <item>Geographical Information Systems and Technologies</item>
+        <item>Geographical Information Systems</item>
+        <item>Geography Teaching</item>
+        <item>Geography</item>
+        <item>Geological Engineering</item>
+        <item>Geophysics Engineering</item>
+        <item>Graphic Arts</item>
+        <item>Graphic Design</item>
+        <item>Guidance and Psychological Counseling</item>
+        <item>Health Information Systems Technician</item>
+        <item>Health Tourism Management</item>
+        <item>Heavy Machinery Operation</item>
+        <item>History of Science</item>
+        <item>History Teaching</item>
+        <item>History</item>
+        <item>Hotel Management</item>
+        <item>Human Resource Management</item>
+        <item>Human Resource Management</item>
+        <item>Industrial Design Engineering</item>
+        <item>Industrial Design</item>
+        <item>Industrial Engineering</item>
+        <item>Industrial Engineering</item>
+        <item>Industrial Glass and Ceramic</item>
+        <item>Industrial Pattern Making</item>
+        <item>Industrial Poultry Farming</item>
+        <item>Industrial Product Design</item>
+        <item>Information and Document Management</item>
+        <item>Information Management</item>
+        <item>Information Security Technology</item>
+        <item>Information Security Technology</item>
+        <item>Information Systems and Technologies</item>
+        <item>Information Systems Engineering</item>
+        <item>Insurance and Risk Management</item>
+        <item>Insurance and Social Security</item>
+        <item>Insurance</item>
+        <item>Interior Architecture and Environmental Design</item>
+        <item>Interior Architecture</item>
+        <item>Interior Design</item>
+        <item>International Business Management</item>
+        <item>International Economic Relations</item>
+        <item>International Finance and Banking</item>
+        <item>International Finance</item>
+        <item>International Relations</item>
+        <item>International Trade and Business</item>
+        <item>International Trade and Finance</item>
+        <item>International Trade and Finance</item>
+        <item>International Trade and Logistics</item>
+        <item>International Transportation Systems</item>
+        <item>Internet and Network Technologies</item>
+        <item>Islamic Economics and Finance</item>
+        <item>Islamic Sciences</item>
+        <item>Islamic Studies</item>
+        <item>Jewelry and Jewelry Design</item>
+        <item>Jewelry and Jewelry Design</item>
+        <item>Jewelry Design</item>
+        <item>Journalism</item>
+        <item>Justice</item>
+        <item>Labor Economics and Industrial Relations</item>
+        <item>Laboratory and Veterinary Health</item>
+        <item>Laboratory Technology</item>
+        <item>Land Registry and Cadastre</item>
+        <item>Land Registry and Cadastre</item>
+        <item>Law</item>
+        <item>Leather Engineering</item>
+        <item>Leather Technology</item>
+        <item>Logistics Management</item>
+        <item>Logistics</item>
+        <item>Management Information Systems</item>
+        <item>Management Sciences Programs</item>
+        <item>Manufacturing Engineering</item>
+        <item>Marina and Yacht Management</item>
+        <item>Marine Brokerage</item>
+        <item>Marine Machinery Operation Engineering</item>
+        <item>Marine Science and Technology Engineering</item>
+        <item>Marine Transportation and Management</item>
+        <item>Marine Transportation Management Engineering</item>
+        <item>Maritime and Port Management</item>
+        <item>Maritime Business Management</item>
+        <item>Marketing</item>
+        <item>Materials Science and Engineering</item>
+        <item>Mathematics and Computer Science</item>
+        <item>Mathematics Engineering</item>
+        <item>Mathematics Teaching</item>
+        <item>Mathematics</item>
+        <item>Mechanical Engineering</item>
+        <item>Mechanical</item>
+        <item>Mechatronics Engineering</item>
+        <item>Media and Communication</item>
+        <item>Media and Visual Arts</item>
+        <item>Medical Engineering</item>
+        <item>Medical Laboratory Techniques</item>
+        <item>Medical Promotion and Marketing</item>
+        <item>Medicine (6-Year)</item>
+        <item>Meteorology Engineering</item>
+        <item>Mining Engineering</item>
+        <item>Mobile Technologies</item>
+        <item>Molecular Biology and Genetics</item>
+        <item>Molecular Biotechnology</item>
+        <item>Nanotechnology Engineering</item>
+        <item>Natural Gas and Plumbing Technology</item>
+        <item>Natural Stone Technology</item>
+        <item>New Media and Communication</item>
+        <item>Nuclear Energy Engineering</item>
+        <item>Nuclear Medicine Techniques</item>
+        <item>Nursing</item>
+        <item>Nutrition and Dietetics</item>
+        <item>Occupational and Recreational Therapy</item>
+        <item>Occupational Health and Safety</item>
+        <item>Occupational Health and Safety</item>
+        <item>Office Management and Executive Assistance</item>
+        <item>Olive Cultivation and Olive Processing Technology</item>
+        <item>Operating Room Services</item>
+        <item>Oral and Dental Health</item>
+        <item>Organic Farming Management</item>
+        <item>Organic Farming</item>
+        <item>Ornamental Plant Cultivation</item>
+        <item>Paint Technology</item>
+        <item>Pathology Laboratory Techniques</item>
+        <item>Petroleum and Natural Gas Engineering</item>
+        <item>Pharmacy (5 Years)</item>
+        <item>Philosophy</item>
+        <item>Photography and Cinematography</item>
+        <item>Photography and Video</item>
+        <item>Physical Education and Sports Teaching</item>
+        <item>Physics Engineering</item>
+        <item>Physics</item>
+        <item>Physiotherapy and Rehabilitation</item>
+        <item>Plant Production and Technologies</item>
+        <item>Plant Protection</item>
+        <item>Plant Protection</item>
+        <item>Political Science and International Relations</item>
+        <item>Political Science and Public Administration</item>
+        <item>Political Sciences</item>
+        <item>Politics and Economics</item>
+        <item>Preschool Teaching</item>
+        <item>Press and Media</item>
+        <item>Primary School Mathematics Teaching</item>
+        <item>Printing and Publishing Technologies</item>
+        <item>Printing Technologies</item>
+        <item>Private Security and Protection</item>
+        <item>Psychological Counseling and Guidance Teaching</item>
+        <item>Psychology</item>
+        <item>Public Administration</item>
+        <item>Public Relations and Advertising</item>
+        <item>Public Relations and Promotion</item>
+        <item>Public Relations</item>
+        <item>Radiation Therapy</item>
+        <item>Radio and Television Programming</item>
+        <item>Radio and Television Technology</item>
+        <item>Radio, Television, and Cinema</item>
+        <item>Rail Systems Engineering</item>
+        <item>Rail Systems Locomotive Engineering</item>
+        <item>Rail Systems Machine Technology</item>
+        <item>Rail Systems Management</item>
+        <item>Real Estate and Property Management</item>
+        <item>Real Estate Development and Management</item>
+        <item>Refrigeration and Air Conditioning Technology</item>
+        <item>Retail Sales and Store Management</item>
+        <item>Rubber and Plastic Technology</item>
+        <item>Science Education</item>
+        <item>Seed Production</item>
+        <item>Seed Science and Technology</item>
+        <item>Selected Department</item>
+        <item>Ship and Marine Technology Engineering</item>
+        <item>Ship and Yacht Design</item>
+        <item>Ship Machinery Operation</item>
+        <item>Shoe Design and Production</item>
+        <item>Shoe Design and Production</item>
+        <item>Social and Political Sciences</item>
+        <item>Social Security</item>
+        <item>Social Services</item>
+        <item>Social Studies Teaching</item>
+        <item>Sociology</item>
+        <item>Software Development</item>
+        <item>Software Engineering</item>
+        <item>Soil Science and Plant Nutrition</item>
+        <item>Space and Satellite Engineering</item>
+        <item>Space Sciences and Technologies</item>
+        <item>Special Education Teaching</item>
+        <item>Sports Management</item>
+        <item>Statistics and Computer Science</item>
+        <item>Statistics</item>
+        <item>Surveying and Cadastre</item>
+        <item>Technology and Information Management</item>
+        <item>Television Journalism and Programming</item>
+        <item>Textile and Fashion Design</item>
+        <item>Textile Engineering</item>
+        <item>Textile Technology</item>
+        <item>Theology</item>
+        <item>Tourism and Hotel Management</item>
+        <item>Tourism Management</item>
+        <item>Tourist Guidance (2-Year)</item>
+        <item>Traditional Crafts</item>
+        <item>Transportation and Traffic Services</item>
+        <item>Travel Management and Tourism Guidance</item>
+        <item>Turf Field Establishment and Management</item>
+        <item>Turkish Islamic Archaeology</item>
+        <item>Turkish Language and Literature Teaching</item>
+        <item>Turkish Teaching</item>
+        <item>Urban and Regional Planning</item>
+        <item>Veterinary (5-Year)</item>
+        <item>Visual Arts and Communication</item>
+        <item>Web Design and Coding</item>
+        <item>Yacht Management and Operation</item>
     </string-array>
 
 </resources>
