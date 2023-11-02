@@ -21,95 +21,79 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
 
-        <LinearLayout
-            android:id="@+id/mainLinearLayout"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mainConstraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_backgorund_linearlayout"
-            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profileImages"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profileImages"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="30dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.497"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                android:layout_margin="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/editIcon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_baseline_edit_24"
-                    app:layout_constraintEnd_toEndOf="@id/profileImages"
-                    app:layout_constraintTop_toTopOf="@id/profileImages" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/editIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/check"
+                android:layout_margin="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/changeProfileImage"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
+            android:layout_width="160dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="25dp"
             android:background="@drawable/selection_screen_button"
-            android:hint="@string/changeProfileImage"
-            android:textColorHint="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.501"
+            android:hint="@string/setupProfile"
+            android:textColorHint="@color/black"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mainLinearLayout" />
+            app:layout_constraintTop_toBottomOf="@id/mainConstraintLayout" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/changeDepartmentName"
+            android:layout_width="160dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/selection_screen_button"
+            android:hint="@string/setupDepartment"
+            android:textColorHint="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mainConstraintLayout" />
 
         <EditText
             android:id="@+id/departmentEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="55dp"
             android:background="?android:selectableItemBackground"
-            android:drawableEnd="@drawable/baseline_arrow_drop_down_24"
             android:focusable="false"
-            android:hint="Select Department"
-            android:padding="16dp"
+            android:gravity="center"
+            android:text="@{viewModel.department}"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/departmentInfoText"
-            app:layout_constraintVertical_bias="0.2" />
-
-        <TextView
-            android:id="@+id/departmentInfoText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="@{viewModel.department}"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/changeProfileImage" />
-
-        <ImageView
-            android:id="@+id/arrowImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:src="@drawable/baseline_arrow_drop_down_24"
-            app:layout_constraintBottom_toBottomOf="@+id/departmentInfoText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toEndOf="@+id/departmentInfoText"
-            app:layout_constraintTop_toTopOf="@+id/departmentInfoText" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

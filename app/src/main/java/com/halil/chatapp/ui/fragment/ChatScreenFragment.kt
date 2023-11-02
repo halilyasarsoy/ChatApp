@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -36,6 +37,7 @@ class ChatScreenFragment : Fragment() {
     var firebaseUser: FirebaseUser? = null
     var topic = "user"
     private val args: ChatScreenFragmentArgs by navArgs()
+    private var isNavigating = false
 
     @SuppressLint("RestrictedApi")
     override fun onCreateView(
@@ -104,9 +106,14 @@ class ChatScreenFragment : Fragment() {
     private fun navigateToUsers() {
         val imageView = binding.imageViewBackButton
         imageView.setOnClickListener {
-            val actionToUser = ChatScreenFragmentDirections.actionChatScreenFragmentToHomeFragment()
-            findNavController().navigate(actionToUser)
+            if (!isNavigating) {
+                isNavigating = true
+                val actionToUser =
+                    ChatScreenFragmentDirections.actionChatScreenFragmentToHomeFragment()
+                findNavController().navigate(actionToUser)
+            }
         }
+
     }
 
     private fun sendMessage(senderId: String, receiverId: String, message: String) {

@@ -1,10 +1,12 @@
 package com.halil.chatapp.adapter
 
+import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.adapters.ImageViewBindingAdapter.setImageDrawable
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -23,6 +25,7 @@ class NotesAdapter(private var notesList: ArrayList<String>) :
         val binding: GetNotesListBinding =
             GetNotesListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
+
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -34,7 +37,7 @@ class NotesAdapter(private var notesList: ArrayList<String>) :
         return notesList.size
     }
 
-    inner class MyViewHolder(private val binding: GetNotesListBinding) :
+    inner class MyViewHolder(val binding: GetNotesListBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.notesImage.setOnClickListener {
@@ -44,6 +47,7 @@ class NotesAdapter(private var notesList: ArrayList<String>) :
                 it.findNavController().navigate(action)
             }
         }
+
         fun bind(note: String) {
             val uri = Uri.parse(note)
             binding.progressBar.visibility = View.VISIBLE
@@ -69,13 +73,18 @@ class NotesAdapter(private var notesList: ArrayList<String>) :
                         if (resource != null) {
                             binding.notesImage.setImageDrawable(resource)
                         }
-                        return false
+                        Glide.with(binding.notesImage.context).clear(binding.notesImage)
+                        return true
                     }
                 })
                 .preload()
             binding.progressBar.visibility = View.GONE
+
         }
+
     }
+
+    @SuppressLint("NotifyDataSetChanged")
     fun setDataChange(newDepartmentList: ArrayList<String>) {
         notesList.clear()
         notesList.addAll(newDepartmentList)

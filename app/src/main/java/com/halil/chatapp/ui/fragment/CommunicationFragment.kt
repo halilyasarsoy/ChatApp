@@ -45,77 +45,9 @@ class CommunicationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        pushDataToFirestore()
-//        pushDataToFirestoreEN()
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_MASK_ADJUST)
         sendMessage()
     }
-
-
-//    fun pushDataToFirestore() {
-//        val db = FirebaseFirestore.getInstance()
-//        val collectionReference = db.collection("department")
-//        val documentReference = collectionReference.document("department-tr")
-//
-//        val data = HashMap<String, Any>()
-//
-//        // Sözel Bölümler ana başlık altında 4 Yıllık ve 2 Yıllık Bölümler
-//        val sozelBolumler = HashMap<String, Any>()
-//        sozelBolumler["4 Yıllık Bölümler"] = dortYillikBolumler
-//        sozelBolumler["2 Yıllık Bölümler"] = ikiYilliBolumler
-//        data["Sözel Bölümler"] = sozelBolumler
-//
-//        val sayisalBolumler = HashMap<String, Any>()
-//        sayisalBolumler["4 Yıllık Bölümler"] = sayisaldortYillikBolumler
-//        sayisalBolumler["2 Yıllık Bölümler"] = sayisalikiYilliBolumler
-//        data["Sayısal Bölümler"] = sayisalBolumler
-//
-//        val esitAgirlik = HashMap<String, Any>()
-//        esitAgirlik["4 Yıllık Bölümler"] = esitdortYillikBolumler
-//        esitAgirlik["2 Yıllık Bölümler"] = esitikiYilliBolumler
-//        data["Eşit Ağırlık Bölümler"] = esitAgirlik
-//
-////        val departmentData = mapOf("department" to data) // "department" anahtarını bir harita olarak saklayın
-//
-//        documentReference.set(data)
-//            .addOnSuccessListener {
-//                println("Veri başarıyla Firestore'a eklendi.")
-//            }
-//            .addOnFailureListener { e ->
-//                println("Firestore'a veri eklenirken bir hata oluştu: $e")
-//            }
-//    }
-//
-//    fun pushDataToFirestoreEN() {
-//        val db = FirebaseFirestore.getInstance()
-//        val collectionReference = db.collection("department")
-//        val documentReference = collectionReference.document("department-en")
-//
-//        val data = HashMap<String, Any>()
-//
-//        val sozelBolumler = HashMap<String, Any>()
-//        sozelBolumler["4 Yıllık Bölümler"] = dortYillikBolumlerEN
-//        sozelBolumler["2 Yıllık Bölümler"] = ikiYilliBolumlerEN
-//        data["Sözel Bölümler"] = sozelBolumler
-//
-//        val sayisalBolumler = HashMap<String, Any>()
-//        sayisalBolumler["4 Yıllık Bölümler"] = sayisaldortYillikBolumlerEN
-//        sayisalBolumler["2 Yıllık Bölümler"] = sayisalikiYilliBolumlerEN
-//        data["Sayısal Bölümler"] = sayisalBolumler
-//
-//        val esitAgirlik = HashMap<String, Any>()
-//        esitAgirlik["4 Yıllık Bölümler"] = esitdortYillikBolumlerEN
-//        esitAgirlik["2 Yıllık Bölümler"] = esitikiYilliBolumlerEN
-//        data["Eşit Ağırlık Bölümler"] = esitAgirlik
-//
-//        documentReference.set(data)
-//            .addOnSuccessListener {
-//                println("Veri başarıyla Firestore'a eklendi.")
-//            }
-//            .addOnFailureListener { e ->
-//                println("Firestore'a veri eklenirken bir hata oluştu: $e")
-//            }
-//    }
 
     private fun sendMessage() {
         binding.btnSubmit.setOnClickListener {

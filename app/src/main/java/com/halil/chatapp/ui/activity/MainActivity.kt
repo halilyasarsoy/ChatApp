@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -91,9 +92,9 @@ class MainActivity : AppCompatActivity() {
 
             R.id.logOut -> {
                 val builder = AlertDialog.Builder(this)
-                builder.setTitle("Alert Dialog")
-                builder.setMessage("çıkış yapmak üzeresiniz.")
-                builder.setPositiveButton("yes") { _, _ ->
+                builder.setTitle(getString(R.string.logOut))
+                builder.setMessage(getString(R.string.questionLogOut))
+                builder.setPositiveButton(getString(R.string.yesAnswer)) { _, _ ->
                     vm.logout {
                         getUID()?.let { vm.updateStatus(it, "offline") }
                         val intent = Intent(this, AuthActivity::class.java)
@@ -101,8 +102,8 @@ class MainActivity : AppCompatActivity() {
                         finish()
                     }
                 }
-                builder.setNegativeButton("no") { _, _ ->
-                    Toast.makeText(this, "Çıkış yapmak için onaylayınız.", Toast.LENGTH_SHORT)
+                builder.setNegativeButton(getString(R.string.noAnswer)) { _, _ ->
+                    Toast.makeText(this, getString(R.string.confirmLogOut), Toast.LENGTH_SHORT)
                         .show()
                 }
 
@@ -120,10 +121,9 @@ class MainActivity : AppCompatActivity() {
                 || super.onSupportNavigateUp()
     }
 
-    private fun updateNavHeader() {
+    fun updateNavHeader() {
         val navHeaderView = binding.navDrawView.getHeaderView(0)
-        headerView = navHeaderView
-        profileImageView = headerView.findViewById(R.id.profileImageView)
+        val profileImageView = navHeaderView.findViewById<ImageView>(R.id.profileImageView)
         val navUsername = navHeaderView.findViewById<TextView>(R.id.navHeaderName)
         val navUserLastName = navHeaderView.findViewById<TextView>(R.id.navHeaderLastName)
         val navUniversity = navHeaderView.findViewById<TextView>(R.id.navHeaderProfession)
@@ -136,7 +136,6 @@ class MainActivity : AppCompatActivity() {
                     navUserLastName.text = it.data?.lastname
                     navUniversity.text = it.data?.profession
                 }
-
                 else -> {}
             }
         }

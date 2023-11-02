@@ -14,7 +14,7 @@
             android:id="@+id/topBarBg"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="@color/top_design_color"
+            android:background="@color/bgsplash"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -56,7 +56,7 @@
             android:shadowColor="#80000000"
             android:shadowDx="2"
             android:shadowDy="2"
-            android:shadowRadius="10"
+            android:shadowRadius="7"
             android:text="@string/register"
             android:textSize="30sp"
             android:textStyle="bold"

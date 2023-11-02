@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
@@ -10,14 +12,61 @@
         android:id="@+id/title2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Bilgileri Doldurun"
+        android:layout_marginTop="10dp"
+        android:text="@string/l_tfen_dosya_se_iniz"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/select_file_notes"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:background="@drawable/selection_screen_button"
+        android:hint="@string/setupProfile"
+        android:text="Dosya Seç"
+        android:textColorHint="@color/black"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title2" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/negativeButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Dosya Seç" />
-</LinearLayout>
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:text="@string/cancel"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/positiveButton"
+        app:layout_constraintStart_toStartOf="@+id/select_file_notes"
+        app:layout_constraintTop_toBottomOf="@+id/select_file_notes" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/positiveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:background="@color/white"
+        android:text="@string/ok"
+        android:textSize="12sp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/select_file_notes"
+        app:layout_constraintTop_toBottomOf="@+id/select_file_notes" />
+
+    <View
+        android:id="@+id/invisibleView"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="30dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/negativeButton" />
+</androidx.constraintlayout.widget.ConstraintLayout>

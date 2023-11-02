@@ -12,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.databinding.ListItemBinding
+
 class ListAdapter(var userList: ArrayList<Users>) :
     RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
@@ -60,7 +61,9 @@ class ListAdapter(var userList: ArrayList<Users>) :
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val userStatus = snapshot.child("status").getValue(String::class.java)
                     user.status = userStatus == "online"
+                    userList.sortByDescending { it.status }
                     holder.bindItem(user)
+
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -75,14 +78,13 @@ class ListAdapter(var userList: ArrayList<Users>) :
     override fun getItemCount(): Int {
         return userList.size
     }
+
     fun updateUserStatus(updatedUserList: ArrayList<Users>) {
+
+        // Kullanıcı listesini güncelle
         userList.clear()
         userList.addAll(updatedUserList)
-        notifyDataSetChanged()
-    }
-
-    fun setDataChange(newUserList: ArrayList<Users>) {
-        userList.addAll(newUserList)
+        // RecyclerView'e değişiklikleri bildir
         notifyDataSetChanged()
     }
 }

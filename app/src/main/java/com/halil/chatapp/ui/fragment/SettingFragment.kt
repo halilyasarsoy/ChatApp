@@ -3,6 +3,7 @@ package com.halil.chatapp.ui.fragment
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -14,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -39,6 +41,9 @@ class SettingFragment : Fragment() {
     private var imgName = ""
     private var imgUrlx: String? = null
     private val viewModel: MainViewModel by viewModels()
+    private var progressDialog: ProgressDialog? = null
+    private var editIconVisible = false
+
 
     private val uid = FirebaseAuth.getInstance().uid
     override fun onCreateView(
@@ -49,23 +54,12 @@ class SettingFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        viewModel.bind()
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.department.observe(viewLifecycleOwner) { department ->
-            if (department.isNullOrEmpty()) {
-                binding.departmentEditText.visibility = View.VISIBLE
-                binding.arrowImageView.visibility = View.GONE
-            } else {
-                binding.departmentEditText.visibility = View.GONE
-
-            }
-        }
         update()
         updateBtn()
         changeDepartment()
@@ -95,8 +89,15 @@ class SettingFragment : Fragment() {
         storageReference.putFile(imageURI).addOnSuccessListener {
             storageReference.downloadUrl.addOnSuccessListener { uri ->
                 imgUrlx = uri.toString()
+                progressDialog?.dismiss()
+                // Edit icon'un görünür hale gelmesi
+                editIconVisible = true
+                binding.editIcon.visibility = View.VISIBLE
+
             }
         }.addOnFailureListener {
+            progressDialog?.dismiss()
+
             Toast.makeText(requireActivity(), "failure", Toast.LENGTH_SHORT).show()
         }
     }
@@ -112,7 +113,9 @@ class SettingFragment : Fragment() {
 
     @SuppressLint("CheckResult")
     private fun updateBtn() {
-        binding.changeProfileImage.setOnClickListener {
+        binding.editIcon.visibility = View.GONE
+
+        binding.editIcon.setOnClickListener {
             if (imgUrlx?.isNotEmpty() == true) {
                 val mapUpdate = mapOf("imgUrl" to imgUrlx)
                 db.collection("users").document(FirebaseAuth.getInstance().currentUser!!.uid)
@@ -129,24 +132,25 @@ class SettingFragment : Fragment() {
         }
     }
 
+    private fun startProgressDialog() {
+        progressDialog = ProgressDialog(requireContext())
+        progressDialog?.setMessage("Bekleyin...")
+        progressDialog?.show()
+    }
+
     private fun update() {
-        binding.editIcon.setOnClickListener {
+        binding.changeProfileImage.setOnClickListener {
             val intent = Intent()
             intent.action = Intent.ACTION_GET_CONTENT
             intent.type = "image/*"
             startActivityForResult(intent, 0)
+            startProgressDialog()
         }
     }
 
     private fun changeDepartment() {
         val departmentEditText = binding.departmentEditText
-        departmentEditText.setOnClickListener {
-            showDepartmentSelectionDialog(departmentEditText)
-        }
-        binding.arrowImageView.setOnClickListener {
-            showDepartmentSelectionDialog(departmentEditText)
-        }
-        binding.departmentInfoText.setOnClickListener {
+        binding.changeDepartmentName.setOnClickListener {
             showDepartmentSelectionDialog(departmentEditText)
         }
     }
@@ -176,29 +180,33 @@ class SettingFragment : Fragment() {
             }
         })
 
+        val builder = AlertDialog.Builder(requireActivity())
+        builder.setView(dialogView)
+
+        val dialog = builder.create()
+
         departmentListView.setOnItemClickListener { _, _, position, _ ->
             val selectedDepartment = departmentList[position]
             editText.setText(selectedDepartment)
-        }
 
-        val builder = AlertDialog.Builder(requireActivity())
-        builder.setView(dialogView)
-        builder.setPositiveButton("Tamam") { dialog, _ ->
-            val department = editText.text.toString()
-            if (department.isEmpty()) {
-                Toast.makeText(
-                    requireContext(),
-                    "Lütfen tüm gerekli alanları doldurunuz ve dosya seçiniz.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
+            // Kullanıcı bir seçenek seçtikten sonra işlemi otomatikleştir
+            val department = selectedDepartment
+            if (department.isNotEmpty()) {
                 viewModel.addNoteToFirestore(department, requireContext())
+                viewModel.department.observe(viewLifecycleOwner) { department ->
+
+                }
+
             }
             dialog.dismiss()
         }
 
-        val dialog = builder.create()
         dialog.show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.bind()
     }
 }
 

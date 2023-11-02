@@ -103,7 +103,7 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
     fun addNoteToFirestore(department: String, context: Context) {
         viewModelScope.launch {
             repository.addNotesData(department, context)
-            _universityData.value = listOf(department)
+            _universityData.postValue(listOf(department))
         }
     }
 
@@ -134,6 +134,8 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
                 _department.postValue(departmentInfo)
             }
         }
-
+    }
+    fun updateDepartment(newDepartment: String) {
+        _department.value = newDepartment
     }
 }

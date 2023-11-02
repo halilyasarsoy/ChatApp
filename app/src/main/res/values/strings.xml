@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ChatApp</string>
+    <string name="app_name">Kampus</string>
     <string name="StringSplashText">Welcome to Chat</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login">Login</string>
@@ -72,6 +72,12 @@
     <string name="esitAgirlik">Equal Weight Sections</string>
     <string name="fourYears">4-Year Departments</string>
     <string name="twoYears">2-Year Departments</string>
+    <string name="questionLogOut">Do you want to log out?</string>
+    <string name="confirmLogOut">Confirm to log out.</string>
+    <string name="setupDepartment">Edit Department</string>
+    <string name="setupProfile">Edit Profile</string>
+    <string name="backToLogin">Back to Login</string>
+    <string name="l_tfen_dosya_se_iniz">Please Select File</string>
     <string-array name="university_names">
         <item>Select University..</item>
         <item>Abant İzzet Baysal University</item>

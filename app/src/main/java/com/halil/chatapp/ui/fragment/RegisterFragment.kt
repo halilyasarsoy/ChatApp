@@ -2,6 +2,7 @@ package com.halil.chatapp.ui.fragment
 
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
+import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -167,6 +168,7 @@ class RegisterFragment : Fragment() {
                 imgUrlx = uri.toString()
             }
     }
+
     private fun registerCheck() {
         vm.registerStatus.observe(viewLifecycleOwner) {
             when (it) {
@@ -174,17 +176,22 @@ class RegisterFragment : Fragment() {
                     Toast.makeText(requireContext(), "Please fill all blanks", Toast.LENGTH_LONG)
                         .show()
                 }
+
                 is Resource.Loading -> {
                     progressBar.visibility = View.VISIBLE
                 }
 
                 is Resource.Success -> {
-                    progressBar.visibility = View.GONE
-                    val action =
-                        RegisterFragmentDirections.actionRegisterFragmentToRegisterSuccessFragment()
-                    findNavController().navigate(action)
-                }
 
+                    val builder = AlertDialog.Builder(requireContext())
+                    builder.setMessage("Kayıt işlemi başarılı! Geri dönmek için tıklayın.")
+                    builder.setPositiveButton(getString(R.string.backToLogin)) { dialog, which ->
+                        val action = RegisterFragmentDirections.actionRegisterFragmentToLoginScreenFragment()
+                        findNavController().navigate(action)
+                    }
+                    val alertDialog = builder.create()
+                    alertDialog.show()
+                }
                 else -> {}
             }
         }

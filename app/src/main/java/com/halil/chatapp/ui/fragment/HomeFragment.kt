@@ -9,15 +9,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.database.FirebaseDatabase
 import com.halil.chatapp.adapter.ListAdapter
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.databinding.FragmentHomeBinding
 import com.halil.chatapp.other.Resource
+import com.halil.chatapp.ui.activity.MainActivity
 import com.halil.chatapp.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
+    private val databaseReference = FirebaseDatabase.getInstance().getReference("User-Status")
 
     private val vm: MainViewModel by viewModels()
     private val listAdapter = ListAdapter(arrayListOf())
@@ -39,12 +42,10 @@ class HomeFragment : Fragment() {
         checkUserList()
     }
 
-
     private fun adapterSetup() {
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
-
             adapter = listAdapter
         }
 
@@ -93,9 +94,8 @@ class HomeFragment : Fragment() {
                 is Resource.Success -> {
                     binding.progressBarUserList.visibility = View.GONE
                     val userList = it.data as? ArrayList<Users>
-                    val sortedList = userList?.sortedByDescending { user -> user.status }
-                    sortedList?.let { newList ->
-                        listAdapter.updateUserStatus(ArrayList(newList))
+                    userList?.let { newList ->
+                        listAdapter.updateUserStatus(newList)
                     }
                 }
 
@@ -103,6 +103,7 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
 }
 
 

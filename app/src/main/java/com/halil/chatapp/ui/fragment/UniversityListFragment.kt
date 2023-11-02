@@ -18,6 +18,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
@@ -63,8 +64,7 @@ class UniversityListFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentNotesBinding.inflate(inflater, container, false)
         return binding.root
@@ -107,14 +107,11 @@ class UniversityListFragment : Fragment() {
 
     private fun checkUniversityNameList() {
         vml.universityNameList.observe(viewLifecycleOwner) { resource ->
-            // UI'ı güncelleme işlemleri
             when (resource) {
                 is Resource.Error -> {
                     // Hata durumu: Boş liste
                     Toast.makeText(
-                        requireContext(),
-                        "Universities not found",
-                        Toast.LENGTH_LONG
+                        requireContext(), "Universities not found", Toast.LENGTH_LONG
                     ).show()
                 }
 
@@ -125,7 +122,6 @@ class UniversityListFragment : Fragment() {
                 }
 
                 is Resource.Loading -> {
-                    // Yükleme durumu: İstediğiniz güncellemeleri yapabilirsiniz
                     binding.fabAddProgressBar.visibility = View.VISIBLE
                 }
 
@@ -216,64 +212,58 @@ class UniversityListFragment : Fragment() {
         binding.fabAdd.setOnClickListener {
             vml.fetchNotesData(requireContext())
             vml.universityData.observe(viewLifecycleOwner) { department ->
-                if (department.isEmpty()) {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.please_enter_department),
-                        Toast.LENGTH_LONG
-                    ).show()
-                } else {
-                    val dialogView = layoutInflater.inflate(R.layout.alert_dialog_pick_file, null)
-                    val selectFileButton = dialogView.findViewById<Button>(R.id.select_file_notes)
-                    selectFileButton.setOnClickListener {
-                        openFilePicker()
-                    }
-                    val builder = AlertDialog.Builder(requireContext())
-                    builder.setView(dialogView)
-                    builder.setPositiveButton(R.string.ok) { dialog, _ ->
-                        val fileUri = selectedFileUri
-                        if (fileUri == null) {
-                            Toast.makeText(
-                                requireContext(),
-                                R.string.pickFile,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        } else {
-                            uploadFile(fileUri)
-                        }
-                        dialog.dismiss()
-                    }
 
-                    val dialog = builder.create()
-                    dialog.show()
+                val dialogView = layoutInflater.inflate(R.layout.alert_dialog_pick_file, null)
+                val selectFileButton = dialogView.findViewById<Button>(R.id.select_file_notes)
+                val okButton = dialogView.findViewById<Button>(R.id.positiveButton)
+                val cancelButton = dialogView.findViewById<Button>(R.id.negativeButton)
+                val builder = AlertDialog.Builder(requireContext())
+                builder.setView(dialogView)
+
+                val dialog = builder.create()
+
+                selectFileButton.setOnClickListener {
+                    openFilePicker()
                 }
+                okButton.setOnClickListener {
+                    dialog.dismiss()
+                    val fileUri = selectedFileUri
+                    if (fileUri != null) {
+                        uploadFile(fileUri)
+                    } else {
+                        Toast.makeText(
+                            requireContext(), R.string.pickFile, Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+                cancelButton.setOnClickListener {
+                    dialog.dismiss()
+                }
+                dialog.show()
             }
         }
-
-
     }
 
     private fun uploadFile(fileUri: Uri) {
+
+
         val user = FirebaseAuth.getInstance().currentUser
         val currentTimeMillis = System.currentTimeMillis()
         val formattedDateTime =
             SimpleDateFormat("dd.MM.yyyy : HH:mm", Locale.getDefault()).format(currentTimeMillis)
         val storageReference =
             FirebaseStorage.getInstance().getReference("${user?.email} - ${formattedDateTime}")
-        storageReference.putFile(fileUri)
-            .addOnSuccessListener { taskSnapshot ->
-                storageReference.downloadUrl.addOnSuccessListener { uri ->
-                    fileUrl = uri.toString() + fileType
-                    addFileUrlToFirestore()
-                }
+        storageReference.putFile(fileUri).addOnSuccessListener { taskSnapshot ->
+            storageReference.downloadUrl.addOnSuccessListener { uri ->
+                fileUrl = uri.toString() + fileType
+                addFileUrlToFirestore()
+
             }
-            .addOnFailureListener { exception ->
-                Toast.makeText(
-                    requireContext(),
-                    R.string.fileError,
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+        }.addOnFailureListener { exception ->
+            Toast.makeText(
+                requireContext(), R.string.fileError, Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     private fun addFileUrlToFirestore() {
@@ -281,43 +271,35 @@ class UniversityListFragment : Fragment() {
         val uid = currentUser?.uid
         if (uid != null) {
             val usersCollection = FirebaseFirestore.getInstance().collection("users")
-            usersCollection.document(uid).get()
-                .addOnSuccessListener { documentSnapshot ->
-                    val profession = documentSnapshot.get("profession") as? String
-                    if (profession != null) {
-                        val notesRef = FirebaseFirestore.getInstance()
-                            .collection("notes")
-                            .document(profession)
-                        val departmentRef = FirebaseFirestore.getInstance()
-                            .collection("university")
-                            .document(uid)
-                        departmentRef.get().addOnSuccessListener { departmentDocument ->
-                            val department = departmentDocument.getString("department")
-                            if (department != null) {
-                                val fieldUpdate = hashMapOf<String, Any>(
-                                    department to FieldValue.arrayUnion(fileUrl)
-                                )
-                                notesRef.set(fieldUpdate, SetOptions.merge())
-                                    .addOnSuccessListener {
-                                        Toast.makeText(
-                                            requireContext(),
-                                            R.string.fileUploaded,
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-                                    .addOnFailureListener { exception ->
-                                        Toast.makeText(
-                                            requireContext(),
-                                            R.string.fileError,
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
+            usersCollection.document(uid).get().addOnSuccessListener { documentSnapshot ->
+                val profession = documentSnapshot.get("profession") as? String
+                if (profession != null) {
+                    val notesRef =
+                        FirebaseFirestore.getInstance().collection("notes").document(profession)
+                    val departmentRef =
+                        FirebaseFirestore.getInstance().collection("university").document(uid)
+                    departmentRef.get().addOnSuccessListener { departmentDocument ->
+                        val department = departmentDocument.getString("department")
+                        if (department != null) {
+                            val fieldUpdate = hashMapOf<String, Any>(
+                                department to FieldValue.arrayUnion(fileUrl)
+                            )
+                            notesRef.set(fieldUpdate, SetOptions.merge()).addOnSuccessListener {
+                                Toast.makeText(
+                                    requireContext(),
+                                    R.string.fileUploaded,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }.addOnFailureListener { exception ->
+                                Toast.makeText(
+                                    requireContext(), R.string.fileError, Toast.LENGTH_SHORT
+                                ).show()
                             }
                         }
                     }
                 }
-                .addOnFailureListener { exception ->
-                }
+            }.addOnFailureListener { exception ->
+            }
         }
     }
 
@@ -339,6 +321,7 @@ class UniversityListFragment : Fragment() {
             selectedFileUri = fileUri
         }
     }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_item, menu)
         super.onCreateOptionsMenu(menu, inflater)

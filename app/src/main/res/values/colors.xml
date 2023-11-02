@@ -27,4 +27,5 @@
     <color name="top_design_color">#cacaca</color>
     <color name="floating_action_bar">#efc984</color>
     <color name="bgsplash">#040e1f</color>
+    <color name="setupProfile">#efefef</color>
 </resources>

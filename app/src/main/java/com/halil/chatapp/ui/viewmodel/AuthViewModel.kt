@@ -9,9 +9,6 @@ import com.google.firebase.auth.AuthResult
 import com.halil.chatapp.other.Resource
 import com.halil.chatapp.repository.MainRepositoryInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,16 +22,6 @@ class AuthViewModel @Inject constructor(private val repository: MainRepositoryIn
     private val _loginStatus = MutableLiveData<Resource<AuthResult>>()
     val loginStatus: LiveData<Resource<AuthResult>> = _loginStatus
 
-    private val _isLoading = MutableStateFlow(true)
-    val isLoading = _isLoading.asStateFlow()
-
-    init {
-        viewModelScope.launch {
-            delay(3000)
-            _isLoading.value = false
-        }
-    }
-
     fun login(email: String, password: String) {
         val error = if (email.isEmpty() || password.isEmpty()) "Please fill all blanks" else null
         error?.let {
@@ -47,7 +34,6 @@ class AuthViewModel @Inject constructor(private val repository: MainRepositoryIn
             _loginStatus.postValue(result)
         }
     }
-
     fun register(
         name: String,
         lastName: String,

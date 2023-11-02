@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ChatApp</string>
+    <string name="app_name">Kampüs</string>
     <string name="StringSplashText">Welcome to Chat</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login">Giriş</string>
@@ -73,6 +73,12 @@
     <string name="esitAgirlik">Eşit Ağırlık Bölümleri</string>
     <string name="fourYears">2 Yıllık Bölümler</string>
     <string name="twoYears">4 Yıllık Bölümler</string>
+    <string name="questionLogOut">Çıkış yapmak istiyor musunuz?</string>
+    <string name="confirmLogOut">Çıkış yapmak için onaylayınız.</string>
+    <string name="setupDepartment">Bölümünü Düzenle</string>
+    <string name="setupProfile">Profili Düzenle</string>
+    <string name="backToLogin">Girişe Geri Dön</string>
+    <string name="l_tfen_dosya_se_iniz">Lütfen Dosya Seçiniz</string>
     <string-array name="university_names">
         <item>Üniversite Seçiniz..</item>
         <item>Abant İzzet Baysal Üniversitesi</item>

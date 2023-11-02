@@ -188,5 +188,11 @@
         android:name="com.halil.chatapp.ui.fragment.DeleteBottomSheetFragment"
         android:label="fragment_delete_bottom_sheet"
         tools:layout="@layout/fragment_delete_bottom_sheet" />
+    <dialog
+        android:id="@+id/pickerFileBottomSheet"
+        android:name="com.halil.chatapp.ui.fragment.PickerFileBottomSheet"
+        android:label="fragment_picker_file_bottom_sheet"
+        tools:layout="@layout/fragment_picker_file_bottom_sheet" />
+
 
 </navigation>
