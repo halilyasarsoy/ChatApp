@@ -34,6 +34,14 @@ KAMPUS is a specialized note-sharing and messaging application designed for univ
         <img width="240px" src="https://i.ibb.co/McnyXnx/screenshot-1699079055126.png" alt="DrawerLayout" border="0">
       </td>
     </tr>
+      <tr>
+      <td style="padding: 10px;">
+        <img width="240px" src="https://i.ibb.co/H7FVbzT/bolumler.png" alt="UniversityListFragment" border="0">
+      </td>
+      <td style="padding: 10px;">
+        <img width="240px" src="https://i.ibb.co/ZYwgzwL/pdf.png" alt="DrawerLayout" border="0">
+      </td>
+    </tr>
     <tr>
       <td style="padding: 10px;">
         <img width="240px" src="https://i.ibb.co/02xg29M/screenshot-1699079067268.png" alt="UserFragment" border="0">
