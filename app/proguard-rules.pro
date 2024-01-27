@@ -19,3 +19,13 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keeppackagenames com.halil.chatapp
+-keep class com.halil.chatapp.** {*;}
+-keep class com.halil.chatapp.data.** {*;}
+-keep class com.halil.chatapp.ui.fragment.** {*;}
+-keep class com.halil.chatapp.ui.activity.** {*;}
+-keep class com.halil.chatapp.ui.viewmodel.** {*;}
+-keep class com.halil.chatapp.repository.** {*;}
+-keep class androidx.core.app.CoreComponentFactory { *; }
+# ---------------- END Firebase -------------------

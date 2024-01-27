@@ -1,19 +1,20 @@
 package com.halil.chatapp.repository
 
 import android.content.Context
-import android.util.Log
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import com.halil.chatapp.data.*
+import com.halil.chatapp.data.Contact
+import com.halil.chatapp.data.ContactMessage
+import com.halil.chatapp.data.GetListUniversityNotes
+import com.halil.chatapp.data.User
+import com.halil.chatapp.data.Users
 import com.halil.chatapp.other.Resource
 import kotlinx.coroutines.tasks.await
-import com.google.firebase.firestore.Query
 
-@Suppress("UNREACHABLE_CODE")
+//@Suppress("UNREACHABLE_CODE")
 class MainRepositoryDefault : MainRepositoryInterface {
     private val message_field = "messages"
     private val auth = FirebaseAuth.getInstance()
@@ -215,9 +216,9 @@ class MainRepositoryDefault : MainRepositoryInterface {
             }
             val filteredList =
                 universityList.filter { it.university.contains(query, ignoreCase = true) }
-            return filteredList
+            filteredList
         } catch (e: Exception) {
-            return emptyList()
+            emptyList()
         }
     }
 

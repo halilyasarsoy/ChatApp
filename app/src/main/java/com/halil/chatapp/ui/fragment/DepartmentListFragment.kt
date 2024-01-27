@@ -89,6 +89,8 @@ class DepartmentListFragment : Fragment() {
                     departmentList?.let { ArrayList(it) }
                         ?.let { departmentAdapter.setDataChange(it) }
                 }
+
+                else -> {}
             }
         }
     }
