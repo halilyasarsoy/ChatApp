@@ -23,10 +23,9 @@ import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.firebase.auth.FirebaseAuth
 import com.halil.chatapp.R
 import com.halil.chatapp.databinding.ActivityMainBinding
+import com.halil.chatapp.other.Resource
 import com.halil.chatapp.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import com.halil.chatapp.other.Resource
-import com.halil.chatapp.ui.fragment.SettingFragment
 import de.hdodenhof.circleimageview.CircleImageView
 
 @AndroidEntryPoint
@@ -57,6 +56,7 @@ class MainActivity : AppCompatActivity() {
                     binding.bottomNavigationView.visibility = View.GONE
                     binding.bottomAppBar.visibility = View.GONE
                 }
+
                 else -> {
                     binding.bottomNavigationView.visibility = View.VISIBLE
                     binding.bottomAppBar.visibility = View.VISIBLE
@@ -136,13 +136,16 @@ class MainActivity : AppCompatActivity() {
                     navUserLastName.text = it.data?.lastname
                     navUniversity.text = it.data?.profession
                 }
+
                 else -> {}
             }
         }
     }
+
     fun hideBottomNavigationView() {
         bottomNavigationView.visibility = View.GONE
     }
+
     fun showBottomNavigationView() {
         bottomNavigationView.visibility = View.VISIBLE
     }

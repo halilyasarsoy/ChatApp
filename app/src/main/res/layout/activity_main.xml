@@ -39,8 +39,7 @@
                 app:itemIconTint="#FFFFFF"
                 app:itemTextColor="#FFFFFF"
                 app:labelVisibilityMode="labeled"
-                app:menu="@menu/bottom_nav_menu">
-            </com.google.android.material.bottomnavigation.BottomNavigationView>
+                app:menu="@menu/bottom_nav_menu"></com.google.android.material.bottomnavigation.BottomNavigationView>
         </com.google.android.material.bottomappbar.BottomAppBar>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

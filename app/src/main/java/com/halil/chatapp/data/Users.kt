@@ -9,18 +9,19 @@ data class Users(
     var name: String,
     var lastname: String,
     var email: String,
-    var imgUrl: String?=null,
+    var imgUrl: String? = null,
     var userList: List<Users>,
-    var profession : String,
+    var profession: String,
     var approved: Boolean = true,
     var status: Boolean = false
 
 
 ) : Parcelable {
     init {
-        this.name= name.capitalize()
-        this.lastname=lastname.capitalize()
-        this.profession=profession.capitalize()
+        this.name = name.capitalize()
+        this.lastname = lastname.capitalize()
+        this.profession = profession.capitalize()
     }
-    constructor() : this("", "", "", "", "", listOf(),"")
+
+    constructor() : this("", "", "", "", "", listOf(), "")
 }

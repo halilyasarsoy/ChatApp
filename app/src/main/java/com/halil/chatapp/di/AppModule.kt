@@ -20,5 +20,5 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideMainRepository () = MainRepositoryDefault() as MainRepositoryInterface
+    fun provideMainRepository() = MainRepositoryDefault() as MainRepositoryInterface
 }

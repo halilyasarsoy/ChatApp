@@ -1,8 +1,5 @@
 package com.halil.chatapp.other
 
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
-
 class AppUtil {
 //
 //     fun getUID(): String? {

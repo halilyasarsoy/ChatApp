@@ -1,6 +1,5 @@
 package com.halil.chatapp.ui.viewmodel
 
-import android.media.Image
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -34,14 +33,15 @@ class AuthViewModel @Inject constructor(private val repository: MainRepositoryIn
             _loginStatus.postValue(result)
         }
     }
+
     fun register(
         name: String,
         lastName: String,
         email: String,
         password: String,
         confirmPassword: String,
-        profession : String,
-        imgUrl : String
+        profession: String,
+        imgUrl: String
     ) {
         val error =
             if (name.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || password != confirmPassword || profession.isEmpty()) "Make sure it's right. Something is wrong.." else null

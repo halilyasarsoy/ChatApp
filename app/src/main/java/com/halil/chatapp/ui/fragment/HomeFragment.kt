@@ -14,7 +14,6 @@ import com.halil.chatapp.adapter.ListAdapter
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.databinding.FragmentHomeBinding
 import com.halil.chatapp.other.Resource
-import com.halil.chatapp.ui.activity.MainActivity
 import com.halil.chatapp.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

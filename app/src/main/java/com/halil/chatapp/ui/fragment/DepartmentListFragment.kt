@@ -4,15 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.Toast
-import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.halil.chatapp.R
 import com.halil.chatapp.adapter.DepartmentAdapter
 import com.halil.chatapp.data.GetListUniversityNotes
 import com.halil.chatapp.databinding.FragmentDepartmentListBinding
@@ -81,9 +77,11 @@ class DepartmentListFragment : Fragment() {
                         Toast.LENGTH_LONG
                     ).show()
                 }
+
                 is Resource.Loading -> {
                     // Yükleme durumu
                 }
+
                 is Resource.Success -> {
                     val departmentList = resource.data as? ArrayList<GetListUniversityNotes>
                     departmentList?.let { ArrayList(it) }

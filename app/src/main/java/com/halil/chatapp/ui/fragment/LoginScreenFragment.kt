@@ -40,6 +40,7 @@ class LoginScreenFragment : Fragment() {
         loginCheck()
         login()
     }
+
     private fun navigateToRegister() {
         binding.buttonSignupAuth.setOnClickListener {
             val actionToRegister =
@@ -47,6 +48,7 @@ class LoginScreenFragment : Fragment() {
             findNavController().navigate(actionToRegister)
         }
     }
+
     private fun login() {
         binding.buttonLogin.setOnClickListener {
             val mail = binding.emailText.text.toString().trim()
@@ -54,6 +56,7 @@ class LoginScreenFragment : Fragment() {
             vm.login(email = mail, password = password)
         }
     }
+
     private fun loginCheck() {
         vm.loginStatus.observe(viewLifecycleOwner) {
             when (it) {
@@ -80,6 +83,7 @@ class LoginScreenFragment : Fragment() {
             }
         }
     }
+
     private fun toggleButton() {
         binding.passwordText.transformationMethod = PasswordTransformationMethod()
         binding.toggleButton.setOnClickListener {
@@ -92,6 +96,7 @@ class LoginScreenFragment : Fragment() {
             updateToggleButtonIcon()
         }
     }
+
     private fun updateToggleButtonIcon() {
         val currentState = binding.passwordText.transformationMethod == null
         val drawableResId = if (currentState) {

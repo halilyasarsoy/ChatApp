@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <TextView
         android:id="@+id/everyone"
         android:text="Delete for Everyone"
@@ -12,7 +13,8 @@
         android:textSize="16sp"
         android:textStyle="bold|normal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
+
     <TextView
         android:id="@+id/cancel"
         android:text="Cancel"
@@ -22,7 +24,8 @@
         android:textSize="16sp"
         android:textStyle="bold|normal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
+
     <TextView
         android:id="@+id/deleteEveryone"
         android:text="Delete for me"
@@ -32,7 +35,7 @@
         android:textSize="16sp"
         android:textStyle="bold|normal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
 
 </LinearLayout>

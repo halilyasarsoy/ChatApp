@@ -75,7 +75,7 @@
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@+id/etxtMessage"
                 app:layout_constraintTop_toTopOf="parent" />
-<!--                android:text="@string/submit_your_problem_or_feedback"-->
+            <!--                android:text="@string/submit_your_problem_or_feedback"-->
 
             <ImageView
                 android:id="@+id/imageView5"

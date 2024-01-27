@@ -2,7 +2,6 @@ package com.halil.chatapp.ui.fragment
 
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
-import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -11,11 +10,9 @@ import android.text.method.TextKeyListener
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ProgressBar
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -27,7 +24,8 @@ import com.halil.chatapp.other.Resource
 import com.halil.chatapp.ui.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
@@ -186,12 +184,14 @@ class RegisterFragment : Fragment() {
                     val builder = AlertDialog.Builder(requireContext())
                     builder.setMessage("Kayıt işlemi başarılı! Geri dönmek için tıklayın.")
                     builder.setPositiveButton(getString(R.string.backToLogin)) { dialog, which ->
-                        val action = RegisterFragmentDirections.actionRegisterFragmentToLoginScreenFragment()
+                        val action =
+                            RegisterFragmentDirections.actionRegisterFragmentToLoginScreenFragment()
                         findNavController().navigate(action)
                     }
                     val alertDialog = builder.create()
                     alertDialog.show()
                 }
+
                 else -> {}
             }
         }

@@ -2,12 +2,12 @@ package com.halil.chatapp.ui.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import com.halil.chatapp.R
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job

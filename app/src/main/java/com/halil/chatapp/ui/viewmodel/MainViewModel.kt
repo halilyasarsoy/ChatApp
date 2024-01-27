@@ -12,8 +12,6 @@ import com.halil.chatapp.other.Resource
 import com.halil.chatapp.repository.MainRepositoryInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -128,6 +126,7 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
             _userData.postValue(user)
         }
     }
+
     fun bind() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.getDepartmentNameDb { departmentInfo ->
@@ -135,6 +134,7 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
             }
         }
     }
+
     fun updateDepartment(newDepartment: String) {
         _department.value = newDepartment
     }

@@ -16,9 +16,11 @@ class UniversityAdapter(private var universityNameList: ArrayList<GetListUnivers
         fun onItemClick(university: GetListUniversityNotes) {
         }
     }
+
     fun setOnItemClickListener(listener: OnItemClickListener) {
         onItemClickListener = listener
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding: GetUniversityListBinding =
             GetUniversityListBinding.inflate(LayoutInflater.from(parent.context), parent, false)

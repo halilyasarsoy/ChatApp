@@ -31,5 +31,5 @@
         android:layout_height="130dp"
         android:scaleType="centerCrop"
         android:visibility="gone"
-        android:src="@drawable/placeholder"/>
+        android:src="@drawable/placeholder" />
 </LinearLayout>

@@ -37,6 +37,7 @@ interface MainRepositoryInterface {
         universityName: String,
         onResult: (Resource<List<GetListUniversityNotes>>) -> Unit
     )
+
     suspend fun getNotesList(
         universityName: String,
         department: String,

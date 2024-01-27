@@ -13,7 +13,6 @@ import androidx.navigation.fragment.navArgs
 import coil.load
 import com.halil.chatapp.databinding.FragmentDetailUsersBinding
 import dagger.hilt.android.AndroidEntryPoint
-import de.hdodenhof.circleimageview.CircleImageView
 
 
 @AndroidEntryPoint

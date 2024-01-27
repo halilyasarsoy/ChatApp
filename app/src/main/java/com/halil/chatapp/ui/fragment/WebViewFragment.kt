@@ -1,20 +1,14 @@
 package com.halil.chatapp.ui.fragment
 
 import android.annotation.SuppressLint
-import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebChromeClient
-import android.webkit.WebResourceRequest
 import android.webkit.WebView
-import android.webkit.WebViewClient
-import android.widget.Button
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.halil.chatapp.R
@@ -42,6 +36,7 @@ class WebViewFragment : Fragment() {
         return view
 
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         webView.settings.apply {
@@ -60,6 +55,7 @@ class WebViewFragment : Fragment() {
             webView.loadUrl(url)
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         val supportActionBar: ActionBar? = (requireActivity() as AppCompatActivity).supportActionBar

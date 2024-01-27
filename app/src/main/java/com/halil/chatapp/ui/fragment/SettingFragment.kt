@@ -15,7 +15,6 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ListView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -28,7 +27,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.halil.chatapp.R
 import com.halil.chatapp.databinding.FragmentSettingBinding
 import com.halil.chatapp.ui.viewmodel.MainViewModel
-import com.halil.chatapp.ui.viewmodel.MainViewModel_Factory
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*

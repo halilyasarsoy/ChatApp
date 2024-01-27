@@ -10,24 +10,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.firebase.firestore.FirebaseFirestore
 import com.halil.chatapp.R
 import com.halil.chatapp.databinding.FragmentCommunicationBinding
-import com.halil.chatapp.other.MyDataObject.dortYillikBolumler
-import com.halil.chatapp.other.MyDataObject.dortYillikBolumlerEN
-import com.halil.chatapp.other.MyDataObject.esitdortYillikBolumler
-import com.halil.chatapp.other.MyDataObject.esitdortYillikBolumlerEN
-import com.halil.chatapp.other.MyDataObject.esitikiYilliBolumler
-import com.halil.chatapp.other.MyDataObject.esitikiYilliBolumlerEN
-import com.halil.chatapp.other.MyDataObject.ikiYilliBolumler
-import com.halil.chatapp.other.MyDataObject.ikiYilliBolumlerEN
-import com.halil.chatapp.other.MyDataObject.sayisaldortYillikBolumler
-import com.halil.chatapp.other.MyDataObject.sayisaldortYillikBolumlerEN
-import com.halil.chatapp.other.MyDataObject.sayisalikiYilliBolumler
-import com.halil.chatapp.other.MyDataObject.sayisalikiYilliBolumlerEN
 import com.halil.chatapp.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
+import java.util.Calendar
 
 @AndroidEntryPoint
 class CommunicationFragment : Fragment() {

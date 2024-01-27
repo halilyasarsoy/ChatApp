@@ -4,13 +4,12 @@
     <corners
         android:bottomLeftRadius="20dp"
         android:topRightRadius="20dp"
-        android:bottomRightRadius="20dp"/>
+        android:bottomRightRadius="20dp" />
 
-    <solid
-        android:color="#80E1DCDC" />
+    <solid android:color="#80E1DCDC" />
     <padding
         android:bottom="8dp"
         android:left="8dp"
         android:right="8dp"
-        android:top="8dp"/>
+        android:top="8dp" />
 </shape>

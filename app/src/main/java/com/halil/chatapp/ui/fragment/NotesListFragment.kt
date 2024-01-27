@@ -62,9 +62,11 @@ class NotesListFragment : Fragment() {
                         Toast.LENGTH_LONG
                     ).show()
                 }
+
                 is Resource.Loading -> {
                     binding.progressBarNotesList.visibility = View.VISIBLE
                 }
+
                 is Resource.Success -> {
                     binding.progressBarNotesList.visibility = View.GONE
 
