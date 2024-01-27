@@ -194,9 +194,9 @@ class MainRepositoryDefault : MainRepositoryInterface {
             userDoc.get().addOnSuccessListener { document ->
                 val department = document?.get("department") as? String
                 val departmentList =
-                    if (department != null) listOf(department) else emptyList<String>()
+                    if (department != null) listOf(department) else emptyList()
                 callback.invoke(departmentList)
-            }.addOnFailureListener { exception ->
+            }.addOnFailureListener {
                 callback.invoke(emptyList())
             }
         }

@@ -188,17 +188,14 @@ class SettingFragment : Fragment() {
             editText.setText(selectedDepartment)
 
             // Kullanıcı bir seçenek seçtikten sonra işlemi otomatikleştir
-            val department = selectedDepartment
-            if (department.isNotEmpty()) {
-                viewModel.addNoteToFirestore(department, requireContext())
-                viewModel.department.observe(viewLifecycleOwner) { department ->
-
+            if (selectedDepartment.isNotEmpty()) {
+                viewModel.addNoteToFirestore(selectedDepartment, requireContext())
+                viewModel.department.observe(viewLifecycleOwner) {
                 }
 
             }
             dialog.dismiss()
         }
-
         dialog.show()
     }
 

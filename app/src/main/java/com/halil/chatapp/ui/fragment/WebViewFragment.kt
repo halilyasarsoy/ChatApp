@@ -27,7 +27,7 @@ class WebViewFragment : Fragment() {
     ): View? {
         (requireActivity() as MainActivity).hideBottomNavigationView()
 
-        val supportActionBar: androidx.appcompat.app.ActionBar? =
+        val supportActionBar: ActionBar? =
             (requireActivity() as AppCompatActivity).supportActionBar
         supportActionBar?.hide()
         supportActionBar?.setShowHideAnimationEnabled(false)
@@ -48,11 +48,14 @@ class WebViewFragment : Fragment() {
         }
 
         val url = args.url
-        if (url.endsWith(".pdf", ignoreCase = true)) {
-            val driveViewerUrl = "https://drive.google.com/viewerng/viewer?embedded=true&url=$url"
-            webView.loadUrl(driveViewerUrl)
-        } else {
-            webView.loadUrl(url)
+        when {
+            url.endsWith(".pdf", ignoreCase = true) -> {
+                val driveViewerUrl = "https://drive.google.com/viewerng/viewer?embedded=true&url=$url"
+                webView.loadUrl(driveViewerUrl)
+            }
+            else -> {
+                webView.loadUrl(url)
+            }
         }
     }
 

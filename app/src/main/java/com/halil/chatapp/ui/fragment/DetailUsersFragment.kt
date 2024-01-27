@@ -38,7 +38,7 @@ class DetailUsersFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.nameTv.text = "${args.name}"
+        binding.nameTv.text = args.name
         binding.lastNameTv.text = args.lastname
         binding.profileImageTv.load(args.imgUrl)
         binding.profession.text = args.university

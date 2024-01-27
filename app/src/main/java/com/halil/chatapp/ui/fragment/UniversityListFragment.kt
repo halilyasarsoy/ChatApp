@@ -251,8 +251,8 @@ class UniversityListFragment : Fragment() {
         val formattedDateTime =
             SimpleDateFormat("dd.MM.yyyy : HH:mm", Locale.getDefault()).format(currentTimeMillis)
         val storageReference =
-            FirebaseStorage.getInstance().getReference("${user?.email} - ${formattedDateTime}")
-        storageReference.putFile(fileUri).addOnSuccessListener { taskSnapshot ->
+            FirebaseStorage.getInstance().getReference("${user?.email} - $formattedDateTime")
+        storageReference.putFile(fileUri).addOnSuccessListener {
             storageReference.downloadUrl.addOnSuccessListener { uri ->
                 fileUrl = uri.toString() + fileType
                 addFileUrlToFirestore()
