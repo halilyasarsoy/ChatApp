@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -139,26 +140,36 @@ class RegisterFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 0 && resultCode == RESULT_OK && data != null) {
+        if (requestCode == 0 && resultCode == RESULT_OK && data?.data != null) {
             imageURI = data.data!!
             binding.imageView.setImageURI(imageURI)
             uploadImage()
-        }
-        if (imageURI.toString().isNotEmpty()) {
             binding.descChooseProfileImage.visibility = View.GONE
         } else {
+            Toast.makeText(requireContext(), "Resim seçimi başarısız oldu", Toast.LENGTH_SHORT).show()
+            binding.descChooseProfileImage.visibility = View.VISIBLE
+        }
+    }
+
+
+    private val selectImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        if (uri != null) {
+            imageURI = uri
+            binding.imageView.setImageURI(imageURI)
+            uploadImage()
+            binding.descChooseProfileImage.visibility = View.GONE
+        } else {
+            Toast.makeText(requireContext(), "Resim seçilmedi", Toast.LENGTH_SHORT).show()
             binding.descChooseProfileImage.visibility = View.VISIBLE
         }
     }
 
     private fun selectImage() {
         binding.imageView.setOnClickListener {
-            val intent = Intent()
-            intent.action = Intent.ACTION_GET_CONTENT
-            intent.type = "image/*"
-            startActivityForResult(intent, 0)
+            selectImageLauncher.launch("image/*")
         }
     }
+
 
     private fun downloadImage() {
         FirebaseStorage.getInstance().reference.child("images")

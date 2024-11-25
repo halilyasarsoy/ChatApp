@@ -114,21 +114,25 @@ class MainRepositoryDefault : MainRepositoryInterface {
 
     override suspend fun getNotesList(
         universityName: String,
-        departmentName: String,
+        department: String,
         onResult: (Resource<List<String>>) -> Unit
     ) {
         notes.document(universityName).get()
             .addOnCompleteListener { universityTask ->
                 if (universityTask.isSuccessful) {
-                    val departmentMap =
-                        universityTask.result?.data?.get(departmentName) as? List<String>
-                    val noteContentList = departmentMap ?: emptyList()
+                    val rawData = universityTask.result?.data?.get(department)
+                    val noteContentList = if (rawData is List<*>) {
+                        rawData.filterIsInstance<String>()
+                    } else {
+                        emptyList()
+                    }
                     onResult.invoke(Resource.Success(noteContentList))
                 } else {
                     onResult.invoke(Resource.Error(universityTask.exception?.message.toString()))
                 }
             }
     }
+
 
     override suspend fun sendMessage(messageText: String, time: String) {
         val contact = Contact()
@@ -152,12 +156,18 @@ class MainRepositoryDefault : MainRepositoryInterface {
     override suspend fun getUserFromFirestoreCollection(): Resource<User> {
         val userId = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
-        try {
+        return try {
             val user = users.document(userId).get().await().toObject(User::class.java)
-            return Resource.Success(user)
+            Resource.Success(user)
         } catch (e: Exception) {
-            return Resource.Error(e.message.toString())
+            Resource.Error(e.message.toString())
         }
+    }
+
+    override fun updateStatusWithDisconnect(uid: String, status: String) {
+        val userStatusRef = FirebaseDatabase.getInstance().getReference("User-Status").child(uid)
+        userStatusRef.onDisconnect().updateChildren(mapOf("status" to "offline"))
+        userStatusRef.updateChildren(mapOf("status" to status))
     }
 
     override fun logout(result: () -> Unit) {

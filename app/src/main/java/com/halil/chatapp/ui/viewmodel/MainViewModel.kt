@@ -49,6 +49,9 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
         repository.logout(result)
     }
 
+    fun updateStatusWithDisconnect(uid: String, status: String) {
+        repository.updateStatusWithDisconnect(uid, status)
+    }
     fun getUser() {
         _userList.postValue(Resource.Loading())
         viewModelScope.launch {
@@ -133,9 +136,5 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
                 _department.postValue(departmentInfo)
             }
         }
-    }
-
-    fun updateDepartment(newDepartment: String) {
-        _department.value = newDepartment
     }
 }

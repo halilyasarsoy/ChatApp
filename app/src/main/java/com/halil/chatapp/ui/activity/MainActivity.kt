@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.LifecycleObserver
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -26,15 +27,12 @@ import com.halil.chatapp.databinding.ActivityMainBinding
 import com.halil.chatapp.other.Resource
 import com.halil.chatapp.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import de.hdodenhof.circleimageview.CircleImageView
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), LifecycleObserver {
     private lateinit var binding: ActivityMainBinding
     private val vm: MainViewModel by viewModels()
-    private lateinit var headerView: View
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var profileImageView: CircleImageView
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var bottomNavigationView: BottomAppBar
 
@@ -74,7 +72,16 @@ class MainActivity : AppCompatActivity() {
             getUID()?.let { vm.updateStatus(it, "online") }
         }
         bottomNavigationView = findViewById(R.id.bottomAppBar)
+        // Kullanıcı durumunu onDisconnect ile yönet
+        getUID()?.let { uid ->
+            vm.updateStatusWithDisconnect(uid, "online")
+        }
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        // Uygulama tamamen kapandığında offline güncelle
+        getUID()?.let { vm.updateStatus(it, "offline") }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -82,7 +89,7 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    fun getUID(): String? {
+    private fun getUID(): String? {
         val firebaseAuth = FirebaseAuth.getInstance()
         return firebaseAuth.uid
     }
@@ -121,7 +128,7 @@ class MainActivity : AppCompatActivity() {
                 || super.onSupportNavigateUp()
     }
 
-    fun updateNavHeader() {
+    private fun updateNavHeader() {
         val navHeaderView = binding.navDrawView.getHeaderView(0)
         val profileImageView = navHeaderView.findViewById<ImageView>(R.id.profileImageView)
         val navUsername = navHeaderView.findViewById<TextView>(R.id.navHeaderName)

@@ -22,10 +22,10 @@ interface MainRepositoryInterface {
     suspend fun login(email: String, password: String): Resource<AuthResult>
 
     fun logout(result: () -> Unit)
-
+    fun updateStatusWithDisconnect(uid: String, status: String)
     suspend fun getUser(onResult: (Resource<List<Users>>) -> Unit)
 
-    fun updateStatus(status: String, userId: String)
+    fun updateStatus(userId: String, status: String)
 
     fun addNotesData(department: String, context: Context)
 
