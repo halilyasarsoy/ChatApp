@@ -5,17 +5,14 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Users(
-    var uid: String,
     var name: String,
     var lastname: String,
     var email: String,
     var imgUrl: String? = null,
-    var userList: List<Users>,
+    var uid: String,
     var profession: String,
     var approved: Boolean = true,
     var status: Boolean = false
-
-
 ) : Parcelable {
     init {
         this.name = name.capitalize()
@@ -23,5 +20,5 @@ data class Users(
         this.profession = profession.capitalize()
     }
 
-    constructor() : this("", "", "", "", "", listOf(), "")
+    constructor() : this("", "", "", "", "",  "")
 }

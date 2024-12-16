@@ -7,10 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.halil.chatapp.data.GetListUniversityNotes
-import com.halil.chatapp.data.User
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.other.Resource
 import com.halil.chatapp.repository.MainRepositoryInterface
@@ -36,7 +34,7 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
     private val _universityData = MutableLiveData<List<String>>()
     val universityData: LiveData<List<String>> = _universityData
 
-    private val _userData = MutableLiveData<Resource<User>>()
+    private val _userData = MutableLiveData<Resource<Users>>()
     val userData = _userData
 
     private val _department = MutableLiveData<String>()
@@ -56,6 +54,16 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
     fun updateStatusWithDisconnect(uid: String, status: String) {
         repository.updateStatusWithDisconnect(uid, status)
     }
+
+    private val _userStatuses = MutableLiveData<Map<String, String>>()
+    val userStatuses: LiveData<Map<String, String>> get() = _userStatuses
+
+    fun fetchUserStatuses() {
+        repository.getUserStatuses { statusMap ->
+            _userStatuses.postValue(statusMap)
+        }
+    }
+
 
     fun getUser() {
         _userList.postValue(Resource.Loading())
@@ -154,7 +162,7 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
             } else {
                 _friendRequestStatus.postValue("Failed to send friend request")
             }
-            _friendRequestStatus.postValue(null) // Mesajı sıfırla
+            _friendRequestStatus.postValue(null)
         }
     }
 
@@ -168,29 +176,32 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
     }
 
     fun resetFriendRequestStatus() {
-        _friendRequestStatus.postValue(null) // LiveData'yı sıfırla
+        _friendRequestStatus.postValue(null)
     }
 
 
-    //request list
-    private val _friendRequests = MutableLiveData<List<User>>()
-    val friendRequests: LiveData<List<User>> get() = _friendRequests
+    private val _friendRequests = MutableLiveData<List<Users>>()
+    val friendRequests: LiveData<List<Users>> get() = _friendRequests
+
+    private val _friendRequestCount = MutableLiveData<Int>()
+    val friendRequestCount: LiveData<Int> get() = _friendRequestCount
 
     fun fetchFriendRequests(userId: String) {
         repository.getFriendRequests(userId) { requestUids ->
-            Log.d("FriendRequests", "Real-time UIDs: $requestUids") // Gelen UID'leri logla
+            Log.d("FriendRequests", "Real-time UIDs: $requestUids")
 
             if (requestUids.isEmpty()) {
-                _friendRequests.postValue(emptyList()) // Eğer istek yoksa boş liste gönder
+                _friendRequests.postValue(emptyList())
+                _friendRequestCount.postValue(0)
                 return@getFriendRequests
             }
 
-            val userList = mutableListOf<User>()
+            val userList = mutableListOf<Users>()
             val firestore = FirebaseFirestore.getInstance().collection("users")
 
-            for (uid in requestUids) {
+            requestUids.forEach { uid ->
                 firestore.document(uid).get().addOnSuccessListener { userSnapshot ->
-                    val user = userSnapshot.toObject(User::class.java)
+                    val user = userSnapshot.toObject(Users::class.java)
                     if (user != null) {
                         userList.add(user)
                     } else {
@@ -198,7 +209,8 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
                     }
 
                     if (userList.size == requestUids.size) {
-                        _friendRequests.postValue(userList) // Tüm kullanıcılar alındığında LiveData'yı güncelle
+                        _friendRequests.postValue(userList)
+                        _friendRequestCount.postValue(userList.size)
                     }
                 }.addOnFailureListener {
                     Log.e("FriendRequests", "Failed to fetch user for UID: $uid")
@@ -208,11 +220,10 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
     }
 
 
+    private val _approvedUsers = MutableLiveData<List<Users>>()
+    val approvedUsers: LiveData<List<Users>> get() = _approvedUsers
 
-    private val _approvedUsers = MutableLiveData<List<User>>()
-    val approvedUsers: LiveData<List<User>> get() = _approvedUsers
-
-    fun approveFriendRequest(targetUser: User) {
+    fun approveFriendRequest(targetUser: Users) {
         val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: return
         repository.approveFriendRequest(currentUserId, targetUser) { success ->
             if (success) {
@@ -238,11 +249,8 @@ class MainViewModel @Inject constructor(private val repository: MainRepositoryIn
     fun fetchApprovedFriends() {
         val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: return
         repository.fetchApprovedFriends(currentUserId) { approvedList ->
-            _approvedUsers.postValue(approvedList) // LiveData'ya yansıt
+            _approvedUsers.postValue(approvedList)
         }
     }
-
-
-
 
 }

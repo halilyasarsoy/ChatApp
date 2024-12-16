@@ -14,7 +14,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.halil.chatapp.data.Contact
 import com.halil.chatapp.data.ContactMessage
 import com.halil.chatapp.data.GetListUniversityNotes
-import com.halil.chatapp.data.User
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.other.Resource
 import kotlinx.coroutines.tasks.await
@@ -51,7 +50,7 @@ class MainRepositoryDefault : MainRepositoryInterface {
                 .await()
             val uid = result.user!!.uid
             val userCreate =
-                User(
+                Users(
                     name = name,
                     lastname = lastname,
                     email = email,
@@ -74,7 +73,6 @@ class MainRepositoryDefault : MainRepositoryInterface {
             Resource.Error(e.message.toString())
         }
     }
-
 
     override suspend fun getUser(onResult: (Resource<List<Users>>) -> Unit) {
         users.get()
@@ -142,7 +140,6 @@ class MainRepositoryDefault : MainRepositoryInterface {
             }
     }
 
-
     override suspend fun sendMessage(messageText: String, time: String) {
         val contact = Contact()
         val message = ContactMessage()
@@ -162,11 +159,11 @@ class MainRepositoryDefault : MainRepositoryInterface {
         }
     }
 
-    override suspend fun getUserFromFirestoreCollection(): Resource<User> {
+    override suspend fun getUserFromFirestoreCollection(): Resource<Users> {
         val userId = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
         return try {
-            val user = users.document(userId).get().await().toObject(User::class.java)
+            val user = users.document(userId).get().await().toObject(Users::class.java)
             Resource.Success(user)
         } catch (e: Exception) {
             Resource.Error(e.message.toString())
@@ -194,6 +191,28 @@ class MainRepositoryDefault : MainRepositoryInterface {
         FirebaseDatabase.getInstance().getReference("User-Status").child(userId)
             .updateChildren(map)
     }
+    override fun getUserStatuses(callback: (Map<String, String>) -> Unit) {
+        val userStatusRef = FirebaseDatabase.getInstance().getReference("User-Status")
+        userStatusRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val statusMap = mutableMapOf<String, String>()
+                for (child in snapshot.children) {
+                    val uid = child.key
+                    val status = child.child("status").getValue(String::class.java) ?: "offline"
+                    if (uid != null) {
+                        statusMap[uid] = status
+                    }
+                }
+                callback(statusMap)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Repository", "Error fetching user statuses: ${error.message}")
+                callback(emptyMap()) // Hata durumunda boş bir map dönüyoruz.
+            }
+        })
+    }
+
 
     override fun addNotesData(department: String, context: Context) {
         val user = FirebaseAuth.getInstance().currentUser
@@ -319,7 +338,7 @@ class MainRepositoryDefault : MainRepositoryInterface {
 
     override fun approveFriendRequest(
         currentUserId: String,
-        targetUser: User,
+        targetUser: Users,
         callback: (Boolean) -> Unit
     ) {
         val approvedFriendsRef = firebaseDatabase.getReference("Approved-Friends")
@@ -356,7 +375,6 @@ class MainRepositoryDefault : MainRepositoryInterface {
     }
 
 
-
     override fun rejectFriendRequest(
         currentUserId: String,
         targetUserId: String,
@@ -370,13 +388,13 @@ class MainRepositoryDefault : MainRepositoryInterface {
             .addOnFailureListener { callback(false) }
     }
 
-    override fun fetchApprovedFriends(currentUserId: String, callback: (List<User>) -> Unit) {
+    override fun fetchApprovedFriends(currentUserId: String, callback: (List<Users>) -> Unit) {
         val approvedFriendsRef = firebaseDatabase.getReference("Approved-Friends").child(currentUserId)
 
         approvedFriendsRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val uids = snapshot.children.mapNotNull { it.key }
-                val userList = mutableListOf<User>()
+                val userList = mutableListOf<Users>()
 
                 if (uids.isEmpty()) {
                     callback(emptyList())
@@ -387,7 +405,7 @@ class MainRepositoryDefault : MainRepositoryInterface {
                 uids.forEach { uid ->
                     firestore.document(uid).get()
                         .addOnSuccessListener { userSnapshot ->
-                            val user = userSnapshot.toObject(User::class.java)
+                            val user = userSnapshot.toObject(Users::class.java)
                             user?.let { userList.add(it) }
 
                             if (userList.size == uids.size) {
@@ -406,7 +424,6 @@ class MainRepositoryDefault : MainRepositoryInterface {
             }
         })
     }
-
 
     override fun removeFriendRequest(
         currentUserId: String,

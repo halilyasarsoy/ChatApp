@@ -3,7 +3,6 @@ package com.halil.chatapp.repository
 import android.content.Context
 import com.google.firebase.auth.AuthResult
 import com.halil.chatapp.data.GetListUniversityNotes
-import com.halil.chatapp.data.User
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.other.Resource
 
@@ -27,6 +26,8 @@ interface MainRepositoryInterface {
 
     fun updateStatus(userId: String, status: String)
 
+    fun getUserStatuses(callback: (Map<String, String>) -> Unit)
+
     fun addNotesData(department: String, context: Context)
 
     suspend fun getUserInfo(context: Context, callback: (List<String>) -> Unit)
@@ -46,7 +47,7 @@ interface MainRepositoryInterface {
 
     suspend fun sendMessage(messageText: String, time: String)
 
-    suspend fun getUserFromFirestoreCollection(): Resource<User>
+    suspend fun getUserFromFirestoreCollection(): Resource<Users>
     suspend fun searchUniversity(query: String): List<GetListUniversityNotes>
 
     suspend fun getDepartmentNameDb(onResult: (String) -> Unit)
@@ -58,9 +59,9 @@ interface MainRepositoryInterface {
     fun getFriendRequests(currentUserId: String, result: (List<String>) -> Unit)
     fun getSentFriendRequests(currentUserId: String, result: (List<String>) -> Unit)
 
-    fun approveFriendRequest(currentUserId: String, targetUser: User, callback: (Boolean) -> Unit)
+    fun approveFriendRequest(currentUserId: String, targetUser: Users, callback: (Boolean) -> Unit)
     fun rejectFriendRequest(currentUserId: String, targetUserId: String, callback: (Boolean) -> Unit)
-    fun fetchApprovedFriends(currentUserId: String, callback: (List<User>) -> Unit)
+    fun fetchApprovedFriends(currentUserId: String, callback: (List<Users>) -> Unit)
     fun removeFriendRequest(currentUserId: String, targetUserId: String, callback: (Boolean) -> Unit)
 
 

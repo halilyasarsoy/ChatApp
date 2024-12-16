@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.halil.chatapp.data.User
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.databinding.ListItemBinding
 
@@ -15,7 +14,7 @@ class ListAdapter(var userList: ArrayList<Users>) :
 
     var sentRequests = listOf<String>() // Gönderilen arkadaşlık isteklerinin UID'lerini tutar
     private lateinit var onItemClickListener: OnItemClickListener
-    var approvedUsers = listOf<User>() // Arkadaş listesi
+    var approvedUsers = listOf<Users>() // Arkadaş listesi
 
     interface OnItemClickListener {
         fun onItemClick(user: Users)
@@ -31,7 +30,7 @@ class ListAdapter(var userList: ArrayList<Users>) :
         notifyDataSetChanged() // RecyclerView'i günceller
     }
 
-    fun updateApprovedUsers(approvedList: List<User>) {
+    fun updateApprovedUsers(approvedList: List<Users>) {
         approvedUsers = approvedList
         notifyDataSetChanged()
     }

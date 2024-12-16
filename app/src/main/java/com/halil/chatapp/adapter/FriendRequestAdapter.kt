@@ -5,18 +5,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.halil.chatapp.data.User
+import com.halil.chatapp.data.Users
 import com.halil.chatapp.databinding.FriendRequestListItemBinding
 
 class FriendRequestAdapter(
-    private var requests: ArrayList<User>,
-    private val onApprove: (User) -> Unit,
+    private var requests: ArrayList<Users>,
+    private val onApprove: (Users) -> Unit,
     private val onReject: (String) -> Unit // User yerine String kullanıyoruz
 ) : RecyclerView.Adapter<FriendRequestAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: FriendRequestListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(user: User) {
+        fun bind(user: Users) {
             Log.d("FriendRequestAdapter", "Binding user: ${user.name} ${user.lastname}") // Kullanıcı bilgilerini logla
 
             binding.tvFirstName.text = user.name
@@ -41,7 +41,7 @@ class FriendRequestAdapter(
 
     override fun getItemCount(): Int = requests.size
 
-    fun updateRequests(newRequests: List<User>) {
+    fun updateRequests(newRequests: List<Users>) {
         Log.d("FriendRequestAdapter", "New requests: ${newRequests.size}")
 
         requests.clear()

@@ -21,5 +21,8 @@
                 android:title="@string/communication" />
         </menu>
     </item>
-
+    <item
+        android:id="@+id/nav_users"
+        android:title="Show All Users"
+        android:icon="@drawable/ic_people" />
 </menu>
