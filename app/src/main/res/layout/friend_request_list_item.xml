@@ -77,38 +77,26 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
-            android:id="@+id/statusOnlineIcon"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_marginStart="2dp"
-            android:background="@color/online_green"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.959"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.49" />
-
-        <ImageView
-            android:id="@+id/statusOfflineIcon"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_marginEnd="10dp"
-            android:background="@color/offline_red"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnSendFriendRequest"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.49" />
-
-        <ImageView
-            android:id="@+id/btnSendFriendRequest"
+            android:id="@+id/btnApprove"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/baseline_person_add_alt_24"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/baseline_check_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/btnReject"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/baseline_cancel_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnApprove"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

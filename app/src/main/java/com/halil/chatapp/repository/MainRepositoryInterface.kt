@@ -50,4 +50,19 @@ interface MainRepositoryInterface {
     suspend fun searchUniversity(query: String): List<GetListUniversityNotes>
 
     suspend fun getDepartmentNameDb(onResult: (String) -> Unit)
+
+
+    //send friend
+
+    fun sendFriendRequest(currentUserId: String, targetUserId: String, result: (Boolean) -> Unit)
+    fun getFriendRequests(currentUserId: String, result: (List<String>) -> Unit)
+    fun getSentFriendRequests(currentUserId: String, result: (List<String>) -> Unit)
+
+    fun approveFriendRequest(currentUserId: String, targetUser: User, callback: (Boolean) -> Unit)
+    fun rejectFriendRequest(currentUserId: String, targetUserId: String, callback: (Boolean) -> Unit)
+    fun fetchApprovedFriends(currentUserId: String, callback: (List<User>) -> Unit)
+    fun removeFriendRequest(currentUserId: String, targetUserId: String, callback: (Boolean) -> Unit)
+
+
+
 }

@@ -8,4 +8,9 @@
         android:title="@string/logOut"
         android:visible="true"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/friendRequests"
+        android:icon="@drawable/baseline_person_add_alt_24"
+        android:title="Friend Requests"
+        app:showAsAction="always" />
 </menu>

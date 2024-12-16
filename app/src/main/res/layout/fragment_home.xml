@@ -5,13 +5,20 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment.HomeFragment">
 
+    <Button
+        android:id="@+id/btnShowAllUsers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show All Users"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="top|center" />
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/recyclerViewApprovedUsers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        android:layout_marginBottom="62dp"
-        tools:listitem="@layout/list_item" />
+        android:layout_marginTop="16dp" />
+
 
     <ProgressBar
         android:id="@+id/progressBarUserList"

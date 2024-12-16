@@ -6,46 +6,67 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.halil.chatapp.data.User
 import com.halil.chatapp.data.Users
 import com.halil.chatapp.databinding.ListItemBinding
 
 class ListAdapter(var userList: ArrayList<Users>) :
     RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
-    private var binding: ListItemBinding? = null
+    var sentRequests = listOf<String>() // Gönderilen arkadaşlık isteklerinin UID'lerini tutar
     private lateinit var onItemClickListener: OnItemClickListener
+    var approvedUsers = listOf<User>() // Arkadaş listesi
 
     interface OnItemClickListener {
-        fun onItemClick(user: Users) {
-        }
+        fun onItemClick(user: Users)
+        fun onFriendRequestClick(user: Users)
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
         onItemClickListener = listener
     }
 
+    fun updateSentRequests(sentList: List<String>) {
+        sentRequests = sentList
+        notifyDataSetChanged() // RecyclerView'i günceller
+    }
+
+    fun updateApprovedUsers(approvedList: List<User>) {
+        approvedUsers = approvedList
+        notifyDataSetChanged()
+    }
+    fun updateItem(userId: String) {
+        val position = userList.indexOfFirst { it.uid == userId }
+        if (position != -1) {
+            notifyItemChanged(position) // Sadece ilgili öğeyi günceller
+        }
+    }
+
     class MyViewHolder(
         private val itemBinding: ListItemBinding
     ) : RecyclerView.ViewHolder(itemBinding.root) {
 
-        fun bindItem(user: Users) {
+        fun bindItem(
+            user: Users,
+            isRequestSent: Boolean,
+            isFriend: Boolean, // Arkadaşlık durumu
+            listener: OnItemClickListener
+        ) {
             itemBinding.tvFirstName.text = user.name
             itemBinding.tvLastName.text = user.lastname
             itemBinding.imgUser.load(user.imgUrl)
-            itemBinding.tvLatestMessage.text = user.profession
 
-            if (user.status) {
-                itemBinding.statusOnlineIcon.visibility = View.VISIBLE
-                itemBinding.statusOfflineIcon.visibility = View.GONE
+            // Buton görünürlüğünü arkadaşlık ve istek durumlarına göre ayarla
+            if (isRequestSent || isFriend) {
+                itemBinding.btnSendFriendRequest.visibility = View.GONE
             } else {
-                itemBinding.statusOnlineIcon.visibility = View.GONE
-                itemBinding.statusOfflineIcon.visibility = View.VISIBLE
+                itemBinding.btnSendFriendRequest.visibility = View.VISIBLE
+                itemBinding.btnSendFriendRequest.setOnClickListener {
+                    listener.onFriendRequestClick(user)
+                }
             }
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -56,35 +77,27 @@ class ListAdapter(var userList: ArrayList<Users>) :
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val user = userList[position]
-        FirebaseDatabase.getInstance().getReference("User-Status").child(user.uid)
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val userStatus = snapshot.child("status").getValue(String::class.java)
-                    user.status = userStatus == "online"
-                    userList.sortByDescending { it.status }
-                    holder.bindItem(user)
 
-                }
+        // Gönderilmiş isteği kontrol et
+        val isRequestSent = sentRequests.contains(user.uid)
 
-                override fun onCancelled(error: DatabaseError) {
-                    // handle error
-                }
-            })
-        holder.itemView.setOnClickListener {
-            onItemClickListener.onItemClick(user)
-        }
+        // Arkadaşlık durumunu kontrol et
+        val isFriend = approvedUsers.any { it.uid == user.uid }
+
+        // Arkadaşlık veya gönderilmiş istek varsa butonu gizle
+        holder.bindItem(user, isRequestSent, isFriend, onItemClickListener)
     }
+
+
+
 
     override fun getItemCount(): Int {
         return userList.size
     }
 
     fun updateUserStatus(updatedUserList: ArrayList<Users>) {
-
-        // Kullanıcı listesini güncelle
         userList.clear()
         userList.addAll(updatedUserList)
-        // RecyclerView'e değişiklikleri bildir
         notifyDataSetChanged()
     }
 }

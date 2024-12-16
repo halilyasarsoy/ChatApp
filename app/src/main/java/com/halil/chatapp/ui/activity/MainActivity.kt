@@ -3,14 +3,18 @@ package com.halil.chatapp.ui.activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.LifecycleObserver
 import androidx.navigation.findNavController
@@ -19,10 +23,13 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.firebase.auth.FirebaseAuth
 import com.halil.chatapp.R
+import com.halil.chatapp.adapter.FriendRequestAdapter
 import com.halil.chatapp.databinding.ActivityMainBinding
 import com.halil.chatapp.other.Resource
 import com.halil.chatapp.ui.viewmodel.MainViewModel
@@ -76,6 +83,11 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
         getUID()?.let { uid ->
             vm.updateStatusWithDisconnect(uid, "online")
         }
+        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
+        if (currentUserId != null) {
+            vm.fetchApprovedFriends()
+            vm.fetchFriendRequests(currentUserId)
+        }
     }
 
     override fun onDestroy() {
@@ -96,7 +108,6 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-
             R.id.logOut -> {
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle(getString(R.string.logOut))
@@ -118,9 +129,49 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
                 builder.show()
             }
 
+            R.id.friendRequests -> {
+                showFriendRequestsDialog() // Arkadaşlık isteklerini göster
+            }
         }
         return super.onOptionsItemSelected(item)
     }
+
+    private fun showFriendRequestsDialog() {
+        val dialogView =
+            LayoutInflater.from(this).inflate(R.layout.dialog_friend_requests, null)
+        val recyclerView = dialogView.findViewById<RecyclerView>(R.id.recyclerView)
+        val progressBar = dialogView.findViewById<ProgressBar>(R.id.progressBar)
+
+        recyclerView.layoutManager = LinearLayoutManager(this) // Hata 2 düzeltiliyor
+        val adapter = FriendRequestAdapter(
+            arrayListOf(),
+            onApprove = { user ->
+                vm.approveFriendRequest(user) // Hata 1 düzeltiliyor
+            },
+            onReject = { userId ->
+                vm.rejectFriendRequest(userId) // Hata 1 düzeltiliyor
+            }
+        )
+        recyclerView.adapter = adapter
+
+        val dialog = AlertDialog.Builder(this) // Fragment değil, Activity olduğu için this kullanılıyor
+            .setTitle("Friend Requests")
+            .setView(dialogView)
+            .setNegativeButton("Close") { dialog, _ -> dialog.dismiss() }
+            .create()
+
+        dialog.show()
+
+        // Activity'de viewLifecycleOwner yerine this kullanılmalı
+        vm.friendRequests.observe(this) { requests ->
+            Log.d("Activity", "Friend requests size: ${requests.size}") // Arkadaşlık isteklerinin boyutunu logla
+
+            progressBar.visibility = View.GONE
+            adapter.updateRequests(requests)
+        }
+    }
+
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.mainFragmentContainerView)

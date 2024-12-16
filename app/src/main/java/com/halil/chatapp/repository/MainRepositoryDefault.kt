@@ -1,9 +1,14 @@
 package com.halil.chatapp.repository
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.halil.chatapp.data.Contact
@@ -22,6 +27,10 @@ class MainRepositoryDefault : MainRepositoryInterface {
     private val notes = FirebaseFirestore.getInstance().collection("notes")
     private val universityInfo = FirebaseFirestore.getInstance().collection("university")
     private val contacts = FirebaseFirestore.getInstance().collection("Contacts")
+    private val firebaseDatabase: FirebaseDatabase
+        get() = FirebaseDatabase.getInstance()
+
+
     private fun getUID(): String? {
         val firebaseAuth = FirebaseAuth.getInstance()
         return firebaseAuth.uid
@@ -250,5 +259,166 @@ class MainRepositoryDefault : MainRepositoryInterface {
                     onResult("Hata: $e")
                 }
         }
+    }
+
+    override fun sendFriendRequest(
+        currentUserId: String,
+        targetUserId: String,
+        result: (Boolean) -> Unit
+    ) {
+        val friendRequestRef = FirebaseDatabase.getInstance().getReference("Friend-Requests")
+        friendRequestRef.child(currentUserId).child("sent").child(targetUserId).setValue(true)
+            .addOnSuccessListener {
+                friendRequestRef.child(targetUserId).child("received").child(currentUserId)
+                    .setValue(true)
+                    .addOnSuccessListener {
+                        result(true)
+                    }
+                    .addOnFailureListener {
+                        result(false)
+                    }
+            }
+            .addOnFailureListener {
+                result(false)
+            }
+    }
+
+    override fun getFriendRequests(currentUserId: String, result: (List<String>) -> Unit) {
+        val friendRequestRef = FirebaseDatabase.getInstance().getReference("Friend-Requests")
+            .child(currentUserId).child("received")
+
+        friendRequestRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val requests = mutableListOf<String>()
+                snapshot.children.forEach {
+                    requests.add(it.key.toString())
+                }
+                result(requests) // Yeni UID listesini döndür
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("FriendRequests", "Failed to listen for friend requests: ${error.message}")
+                result(emptyList()) // Hata durumunda boş liste döndür
+            }
+        })
+    }
+
+
+    override fun getSentFriendRequests(currentUserId: String, result: (List<String>) -> Unit) {
+        val sentRequestsRef = FirebaseDatabase.getInstance().getReference("Friend-Requests")
+            .child(currentUserId).child("sent")
+
+        sentRequestsRef.get().addOnSuccessListener { snapshot ->
+            val sentList = mutableListOf<String>()
+            snapshot.children.forEach { sentList.add(it.key.toString()) }
+            result(sentList)
+        }.addOnFailureListener {
+            result(emptyList())
+        }
+    }
+
+    override fun approveFriendRequest(
+        currentUserId: String,
+        targetUser: User,
+        callback: (Boolean) -> Unit
+    ) {
+        val approvedFriendsRef = firebaseDatabase.getReference("Approved-Friends")
+            .child(currentUserId).child(targetUser.uid!!)
+
+        approvedFriendsRef.setValue(targetUser)
+            .addOnSuccessListener {
+                val reverseApprovedRef = firebaseDatabase.getReference("Approved-Friends")
+                    .child(targetUser.uid!!).child(currentUserId)
+
+                reverseApprovedRef.setValue(true)
+                    .addOnSuccessListener {
+                        val friendRequestsRef = firebaseDatabase.getReference("Friend-Requests")
+
+                        friendRequestsRef.child(currentUserId).child("sent")
+                            .child(targetUser.uid!!).setValue(true)
+
+                        friendRequestsRef.child(targetUser.uid!!).child("sent")
+                            .child(currentUserId).setValue(true)
+
+                        removeFriendRequest(currentUserId, targetUser.uid!!) {
+                            callback(true)
+                        }
+                    }
+                    .addOnFailureListener {
+                        callback(false)
+                    }
+                Log.d("approveFriendRequest", "User added successfully to Approved-Friends")
+
+            }
+            .addOnFailureListener {
+                callback(false)
+            }
+    }
+
+
+
+    override fun rejectFriendRequest(
+        currentUserId: String,
+        targetUserId: String,
+        callback: (Boolean) -> Unit
+    ) {
+        val friendRequestsRef =
+            firebaseDatabase.getReference("Friend-Requests").child(currentUserId).child("received")
+                .child(targetUserId)
+        friendRequestsRef.removeValue()
+            .addOnSuccessListener { callback(true) }
+            .addOnFailureListener { callback(false) }
+    }
+
+    override fun fetchApprovedFriends(currentUserId: String, callback: (List<User>) -> Unit) {
+        val approvedFriendsRef = firebaseDatabase.getReference("Approved-Friends").child(currentUserId)
+
+        approvedFriendsRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val uids = snapshot.children.mapNotNull { it.key }
+                val userList = mutableListOf<User>()
+
+                if (uids.isEmpty()) {
+                    callback(emptyList())
+                    return
+                }
+
+                val firestore = FirebaseFirestore.getInstance().collection("users")
+                uids.forEach { uid ->
+                    firestore.document(uid).get()
+                        .addOnSuccessListener { userSnapshot ->
+                            val user = userSnapshot.toObject(User::class.java)
+                            user?.let { userList.add(it) }
+
+                            if (userList.size == uids.size) {
+                                callback(userList)
+                            }
+                        }
+                        .addOnFailureListener {
+                            Log.e("fetchApprovedFriends", "Failed to fetch user: $uid")
+                        }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("fetchApprovedFriends", "Error: ${error.message}")
+                callback(emptyList())
+            }
+        })
+    }
+
+
+    override fun removeFriendRequest(
+        currentUserId: String,
+        targetUserId: String,
+        callback: (Boolean) -> Unit
+    ) {
+        val friendRequestsRef =
+            firebaseDatabase.getReference("Friend-Requests").child(currentUserId).child("received")
+                .child(targetUserId)
+        friendRequestsRef.removeValue()
+            .addOnSuccessListener { callback(true) }
+            .addOnFailureListener { callback(false) }
+
     }
 }
