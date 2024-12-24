@@ -12,20 +12,12 @@ import com.halil.chatapp.databinding.ApprovedUserListBinding
 class ApprovedUsersAdapter(
     private var approvedUsers: ArrayList<Users>,
     private var userStatuses: Map<String, String> = emptyMap() // Kullanıcı durumları
-) :
-    RecyclerView.Adapter<ApprovedUsersAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<ApprovedUsersAdapter.ViewHolder>() {
 
-    private lateinit var onItemClickListener: ListAdapter.OnItemClickListener
+    private lateinit var onItemClickListener: OnItemClickListener
 
-    interface OnItemClickListener : ListAdapter.OnItemClickListener {
-
-        override fun onItemClick(user: Users) {
-            TODO("Not yet implemented")
-        }
-
-        override fun onFriendRequestClick(user: Users) {
-            TODO("Not yet implemented")
-        }
+    interface OnItemClickListener {
+        fun onItemClick(user: Users)
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
@@ -40,15 +32,12 @@ class ApprovedUsersAdapter(
             binding.imgUser.load(user.imgUrl)
             binding.tvLatestMessage.text = user.profession
 
+            // Kullanıcı durumlarını ayarla
             val userStatus = userStatuses[user.uid] ?: "offline"
-            if (userStatus == "online") {
-                binding.statusOnlineIcon.visibility = View.VISIBLE
-                binding.statusOfflineIcon.visibility = View.GONE
-            } else {
-                binding.statusOnlineIcon.visibility = View.GONE
-                binding.statusOfflineIcon.visibility = View.VISIBLE
-            }
+            binding.statusOnlineIcon.visibility = if (userStatus == "online") View.VISIBLE else View.GONE
+            binding.statusOfflineIcon.visibility = if (userStatus != "online") View.VISIBLE else View.GONE
 
+            // Tıklama olayını ata
             itemView.setOnClickListener {
                 if (::onItemClickListener.isInitialized) {
                     onItemClickListener.onItemClick(user)
@@ -70,11 +59,11 @@ class ApprovedUsersAdapter(
     override fun getItemCount(): Int = approvedUsers.size
 
     fun updateApprovedUsers(newUsers: List<Users>) {
-
         approvedUsers.clear()
         approvedUsers.addAll(newUsers)
         notifyDataSetChanged()
     }
+
     fun updateUserStatuses(newStatuses: Map<String, String>) {
         userStatuses = newStatuses
         notifyDataSetChanged()

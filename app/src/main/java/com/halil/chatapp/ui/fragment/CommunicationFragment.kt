@@ -54,7 +54,7 @@ class CommunicationFragment : Fragment() {
                     ) { dialog, _ ->
                         if (msg.isNotEmpty()) {
                             viewModel.sendMessages(msg, myLdt)
-                            MaterialAlertDialogBuilder(requireContext(), 2)
+                            MaterialAlertDialogBuilder(requireContext(),  2)
                                 .setTitle(getString(R.string.message_sent_title))
                                 .setMessage(getString(R.string.message_sent_msg))
                                 .setView(mDialogView)

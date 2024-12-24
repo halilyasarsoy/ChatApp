@@ -117,6 +117,24 @@
         <action
             android:id="@+id/action_notesFragment_to_communicationFragment"
             app:destination="@id/communicationFragment" />
+        <action
+            android:id="@+id/action_universityListFragment_to_detailUsersFragment"
+            app:destination="@id/detailUsersFragment" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="lastname"
+            app:argType="string" />
+        <argument
+            android:name="imgUrl"
+            app:argType="string" />
+        <argument
+            android:name="userId"
+            app:argType="string" />
+        <argument
+            android:name="university"
+            app:argType="string" />
 
     </fragment>
     <fragment

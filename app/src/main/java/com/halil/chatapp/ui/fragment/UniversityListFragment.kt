@@ -74,8 +74,6 @@ class UniversityListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         setAlertDialog()
         vml.getUniversityName()
         universityNameAdapterSet()
@@ -285,9 +283,7 @@ class UniversityListFragment : Fragment() {
                             )
                             notesRef.set(fieldUpdate, SetOptions.merge()).addOnSuccessListener {
                                 Toast.makeText(
-                                    requireContext(),
-                                    R.string.fileUploaded,
-                                    Toast.LENGTH_SHORT
+                                    requireContext(), R.string.fileUploaded, Toast.LENGTH_SHORT
                                 ).show()
                             }.addOnFailureListener { exception ->
                                 Toast.makeText(
