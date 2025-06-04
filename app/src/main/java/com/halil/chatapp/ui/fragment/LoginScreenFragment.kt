@@ -38,6 +38,7 @@ class LoginScreenFragment : Fragment() {
         toggleButton()
         navigateToRegister()
         loginCheck()
+        
         login()
     }
 
